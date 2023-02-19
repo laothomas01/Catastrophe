@@ -5,12 +5,9 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 10f;
-    private Vector2 move;
     private Rigidbody2D rb;
-
     private Vector3 mouse_direction;
     private float rotational_radian;
-
     private Vector3 mousePos;
     int forward;
     int turn;
@@ -60,25 +57,31 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         rb.SetRotation(rotational_radian * Mathf.Rad2Deg);
+        move_player(forward, turn, delta);
+        if (forward > 0 && turn > 0)
+        {
+            rb.velocity = new Vector3(Mathf.Cos(Mathf.PI / 4) * forward, Mathf.Sin(Mathf.PI / 4) * forward, 0);
 
-        //if (forward == 1)
-        //{
-        //    rb.velocity = new Vector3(Mathf.Cos(rotational_radian), Mathf.Sin(rotational_radian), 0);
-        //}
-        //else
-        //{
-        //    rb.velocity = Vector3.zero;
-        //}
-        //move_player(forward, turn, delta);
-        //rb.velocity = new Vector3(Mathf.Cos(rot_radian), Mathf.Sin(rot_radian), 0);
+        }
+        else if (forward > 0 && turn < 0)
+        {
+            rb.velocity = new Vector3(Mathf.Cos(Mathf.PI / 4) * forward, Mathf.Sin(Mathf.PI / 4) * forward, 0);
 
+        }
+        else if (forward > 0 && turn == 0)
+        {
+            rb.velocity = new Vector3(Mathf.Cos(rotational_radian) * forward, Mathf.Sin(rotational_radian) * forward, 0);
 
-        ////Based on the current value of the move, we multiply that into the movespeed and add that to the current position
-        //rb.MovePosition(rb.position + (move * moveSpeed * Time.fixedDeltaTime));
-        //if(forward == 1)
-        //{
-        //rb.MovePosition(rb.position + (move * rb.velocity * moveSpeed) * Time.fixedDeltaTime);
-        //}
+        }
+        else if (forward < 0 && turn > 0)
+        {
+            rb.velocity = new Vector3(Mathf.Cos(Mathf.PI / 4) * forward, Mathf.Sin(Mathf.PI / 4) * forward, 0);
+
+        }
+        else
+        {
+            rb.velocity = new Vector3(forward, forward, 0);
+        }
     }
     private Vector3 getLookDirection()
     {
@@ -86,106 +89,91 @@ public class PlayerMovement : MonoBehaviour
     }
     private void handleInput()
     {
-        bool up, left, right, down;
+        bool up, left, right, down, up_release, down_release, right_release, left_release;
         up = Input.GetKey(KeyCode.W);
         down = Input.GetKey(KeyCode.S);
         left = Input.GetKey(KeyCode.A);
         right = Input.GetKey(KeyCode.D);
 
 
-
-
-        //if (up)
-        //{
-        //    Debug.Log("UP");
-        //    forward = 1;
-        //}
-        //else
+        up_release = Input.GetKeyUp(KeyCode.W);
+        down_release = Input.GetKeyUp(KeyCode.S);
+        left_release = Input.GetKeyUp(KeyCode.A);
+        right_release = Input.GetKeyUp(KeyCode.D);
 
 
         if (up && right)
         {
-            Debug.Log("FORWARD RIGHT");
+
+
+            //Debug.Log("FORWARD RIGHT");
             forward = 1;
             turn = 1;
         }
         else if (up && left)
         {
-            Debug.Log("FORWARD LEFT");
+            //Debug.Log("FORWARD LEFT");
             forward = 1;
-            turn = 1;
+            turn = -1;
         }
         else if (down && right)
         {
-            Debug.Log("BACKWARD RIGHT");
+            //Debug.Log("BACKWARD RIGHT");
             forward = -1;
             turn = 1;
         }
         else if (down && left)
         {
-            Debug.Log("BACKWARD LEFT");
+            //Debug.Log("BACKWARD LEFT");
             forward = -1;
-            turn = 1;
+            turn = -1;
         }
         else if (up && !down)
         {
-            Debug.Log("UP");
+            forward = 1;
+            //Debug.Log("UP");
         }
         else if (down && !up)
         {
-            Debug.Log("DOWN");
+            forward = -1;
+            //Debug.Log("DOWN");
         }
         else if (left && !right)
         {
-            Debug.Log("LEFT");
+            turn = -1;
+            //Debug.Log("LEFT");
 
         }
         else if (right && !left)
         {
-            Debug.Log("RIGHT");
+            turn = 1;
+            //Debug.Log("RIGHT");
         }
         else
         {
-            Debug.Log("NONE");
+            forward = 0;
+            turn = 0;
+            //Debug.Log("NONE");
         }
-        //else if (down)
-        //{
-        //    Debug.Log("DOWN");
-        //    forward = -1;
-        //}
-
-
-        //else if (up && !down && right && !left)
-        //{
-        //    Debug.Log("FOWARD RIGHT");
-        //    forward = 1;
-        //    turn = 1;
-        //}
-        //else if (down && !up && left && !right)
-        //{
-        //    Debug.Log("BACK LEFT");
-        //    forward = -1;
-        //    turn = -1;
-        //}
-        //else if (down && !up && right && !left)
-        //{
-
-        //    Debug.Log("BACK RIGHT");
-        //    forward = -1;
-        //    turn = 1;
-        //}
-        //else
-        //{
-        //    Debug.Log("NONE");
-        //    forward = 0;
-        //    turn = 0;
-        //}
+        if (right_release)
+        {
+            turn = 0;
+        }
 
 
     }
     private void move_player(int forward, int turning, float delta)
     {
-        Debug.Log("FORWARD:" + forward + "TURNING:" + turning);
+        //Debug.Log("FORWARD:" + forward + "TURNING:" + turning);
+        //if (forward > 0)
+        //{
+        //    //move forward
+
+        //}
+        //else
+        //{
+
+        //}
         //if (forward > 0)
         //{
         //    rb.velocity = new Vector3(Mathf.Cos(getRotationRadians() * getMoveSpeed() * delta), Mathf.Sin(getRotationRadians() * getMoveSpeed() * delta), 0);
