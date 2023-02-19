@@ -2,28 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ 
+Note: Do not clean anything up yet
+ 
+ 
+ */
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 10f;
-    private Rigidbody2D rb;
-    private Vector3 mouse_direction;
-    private float rotational_radian;
-    private Vector3 mousePos;
+   protected float moveSpeed = 10f;
+    protected Rigidbody2D rb;
+    protected Vector3 mouse_direction;
+    protected float rotational_radian;
+    protected Vector3 mousePos;
     int forward;
     int turn;
 
     float delta;
 
-    // Start is called before the first frame update
     void Start()
     {
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         rb = GetComponent<Rigidbody2D>();
         forward = 0;
         turn = 0;
         delta = Time.deltaTime;
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -54,40 +59,43 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    private void FixedUpdate()
-    {
+    protected void FixedUpdate()
+    {/*
+      
+        [X] forward/backwards movement
+        [] sideways movement
+      
+      */
         rb.SetRotation(rotational_radian * Mathf.Rad2Deg);
-        move_player(forward, turn, delta);
-        if (forward > 0 && turn > 0)
-        {
-            rb.velocity = new Vector3(Mathf.Cos(Mathf.PI / 4) * forward, Mathf.Sin(Mathf.PI / 4) * forward, 0);
+        move_player(forward, 0, delta);
 
-        }
-        else if (forward > 0 && turn < 0)
-        {
-            rb.velocity = new Vector3(Mathf.Cos(Mathf.PI / 4) * forward, Mathf.Sin(Mathf.PI / 4) * forward, 0);
+        //if (turn > 0)
+        //{
+        //    rb.velocity = new Vector3(Mathf.Cos(rotational_radian) + Mathf.PI / 2 * forward, 1, 0);
 
-        }
-        else if (forward > 0 && turn == 0)
-        {
-            rb.velocity = new Vector3(Mathf.Cos(rotational_radian) * forward, Mathf.Sin(rotational_radian) * forward, 0);
+        //}
+        //else if (forward > 0 && turn < 0)
+        //{
+        //    rb.velocity = new Vector3(Mathf.Cos(Mathf.PI / 4) * forward, Mathf.Sin(Mathf.PI / 4) * forward, 0);
 
-        }
-        else if (forward < 0 && turn > 0)
-        {
-            rb.velocity = new Vector3(Mathf.Cos(Mathf.PI / 4) * forward, Mathf.Sin(Mathf.PI / 4) * forward, 0);
+        //}
+        //else if (forward > 0 && turn == 0)
+        //{
+        //    rb.velocity = new Vector3(Mathf.Cos(rotational_radian) * forward, Mathf.Sin(rotational_radian) * forward, 0);
 
-        }
-        else
-        {
-            rb.velocity = new Vector3(forward, forward, 0);
-        }
+        //}
+        //else if (forward < 0 && turn > 0)
+        //{
+        //    rb.velocity = new Vector3(Mathf.Cos(Mathf.PI / 4) * forward, Mathf.Sin(Mathf.PI / 4) * forward, 0);
+
+        //}
+
     }
-    private Vector3 getLookDirection()
+    protected Vector3 getLookDirection()
     {
         return mouse_direction;
     }
-    private void handleInput()
+    protected void handleInput()
     {
         bool up, left, right, down, up_release, down_release, right_release, left_release;
         up = Input.GetKey(KeyCode.W);
@@ -162,8 +170,21 @@ public class PlayerMovement : MonoBehaviour
 
 
     }
-    private void move_player(int forward, int turning, float delta)
+    protected void move_player(int forward, int turning, float delta)
     {
+
+        if (forward > 0)
+        {
+            rb.velocity = new Vector3(Mathf.Cos(rotational_radian) * forward * moveSpeed * delta, Mathf.Sin(rotational_radian) * forward * moveSpeed * delta, 0);
+        }
+        else if (forward < 0)
+        {
+            rb.velocity = new Vector3(Mathf.Cos(rotational_radian) * forward * moveSpeed * delta, Mathf.Sin(rotational_radian) * forward * moveSpeed * delta, 0);
+        }
+        else
+        {
+            rb.velocity = new Vector3(forward, forward, 0);
+        }
         //Debug.Log("FORWARD:" + forward + "TURNING:" + turning);
         //if (forward > 0)
         //{
@@ -184,25 +205,33 @@ public class PlayerMovement : MonoBehaviour
         //}
 
     }
-    private int getForward()
+    protected int getForward()
     {
         return forward;
     }
-    private int getTurning()
+    protected int getTurning()
     {
         return getTurning();
     }
-    private float getRotationRadians()
+    public float getRotationRadians()
     {
         return rotational_radian;
     }
-    private float getMoveSpeed()
+    public float getMoveSpeed()
     {
         return moveSpeed;
     }
-    private float getDeltaTime()
+    public float getDeltaTime()
     {
         return delta;
+    }
+    public Vector3 getMouseDirection()
+    {
+        return mouse_direction;
+    }
+    public Vector3 getMousePosition()
+    {
+        return mousePos;
     }
 }
 

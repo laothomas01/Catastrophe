@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 1076317132}
   - component: {fileID: 1076317131}
   - component: {fileID: 1076317130}
+  - component: {fileID: 1076317133}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -176,7 +177,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 14.96
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -207,6 +208,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1076317133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076317129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03e0c4c03e5fe56408806b3fea126ff3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1348732149}
 --- !u!1 &1348732146
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,6 +233,8 @@ GameObject:
   - component: {fileID: 1348732148}
   - component: {fileID: 1348732147}
   - component: {fileID: 1348732150}
+  - component: {fileID: 1348732151}
+  - component: {fileID: 1348732152}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -238,7 +254,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33abd70b401d141dc91b41a13255d4be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
 --- !u!212 &1348732148
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -327,3 +342,42 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!61 &1348732151
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348732146}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &1348732152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1348732146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcddc22bdbf3eb044b9c5da528cbfe8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackRange: 5
