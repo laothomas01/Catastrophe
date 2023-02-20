@@ -10,7 +10,8 @@ Note: Do not clean anything up yet
  */
 public class PlayerMovement : MonoBehaviour
 {
-   protected float moveSpeed = 10f;
+    [SerializeField]
+    protected float moveSpeed = 10f;
     protected Rigidbody2D rb;
     protected Vector3 mouse_direction;
     protected float rotational_radian;
@@ -23,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouse_direction = new Vector3();
         rb = GetComponent<Rigidbody2D>();
         forward = 0;
         turn = 0;
@@ -36,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
 
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouse_direction = mousePos - transform.position;
-
+        mouse_direction = Vector3.ClampMagnitude(mouse_direction, 5);
         rotational_radian = Mathf.Atan2(mouse_direction.y, mouse_direction.x);
 
         if (rotational_radian > Mathf.PI * 2)
@@ -203,6 +205,13 @@ public class PlayerMovement : MonoBehaviour
         //{
         //    rb.velocity = new Vector3(Mathf.Cos(getRotationRadians() * -getMoveSpeed() * delta), Mathf.Sin(getRotationRadians() * getMoveSpeed() * delta), 0);
         //}
+
+    }
+
+    private void OnDrawGizmos()
+    {
+        //Gizmos.color = Color.blue;
+        //Gizmos.DrawLine(mousePos, transform.position);
 
     }
     protected int getForward()

@@ -13,32 +13,15 @@ public class Player_Attack : MonoBehaviour
     int attack = 0;
     void Start()
     {
-        //attackDirection = refScript.getMouseDirection();
-        //requires player movement script
-        refScript = GetComponent<PlayerMovement>();
-        attackDirection = new Vector3();
         attackRange = 6;
+        attackDirection = new Vector3();
+        refScript = GetComponent<PlayerMovement>();
     }
 
     void Update()
     {
-        //limit the directional distance of mouse
+        attackDirection = Vector3.ClampMagnitude(refScript.getMouseDirection(), 6);
 
-        attackDirection = refScript.getMouseDirection();
-        if (attackDirection.magnitude > attackRange)
-        {
-            attackDirection = Vector3.ClampMagnitude(attackDirection, attackRange);
-        }
-        //Debug.Log(attackDirection.magnitude);
-        //attackDirection = refScript.getMousePosition()/attackRange;
-
-        //if(attackDirection.magnitude > attackRange)
-        //{
-        //    attackDirection = Vector3.ClampMagnitude(attackDirection, attackRange);
-        //}
-
-
-        //Debug.Log(refScript.getMouseDirection().magnitude);
 
         if (Input.GetKey(0))
         {
@@ -50,20 +33,8 @@ public class Player_Attack : MonoBehaviour
             attack = 0;
         }
 
-        //Debug.Log(attackDirection);
 
 
-
-
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawLine(transform.position, attackDirection);
-
-    }
-    private void FixedUpdate()
-    {
 
 
     }
@@ -71,4 +42,6 @@ public class Player_Attack : MonoBehaviour
     {
         return attackDirection;
     }
+
+
 }
