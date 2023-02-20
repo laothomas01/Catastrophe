@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 10f;
+    public float speedMultiplier = 10f;
     private Vector3 move;
     private Rigidbody rb;
     private Vector3 moveDir;
@@ -38,8 +39,7 @@ public class PlayerController : MonoBehaviour
     {
         //moveDir = new Vector3(move.x, 0f, move.y);
         moveDir = (transform.forward * move.y) + (transform.right * move.x);
-        Debug.Log(moveDir);
-        rb.AddForce(moveDir.normalized  * moveSpeed, ForceMode.Force);
+        rb.AddForce(moveDir.normalized  * moveSpeed * speedMultiplier, ForceMode.Force);
         //rb.MovePosition(moveDir * moveSpeed);
 
     }
