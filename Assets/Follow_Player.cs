@@ -6,6 +6,7 @@ public class Follow_Player : MonoBehaviour
 {
     [SerializeField]
     private Transform player;
+    public Vector3 offset;
     void Start()
     {
 
@@ -13,6 +14,6 @@ public class Follow_Player : MonoBehaviour
 
     void Update()
     {
-        transform.position = player.transform.position + new Vector3(0, 1, -5);
+        transform.position = player.transform.position + offset;
     }
 }
