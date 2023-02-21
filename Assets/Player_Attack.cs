@@ -4,44 +4,63 @@ using UnityEngine;
 
 public class Player_Attack : MonoBehaviour
 {
-    // //Creating and assigning the reference variable
-
-    // PlayerMovement refScript;
-    // [SerializeField]
-    // protected int attackRange;
-    // protected Vector3 attackDirection;
-    // int attack = 0;
+    [SerializeField]
+    private PlayerMovement move;
+    private Vector3 attackDir;
+    
+    //not used
+    private int maxAttackRange;
+    //not used
+    private int minAttackRange;
+    //1 or 0 to determine if attacking
+    private int attack;
     void Start()
     {
-        // attackRange = 6;
-        // attackDirection = new Vector3();
-        // refScript = GetComponent<PlayerMovement>();
+        
+       attack = 0;
+        move = GetComponent<PlayerMovement>();
+        attackDir = new Vector3();
     }
 
-    void Update()
+private void OnDrawGizmos() {
+
+        void Update() {
+            // attackDir = Vector3.ClampMagnitude(attackDir,6);
+            //        Debug.DrawRay(transform.position,attackDir,Color.blue);
+            attackInputs();
+
+        }
+    void FixedUpdate()
     {
-        // attackDirection = Vector3.ClampMagnitude(refScript.getMouseDirection(), 6);
+        RaycastHit hit;
+         // Bit shift the index of the layer (8) to get a bit mask
+        int layerMask = 1 << 8;
 
+        // This would cast rays only against colliders in layer 8.
+        //We want to collide againast layer 8
 
-        // if (Input.GetKey(0))
-        // {
-        //     attack = 1;
-        // }
-        // else
-
-        // {
-        //     attack = 0;
-        // }
-
-
-
-
-
+        attackDir = move.getLookDirection();
+        if(Physics.Raycast(transform.position,attackDir,out hit,120f,layerMask))
+        {
+                    //attack in look direction
+                    if(attack == 1)
+                    {
+                            Destroy(hit.transform.gameObject);
+                    }
+        }
     }
-    // private Vector3 getAttackDirection()
-    // {
-    //     return attackDirection;
-    // }
-
+    void attackInputs()
+    {
+        //left mouse click to attack
+        if(Input.GetKeyDown(KeyCode.Mouse0))
+        {
+                attack = 1;
+        }
+        else
+        {
+                attack = 0;
+        }
+    }
+}
 
 }
