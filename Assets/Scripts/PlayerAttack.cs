@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField]
     private PlayerMovement move;
     private Vector3 attackDir;
     
