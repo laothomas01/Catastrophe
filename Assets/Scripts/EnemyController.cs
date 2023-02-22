@@ -8,6 +8,7 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     public Transform cat;
     NavMeshAgent agent;
+    public float furnitureDistance = 100;
 
     void Start()
     {
@@ -23,6 +24,11 @@ public class EnemyController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space)){
             agent.SetDestination(cat.position);
         }
+    }
+
+    public void InspectFurniture(Transform furniture)
+    {
+            agent.SetDestination(furniture.position);
     }
 
 
