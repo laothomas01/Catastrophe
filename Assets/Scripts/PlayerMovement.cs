@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         // lookDirection = new Vector3();
+        speedMultiplier = 1;
         moveDir = new Vector3();
         mousePoint = new Vector3();
         // hit = new RaycastHit();
@@ -57,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
         layerMask = ~layerMask;
         cursor_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
+//only 
   if (Physics.Raycast(cursor_ray, out hit, Mathf.Infinity,layerMask))
         {
 
@@ -94,5 +96,13 @@ public class PlayerMovement : MonoBehaviour
          //switch between the values of 1,0,-1 based on the input
         move.x = Input.GetAxisRaw("Horizontal");
         move.y = Input.GetAxisRaw("Vertical");
+        if(Input.GetKey(KeyCode.LeftShift))
+        {
+            speedMultiplier = 500;
+        }
+        else
+        {
+            speedMultiplier = 200;
+        }
     }
 }

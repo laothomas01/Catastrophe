@@ -28,6 +28,8 @@ public class DestroyFurniture : MonoBehaviour
         }
     }
 
+
+    
     void AlertEnemy(GameObject furniture)
     {
         //there is always going to be atleast one enemy around
