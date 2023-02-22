@@ -39,12 +39,12 @@ public class PlayerAttack : MonoBehaviour
         
         // hits = new HashSet<RaycastHit>();        
         destroyTime = 3;
-       DEBUGGING = false;
+         DEBUGGING = false;
         //look for all game objects with Enemy tag
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        maxAttackTime = 1f;
+        maxAttackTime = 0.75f;
         isHolding = false;
-        attacking = true;
+        
        //initialize to maxAttackTime to allow first attack
         attackTime = maxAttackTime;
         move = GetComponent<PlayerMovement>();
@@ -63,7 +63,10 @@ public class PlayerAttack : MonoBehaviour
             }
             attackInputs();
 
-
+            if(attacking)
+            {
+                attackTime = 0;
+            }
 
         }
     void FixedUpdate()
@@ -81,59 +84,82 @@ public class PlayerAttack : MonoBehaviour
         // attackDir = Vector3.ClampMagnitude(attack)
 
         //@TODO 200 = testing attack range
-        if(Physics.Raycast(transform.position,attackDir,out hit,600,layerMask))
+        if(Physics.Raycast(transform.position,attackDir,out hit,600,layerMask) && attacking)
         {
+                //--------------Perform Phyics------------------
 
+               
+                
+               if(attacking)
+               {
+                    GameObject hitObj = hit.transform.gameObject;
+                 if(hit.transform.gameObject.tag == "Pushable")
+                {
+                    hitObj.transform.gameObject.GetComponent<Rigidbody>().AddForce(attackDir * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);
+                }
+               }
 
-                    
-                    //attack in look direction
-                    if(attacking && attackTime >= maxAttackTime)
-                    {
+                //--------------Perform Phyics------------------
 
-
-                    
-
-                         GameObject furniture = hit.transform.gameObject;
-                    
-                         if(furniture.tag == "Pushable")
-                        {
-                            furniture.transform.GetComponent<Rigidbody>().AddForce(attackDir * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);
-                             if(DEBUGGING)
+                //   if(attacking)
+                //   {
+                //     attackTime = 0;
+                //   }
                    
-                           {
-                             Destroy(furniture,destroyTime);
-                           }
-                                attacking = false;
-                                attackTime = 0;
-                        }
-                        //@TODO: finish
-                        else if(furniture.tag == "Throwable")
-                        {
+                    //attack in look direction
+                    // if(attacking && attackTime >= maxAttackTime)
+                    // {
 
-                            // if(this.transform.childCount > 2)
-                            // {
-                            //     for(int i = 1; i < this.transform.childCount; ++i)
-                            //     {
-                            //         this.transform.GetChild(i).SetParent(null);
-                            //     }
-                            // }
-                            // else
+
+                    
+
+                    //  
+                    
+                    //      if(furniture.tag == "Pushable")
+                    //     {
+                    //         furniture.transform.GetComponent<Rigidbody>().AddForce(attackDir * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);
+                    //          if(DEBUGGING)
+                   
+                    //        {
+                    //          Destroy(furniture,destroyTime);
+                    //        }
+                           
+                    //             attackTime = 0;
+                    //     }
+                    //     //@TODO: finish
+                    //     else if(furniture.tag == "Throwable")
+                    //     {
+
+
+                    //             if(isHolding = false)
+                    //             {
+                    //                 isHolding = true;
+                    //                 furniture.transform.position = furniture.transform.position + attackDir;
+                    //             }
+                    //         // if(this.transform.childCount > 2)
+                    //         // {
+                    //         //     for(int i = 1; i < this.transform.childCount; ++i)
+                    //         //     {
+                    //         //         this.transform.GetChild(i).SetParent(null);
+                    //         //     }
+                    //         // }
+                    //         // else
                                
-                                // if(isHolding == false)
-                                // {
-                                //     isHolding = true;
-                                //     furniture.transform.SetParent(this.transform);
-                                //     // furniture.transform.forward = attackDir;
-                                //     this.transform.GetChild(1).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                                // }
-                                // else
-                                // {
-                                //     this.transform.GetChild(1).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                    //             // if(isHolding == false)
+                    //             // {
+                    //             //     isHolding = true;
+                    //             //     furniture.transform.SetParent(this.transform);
+                    //             //     // furniture.transform.forward = attackDir;
+                    //             //     this.transform.GetChild(1).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                    //             // }
+                    //             // else
+                    //             // {
+                    //             //     this.transform.GetChild(1).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 
-                                //       this.transform.GetChild(1).SetParent(null);
-                                // isHolding = false;
-                                // attacking = false;
-                                // }
+                    //             //       this.transform.GetChild(1).SetParent(null);
+                    //             // isHolding = false;
+                    //             // attacking = false;
+                    //             // }
                              
                           
                                     
@@ -142,13 +168,13 @@ public class PlayerAttack : MonoBehaviour
 
                            
                   
-                        }
+                    //     }
 
                            
                   
-                        //@TODO add more attack mechanics if possible
+                    //     //@TODO add more attack mechanics if possible
             
-                    }
+                    // }
                   
                    
         }
@@ -159,14 +185,17 @@ public class PlayerAttack : MonoBehaviour
     {
 
         //set attack flag
-        if(Input.GetKeyDown(KeyCode.Mouse0))
+        if(Input.GetKeyDown(KeyCode.Mouse0) && attackTime >= maxAttackTime)
         {
-                attacking = true;
+                    
+                    setAttack(true);
         }
         else
         {
-            attacking = false;
+               setAttack(false);
+
         }
+        
         
       
     
@@ -193,5 +222,9 @@ public class PlayerAttack : MonoBehaviour
         }
         closestEnemy.GetComponent<EnemyController>().InspectFurniture(furniture.transform);
         Destroy(furniture,destroyTime);
+    }
+    public void setAttack(bool attack)
+    {
+        this.attacking = attack;
     }
 }
