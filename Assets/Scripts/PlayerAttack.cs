@@ -10,7 +10,9 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]
     private int attackRange;  
     [SerializeField]  
-    private bool canAttack;
+    private bool attacking;
+    [SerializeField]
+    private bool isHolding;
     [SerializeField]
     private float forceAmount;
     [SerializeField]
@@ -18,18 +20,32 @@ public class PlayerAttack : MonoBehaviour
 
 [SerializeField]
     private float attackTime;
+    
     [SerializeField]
     private float maxAttackTime;
 
+    [SerializeField]
+    bool DEBUGGING;
+    [SerializeField]
+    private float destroyTime;
 
     //collection of all enemies
     GameObject[] enemies;
+
+    //list of raycast hit objects
+    // HashSet<RaycastHit> hits;
     void Start()
     {
-       
-       //initialize to maxAttackTime to allow first attack
         
+        // hits = new HashSet<RaycastHit>();        
+        destroyTime = 3;
+       DEBUGGING = false;
+        //look for all game objects with Enemy tag
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
         maxAttackTime = 1f;
+        isHolding = false;
+        attacking = true;
+       //initialize to maxAttackTime to allow first attack
         attackTime = maxAttackTime;
         move = GetComponent<PlayerMovement>();
         attackDir = new Vector3();
@@ -48,6 +64,7 @@ public class PlayerAttack : MonoBehaviour
             attackInputs();
 
 
+
         }
     void FixedUpdate()
     {
@@ -64,39 +81,94 @@ public class PlayerAttack : MonoBehaviour
         // attackDir = Vector3.ClampMagnitude(attack)
 
         //@TODO 200 = testing attack range
-        if(Physics.Raycast(transform.position,attackDir,out hit,200,layerMask))
+        if(Physics.Raycast(transform.position,attackDir,out hit,600,layerMask))
         {
-            
+
+
+                    
                     //attack in look direction
-                    if(canAttack && attackTime >= maxAttackTime)
+                    if(attacking && attackTime >= maxAttackTime)
                     {
 
-                        Debug.Log("ATTACKING");
 
-                        GameObject hit_obj = hit.transform.gameObject;
                     
-                         if(hit_obj.tag == "Pushable")
+
+                         GameObject furniture = hit.transform.gameObject;
+                    
+                         if(furniture.tag == "Pushable")
                         {
-                            hit.transform.GetComponent<Rigidbody>().AddForce(attackDir * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);
-                            // Destroy(hit_obj,2);
+                            furniture.transform.GetComponent<Rigidbody>().AddForce(attackDir * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);
+                             if(DEBUGGING)
+                   
+                           {
+                             Destroy(furniture,destroyTime);
+                           }
+                                attacking = false;
+                                attackTime = 0;
                         }
-                        attackTime = 0;
+                        //@TODO: finish
+                        else if(furniture.tag == "Throwable")
+                        {
+
+                            // if(this.transform.childCount > 2)
+                            // {
+                            //     for(int i = 1; i < this.transform.childCount; ++i)
+                            //     {
+                            //         this.transform.GetChild(i).SetParent(null);
+                            //     }
+                            // }
+                            // else
+                               
+                                // if(isHolding == false)
+                                // {
+                                //     isHolding = true;
+                                //     furniture.transform.SetParent(this.transform);
+                                //     // furniture.transform.forward = attackDir;
+                                //     this.transform.GetChild(1).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                                // }
+                                // else
+                                // {
+                                //     this.transform.GetChild(1).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+
+                                //       this.transform.GetChild(1).SetParent(null);
+                                // isHolding = false;
+                                // attacking = false;
+                                // }
+                             
+                          
+                                    
+
+                                
+
+                           
+                  
+                        }
+
+                           
+                  
+                        //@TODO add more attack mechanics if possible
             
                     }
+                  
                    
         }
+        
+     
     }
     void attackInputs()
     {
 
+        //set attack flag
         if(Input.GetKeyDown(KeyCode.Mouse0))
         {
-                canAttack = true;
+                attacking = true;
         }
         else
         {
-                canAttack = false;
+            attacking = false;
         }
+        
+      
     
         
         
@@ -104,7 +176,7 @@ public class PlayerAttack : MonoBehaviour
 
 
 //calls enemy 
- void AlertEnemy(GameObject furniture)
+ void AlertEnemy(GameObject furniture,float destroyTime)
     {
         //there is always going to be atleast one enemy around
         GameObject closestEnemy = enemies[0];
@@ -120,7 +192,6 @@ public class PlayerAttack : MonoBehaviour
             }
         }
         closestEnemy.GetComponent<EnemyController>().InspectFurniture(furniture.transform);
-        //time out destroy
-        Destroy(furniture);
+        Destroy(furniture,destroyTime);
     }
 }
