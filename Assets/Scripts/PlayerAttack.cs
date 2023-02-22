@@ -29,7 +29,7 @@ public class PlayerAttack : MonoBehaviour
        
        //initialize to maxAttackTime to allow first attack
         
-        maxAttackTime = 0.5f;
+        maxAttackTime = 1f;
         attackTime = maxAttackTime;
         move = GetComponent<PlayerMovement>();
         attackDir = new Vector3();
