@@ -22,7 +22,6 @@ public class Player_Attack : MonoBehaviour
         attackDir = new Vector3();
     }
 
-private void OnDrawGizmos() {
 
         void Update() {
             // attackDir = Vector3.ClampMagnitude(attackDir,6);
@@ -61,6 +60,5 @@ private void OnDrawGizmos() {
                 attack = 0;
         }
     }
-}
 
 }

@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
        
         movementInputs();
         //testing
-        Debug.DrawRay(transform.position,lookDirection,Color.blue);
+        // Debug.DrawRay(transform.position,lookDirection,Color.blue);
       
     }
 
@@ -74,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
             //moving sideways via Horizontal button
             (transform.right * move.x);
             //move in look direction
-        rb.AddForce(moveDir.normalized * moveSpeed * speedMultiplier, ForceMode.Force);
+        rb.AddForce(moveDir.normalized * moveSpeed * speedMultiplier * Time.fixedDeltaTime, ForceMode.Force);
     }
     
     public Vector3 getMousePoint()

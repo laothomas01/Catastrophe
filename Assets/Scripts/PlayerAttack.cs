@@ -4,20 +4,19 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField]
     private PlayerMovement move;
     private Vector3 attackDir;
-    
-    //not used
-    private int maxAttackRange;
-    //not used
-    private int minAttackRange;
-    //1 or 0 to determine if attacking
+
+    [SerializeField]
+    private int attackRange;    
     private int attack;
     [SerializeField]
     private float forceAmount;
+    [SerializeField]
+    private float forceMultiplier;
     void Start()
     {
+       
        
        attack = 0;
         move = GetComponent<PlayerMovement>();
@@ -30,6 +29,10 @@ public class PlayerAttack : MonoBehaviour
             //        Debug.DrawRay(transform.position,attackDir,Color.blue);
             attackInputs();
 
+            Debug.DrawRay(transform.position,attackDir,Color.blue);
+
+            // Debug.Log((attackDir + transform.forward * attackRange).magnitude);
+
         }
     void FixedUpdate()
     {
@@ -41,12 +44,13 @@ public class PlayerAttack : MonoBehaviour
         //We want to collide againast layer 8
 
         attackDir = move.getLookDirection();
+        // attackDir = Vector3.ClampMagnitude(attack)
         if(Physics.Raycast(transform.position,attackDir,out hit,Mathf.Infinity,layerMask))
         {
                     //attack in look direction
                     if(attack == 1)
                     {
-                            hit.transform.GetComponent<Rigidbody>().AddForce(attackDir * forceAmount ,ForceMode.Impulse);
+                            hit.transform.GetComponent<Rigidbody>().AddForce(attackDir * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);
                     }
         }
     }
