@@ -8,7 +8,7 @@ public class PlayerAttack : MonoBehaviour
     private Vector3 attackDir;
 
     [SerializeField]
-    private int attackRange;  
+    private float attackRange;  
     [SerializeField]  
     private bool attacking;
     [SerializeField]
@@ -28,18 +28,27 @@ public class PlayerAttack : MonoBehaviour
     bool DEBUGGING;
     [SerializeField]
     private float destroyTime;
+    [SerializeField]
+    private float maxAttackRange;
+    [SerializeField]
+    private float minAttackRange;
 
     //collection of all enemies
     GameObject[] enemies;
 
+    [SerializeField]
+    private float offsetValue;
+
+    private bool canThrow = false;
     //list of raycast hit objects
     // HashSet<RaycastHit> hits;
     void Start()
     {
         
-        // hits = new HashSet<RaycastHit>();        
+        // hits = new HashSet<RaycastHit>();   
+           
         destroyTime = 3;
-         DEBUGGING = false;
+        DEBUGGING = false;
         //look for all game objects with Enemy tag
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         maxAttackTime = 0.75f;
@@ -49,24 +58,31 @@ public class PlayerAttack : MonoBehaviour
         attackTime = maxAttackTime;
         move = GetComponent<PlayerMovement>();
         attackDir = new Vector3();
+        attacking = false;
     }
 
 
         void Update() {
             
 
-            Debug.DrawRay(transform.position,attackDir * attackRange,Color.blue);
-        
-            if(attackTime < maxAttackTime)
+            attackDir = attackDir * attackRange;
+            Debug.DrawRay(transform.position,attackDir);
+
+        if(attackTime < maxAttackTime)
             {
                 attackTime += Time.deltaTime;
             }
-            attackInputs();
 
             if(attacking)
             {
                 attackTime = 0;
             }
+
+
+  
+            attackInputs();
+
+  
 
         }
     void FixedUpdate()
@@ -82,103 +98,57 @@ public class PlayerAttack : MonoBehaviour
 
         attackDir = move.getLookDirection();
         // attackDir = Vector3.ClampMagnitude(attack)
-
         //@TODO 200 = testing attack range
-        if(Physics.Raycast(transform.position,attackDir,out hit,600,layerMask) && attacking)
+
+
+//find better way to set,reset color
+        GameObject hitObj;
+        if(Physics.Raycast(transform.position,attackDir,out hit,attackDir.magnitude,layerMask))
         {
                 //--------------Perform Phyics------------------
 
-               
-                
+
+
+                hitObj = hit.transform.gameObject;
+
+                Color customColor = new Color(0.4f, 0.9f, 0.7f, 1.0f);
+                hitObj.GetComponent<Renderer>().material.SetColor("_Color",customColor); // need a way to change hit object's color back
+                    
+                   
                if(attacking)
                {
-                    GameObject hitObj = hit.transform.gameObject;
-                 if(hit.transform.gameObject.tag == "Pushable")
+                 if(hitObj.gameObject.tag == "Pushable")
                 {
                     hitObj.transform.gameObject.GetComponent<Rigidbody>().AddForce(attackDir * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);
                 }
+                // else if(hitObj.gameObject.tag == "Throwable")
+                // {
+                //    if(!isHolding)
+                //    {
+                //       Debug.Log("Pick UP");
+                //      isHolding = true;
+                //     holdingObj = hitObj;
+                //    }
+                // }
                }
+          
 
-                //--------------Perform Phyics------------------
-
-                //   if(attacking)
-                //   {
-                //     attackTime = 0;
-                //   }
-                   
-                    //attack in look direction
-                    // if(attacking && attackTime >= maxAttackTime)
-                    // {
-
-
-                    
-
-                    //  
-                    
-                    //      if(furniture.tag == "Pushable")
-                    //     {
-                    //         furniture.transform.GetComponent<Rigidbody>().AddForce(attackDir * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);
-                    //          if(DEBUGGING)
-                   
-                    //        {
-                    //          Destroy(furniture,destroyTime);
-                    //        }
-                           
-                    //             attackTime = 0;
-                    //     }
-                    //     //@TODO: finish
-                    //     else if(furniture.tag == "Throwable")
-                    //     {
-
-
-                    //             if(isHolding = false)
-                    //             {
-                    //                 isHolding = true;
-                    //                 furniture.transform.position = furniture.transform.position + attackDir;
-                    //             }
-                    //         // if(this.transform.childCount > 2)
-                    //         // {
-                    //         //     for(int i = 1; i < this.transform.childCount; ++i)
-                    //         //     {
-                    //         //         this.transform.GetChild(i).SetParent(null);
-                    //         //     }
-                    //         // }
-                    //         // else
-                               
-                    //             // if(isHolding == false)
-                    //             // {
-                    //             //     isHolding = true;
-                    //             //     furniture.transform.SetParent(this.transform);
-                    //             //     // furniture.transform.forward = attackDir;
-                    //             //     this.transform.GetChild(1).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                    //             // }
-                    //             // else
-                    //             // {
-                    //             //     this.transform.GetChild(1).GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-
-                    //             //       this.transform.GetChild(1).SetParent(null);
-                    //             // isHolding = false;
-                    //             // attacking = false;
-                    //             // }
-                             
-                          
-                                    
-
-                                
-
-                           
-                  
-                    //     }
-
-                           
-                  
-                    //     //@TODO add more attack mechanics if possible
-            
-                    // }
-                  
                    
         }
+       
+       
+        //  hitObj.GetComponent<Renderer>().material.color = new Color(1,1,1,1); // need a way to change hit object's color back
         
+        //[x] hold object
+        //[] restrict held object to player's position, offset by some value and clamping down the attack direction. 
+        //[] add throw force
+        // if(isHolding)
+        // {
+
+                        
+        //                 holdingObj.transform.position = this.transform.position + attackDir * 0.5f * offsetValue;
+                    
+        // }
      
     }
     void attackInputs()
@@ -187,7 +157,7 @@ public class PlayerAttack : MonoBehaviour
         //set attack flag
         if(Input.GetKeyDown(KeyCode.Mouse0) && attackTime >= maxAttackTime)
         {
-                    
+                   
                     setAttack(true);
         }
         else

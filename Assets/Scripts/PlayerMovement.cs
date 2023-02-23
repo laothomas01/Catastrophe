@@ -62,7 +62,6 @@ public class PlayerMovement : MonoBehaviour
   if (Physics.Raycast(cursor_ray, out hit, Mathf.Infinity,layerMask))
         {
 
-
               //find mouse point on X-Z plane
                 mousePoint = new Vector3(hit.point.x,  transform.position.y, hit.point.z);
                 
