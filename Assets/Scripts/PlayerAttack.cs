@@ -5,14 +5,14 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     private PlayerMovement move;
+    private Camera camera;
     private Vector3 attackDir;
 
     [SerializeField]
     private float attackRange;  
     [SerializeField]  
     private bool attacking;
-    [SerializeField]
-    private bool isHolding;
+
     [SerializeField]
     private float forceAmount;
     [SerializeField]
@@ -25,36 +25,50 @@ public class PlayerAttack : MonoBehaviour
     private float maxAttackTime;
 
     [SerializeField]
-    bool DEBUGGING;
+    bool DEBUG_CAMERA,DEBUG_DESTROY;
     [SerializeField]
     private float destroyTime;
-    [SerializeField]
-    private float maxAttackRange;
-    [SerializeField]
-    private float minAttackRange;
-
-    //collection of all enemies
+ 
     GameObject[] enemies;
+    GameObject[] furnitures;
 
     [SerializeField]
     private float offsetValue;
-
-    private bool canThrow = false;
-    //list of raycast hit objects
-    // HashSet<RaycastHit> hits;
+    private Material originalMaterial;
+    [SerializeField]
+    private Material newMaterial;
+    private Color originalColor;
+    List<Color> originalColors;
+    HashSet<GameObject> hitObjs;
+    int furnitureLayer;
+       GameObject hitObj;
+       private bool colorChanged;
     void Start()
     {
+
+            camera = Camera.main;
+            
+        colorChanged = false;
+            originalColor = new Color();
+        originalColors = new List<Color>();
+        hitObj = new GameObject();
+
+        hitObjs = new HashSet<GameObject>();
         
-        // hits = new HashSet<RaycastHit>();   
-           
+        furnitureLayer = 9;
         destroyTime = 3;
-        DEBUGGING = false;
+   
+  
+
         //look for all game objects with Enemy tag
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        maxAttackTime = 0.75f;
-        isHolding = false;
+        furnitures = FindGameObjectsInLayer(furnitureLayer);
+        foreach(GameObject obj in furnitures)
+        {
+            originalColors.Add(obj.GetComponent<Renderer>().material.color);
+        }
         
-       //initialize to maxAttackTime to allow first attack
+        maxAttackTime = 0.5f;
         attackTime = maxAttackTime;
         move = GetComponent<PlayerMovement>();
         attackDir = new Vector3();
@@ -65,8 +79,9 @@ public class PlayerAttack : MonoBehaviour
         void Update() {
             
 
-            attackDir = attackDir * attackRange;
-            Debug.DrawRay(transform.position,attackDir);
+            attackDir = Vector3.ClampMagnitude(attackDir,(attackDir * attackRange).magnitude);
+            //@TODO: clamp down a min and max attack range
+            Debug.DrawRay(transform.position,attackDir,Color.blue);
 
         if(attackTime < maxAttackTime)
             {
@@ -79,6 +94,10 @@ public class PlayerAttack : MonoBehaviour
             }
 
 
+
+           
+
+           
   
             attackInputs();
 
@@ -93,63 +112,75 @@ public class PlayerAttack : MonoBehaviour
          //e.g: 1 << 9 checks layer 9 ("Furniture layer") 
         int layerMask = 1 << 9;
 
-        // This would cast rays only against colliders in layer 8.
-        //We want to collide againast layer 8
 
         attackDir = move.getLookDirection();
-        // attackDir = Vector3.ClampMagnitude(attack)
-        //@TODO 200 = testing attack range
+        // Debug.Log(hitObj.name);
 
-
-//find better way to set,reset color
-        GameObject hitObj;
         if(Physics.Raycast(transform.position,attackDir,out hit,attackDir.magnitude,layerMask))
         {
-                //--------------Perform Phyics------------------
-
-
-
                 hitObj = hit.transform.gameObject;
 
-                Color customColor = new Color(0.4f, 0.9f, 0.7f, 1.0f);
-                hitObj.GetComponent<Renderer>().material.SetColor("_Color",customColor); // need a way to change hit object's color back
-                    
+              
+               if(hitObj != null)
+               {
+                 if(!colorChanged)
+                {
                    
+                    originalColor = hitObj.GetComponent<Renderer>().material.color;
+                    hitObj.GetComponent<Renderer>().material.color = Color.blue;
+                }
+                
                if(attacking)
                {
-                 if(hitObj.gameObject.tag == "Pushable")
+        
+        
+                if(hitObj.gameObject.tag == "Pushable")
                 {
                     hitObj.transform.gameObject.GetComponent<Rigidbody>().AddForce(attackDir * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);
+                    
+                  
+                    if(DEBUG_CAMERA)
+                    {
+                        camera.GetComponent<Follow_Player>().setCanShake(true);
+                    }
+                    if(DEBUG_DESTROY)
+                    {
+                        // AlertEnemy(hit.transform.gameObject,3);
+                        Destroy(hit.transform.gameObject,3);
+                    }
                 }
-                // else if(hitObj.gameObject.tag == "Throwable")
-                // {
-                //    if(!isHolding)
-                //    {
-                //       Debug.Log("Pick UP");
-                //      isHolding = true;
-                //     holdingObj = hitObj;
-                //    }
-                // }
+            
                }
-          
+              
+       
+               
+               }
 
-                   
+               colorChanged = true;
+        }
+        else
+        {
+
+            if(hitObj != null)
+            {
+                if(hitObj.layer == LayerMask.NameToLayer("Furniture"))
+            {
+                colorChanged = false;
+                hitObj.GetComponent<Renderer>().material.color = originalColor;
+            }
+            
+            }
+        
         }
        
-       
-        //  hitObj.GetComponent<Renderer>().material.color = new Color(1,1,1,1); // need a way to change hit object's color back
         
-        //[x] hold object
-        //[] restrict held object to player's position, offset by some value and clamping down the attack direction. 
-        //[] add throw force
-        // if(isHolding)
-        // {
 
-                        
-        //                 holdingObj.transform.position = this.transform.position + attackDir * 0.5f * offsetValue;
-                    
-        // }
-     
+
+   
+    }
+    //
+    private void OnCollisionEnter(Collision other) {
+            
     }
     void attackInputs()
     {
@@ -158,19 +189,14 @@ public class PlayerAttack : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Mouse0) && attackTime >= maxAttackTime)
         {
                    
-                    setAttack(true);
+                setAttack(true);
         }
         else
         {
                setAttack(false);
 
         }
-        
-        
-      
-    
-        
-        
+
     }
 
 
@@ -197,4 +223,41 @@ public class PlayerAttack : MonoBehaviour
     {
         this.attacking = attack;
     }
-}
+
+
+  public void ColorFurniture(GameObject furniture)
+   {
+      
+    //   int currSeenIndex = 0;
+    //   for(int i = 0; i < furnitures.Length; i++)
+    //   {
+    //     if(furnitures[i] == furniture)
+    //     {
+    //         currSeenIndex = i;
+    //     }
+        // else
+        // {
+        //     furnitures[currSeenIndex].GetComponent<Renderer>().material.color = Color.green; //  all furniture stays as its default color: currently set as green for testing
+        // }
+      
+   }
+  private GameObject [] FindGameObjectsInLayer(int layer)
+   {
+        GameObject [] gameObjArray = (GameObject[]) FindObjectsOfType(typeof(GameObject));
+        List<GameObject> gameObjList = new System.Collections.Generic.List<GameObject>();
+        
+        for(int i = 0; i < gameObjArray.Length; i++)
+        {
+            if(gameObjArray[i].layer == layer)
+            {
+                gameObjList.Add(gameObjArray[i]);
+            }
+        }
+        if(gameObjList.Count == 0)
+        {
+            return null;
+        }
+        return gameObjList.ToArray();
+   }
+
+ }

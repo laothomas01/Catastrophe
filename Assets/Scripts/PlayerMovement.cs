@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
         movementInputs();
         //testing
         // Debug.DrawRay(transform.position,lookDirection,Color.blue);
-      
+        
     }
 
     private void FixedUpdate()
