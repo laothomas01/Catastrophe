@@ -30,16 +30,11 @@ public class PlayerAttack : MonoBehaviour
     private float destroyTime;
  
     GameObject[] enemies;
-    GameObject[] furnitures;
+ 
 
     [SerializeField]
-    private float offsetValue;
-    private Material originalMaterial;
-    [SerializeField]
-    private Material newMaterial;
     private Color originalColor;
     List<Color> originalColors;
-    HashSet<GameObject> hitObjs;
     int furnitureLayer;
        GameObject hitObj;
        private bool colorChanged;
@@ -53,7 +48,6 @@ public class PlayerAttack : MonoBehaviour
         originalColors = new List<Color>();
         hitObj = new GameObject();
 
-        hitObjs = new HashSet<GameObject>();
         
         furnitureLayer = 9;
         destroyTime = 3;
@@ -62,11 +56,7 @@ public class PlayerAttack : MonoBehaviour
 
         //look for all game objects with Enemy tag
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        furnitures = FindGameObjectsInLayer(furnitureLayer);
-        foreach(GameObject obj in furnitures)
-        {
-            originalColors.Add(obj.GetComponent<Renderer>().material.color);
-        }
+      
         
         maxAttackTime = 0.5f;
         attackTime = maxAttackTime;
@@ -241,23 +231,6 @@ public class PlayerAttack : MonoBehaviour
         // }
       
    }
-  private GameObject [] FindGameObjectsInLayer(int layer)
-   {
-        GameObject [] gameObjArray = (GameObject[]) FindObjectsOfType(typeof(GameObject));
-        List<GameObject> gameObjList = new System.Collections.Generic.List<GameObject>();
-        
-        for(int i = 0; i < gameObjArray.Length; i++)
-        {
-            if(gameObjArray[i].layer == layer)
-            {
-                gameObjList.Add(gameObjArray[i]);
-            }
-        }
-        if(gameObjList.Count == 0)
-        {
-            return null;
-        }
-        return gameObjList.ToArray();
-   }
+
 
  }
