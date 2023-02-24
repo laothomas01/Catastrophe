@@ -20,7 +20,10 @@ public class Score : MonoBehaviour
         // objManage_Script = objManage.GetComponent<ManageGameObjects>();
         objManage_Script = GameObject.Find("GameObjectManager").GetComponent<ManageGameObjects>();
         objects = objManage_Script.FindGameObjectsInLayer(layer);
-        maxFurnitureCount = objects.Count;
+        if(objects != null)
+        {
+            maxFurnitureCount = objects.Count;
+        }
         currFurnitureCount = maxFurnitureCount;
         textMesh.text = currFurnitureCount.ToString() + "/" + maxFurnitureCount.ToString();
     }
