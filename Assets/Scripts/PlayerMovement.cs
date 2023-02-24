@@ -21,11 +21,13 @@ public class PlayerMovement : MonoBehaviour
     Ray cursor_ray;
 
 
+    public bool DEBUG_LOOK_DIR;
 
-
+    float testRadius;
 
     void Start()
     {
+        
         // lookDirection = new Vector3();
         speedMultiplier = 1;
         moveDir = new Vector3();
@@ -34,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
         cursor_ray = new Ray();
         rb = GetComponent<Rigidbody>();
         Cursor.visible = false;
+        DEBUG_LOOK_DIR = false;
 
     }
 
@@ -44,7 +47,12 @@ public class PlayerMovement : MonoBehaviour
        
         movementInputs();
         //testing
-        // Debug.DrawRay(transform.position,lookDirection,Color.blue);
+      if(DEBUG_LOOK_DIR)
+      {
+          Debug.DrawRay(transform.position,lookDirection,Color.blue);
+      }
+
+      
 
     }
 
@@ -70,7 +78,11 @@ public class PlayerMovement : MonoBehaviour
                 lookDirection = mousePoint - transform.position;
                 //rotate transform.forward vector in direction of mouse point
                 this.transform.LookAt(mousePoint);
+
+                
         }
+
+
         moveDir = 
             //moving in look direction via Verticle button
             (transform.forward * move.y) + 
@@ -91,6 +103,10 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 getLookDirection()
     {
         return lookDirection;
+    }
+    public void setLookDirection(Vector3 lookDir)
+    {
+        this.lookDirection = lookDir;
     }
     public void movementInputs()
     {

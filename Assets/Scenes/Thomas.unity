@@ -851,7 +851,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cat: {fileID: 96397557}
-  furnitureDistance: 100
+  lerpSpeed: 0
+  rotateTime: 0
+  rotateAmount: 0
+  playerDetectDistance: 0
+  patrolPoints: []
+  waitBetweenPatrol: 0
 --- !u!65 &1621768865
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1656,6 +1661,14 @@ PrefabInstance:
       propertyPath: mouseObj
       value: 
       objectReference: {fileID: 980094813}
+    - target: {fileID: 8753405418588097990, guid: 77f45c65984b20ada9b690229281c36a, type: 3}
+      propertyPath: DEBUG_LOOK_DIR
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8753405418588097991, guid: 77f45c65984b20ada9b690229281c36a, type: 3}
+      propertyPath: attackRange
+      value: 140
+      objectReference: {fileID: 0}
     - target: {fileID: 8753405418588098015, guid: 77f45c65984b20ada9b690229281c36a, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1712,6 +1725,10 @@ PrefabInstance:
     - target: {fileID: 9092209195414508693, guid: d0c8bc3ad247b1906b34ca6ec35b7d66, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9092209195414508694, guid: d0c8bc3ad247b1906b34ca6ec35b7d66, type: 3}
+      propertyPath: field of view
+      value: 28.374002
       objectReference: {fileID: 0}
     - target: {fileID: 9092209195414508696, guid: d0c8bc3ad247b1906b34ca6ec35b7d66, type: 3}
       propertyPath: player
@@ -1778,5 +1795,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9137425217724093507, guid: 26fafe21f5c37ffb4a4893c880450c42, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 26fafe21f5c37ffb4a4893c880450c42, type: 3}

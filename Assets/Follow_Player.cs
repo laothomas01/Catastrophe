@@ -62,14 +62,17 @@ public class Follow_Player : MonoBehaviour
         //camera shake
         if (shakeDuration > 0)
 		{
-			camTransform.localPosition = originalPos + Random.insideUnitSphere * shakeAmount;
+            //shake and  shake at its current position
+			camTransform.localPosition = this.transform.position + Random.insideUnitSphere * shakeAmount;
 			
 			shakeDuration -= Time.deltaTime * decreaseFactor;
 		}
 		else
 		{
 			shakeDuration = 0.2f;
-			camTransform.localPosition = originalPos;
+            
+            // return to current position
+			camTransform.localPosition = this.transform.position;
             setCanShake(false);
 		}
     }
