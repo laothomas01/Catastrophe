@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 public class Score : MonoBehaviour
 {
     private int maxFurnitureCount;
@@ -36,11 +37,12 @@ public class Score : MonoBehaviour
             if(objects != null)
             {
             currFurnitureCount = objects.Count;
-
+           
             }
             else
             {
             currFurnitureCount = 0;
+             SceneManager.LoadScene("Win_Screen");
             }
             textMesh.text = currFurnitureCount.ToString() + "/" + maxFurnitureCount.ToString();
 

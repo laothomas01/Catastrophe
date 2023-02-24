@@ -27,25 +27,14 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
 
-            // playGame = true;
-            // canSelect = false;
-            // if(playButtonAnimationTime > maxPlayButtonAnimationTime)
-            // {
-            // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+       
         
         if(canSelect)
         {
             playGame = true;
             canSelect = false;
         }
-        // else
-        // {
-        //      Debug.Log("CANNOT SELECT");
-        // }
-            // }
-            //  playButtonAnimationTime += Time.deltaTime;
 
-            // Debug.Log(playButtonAnimationTime);
             
     }
     public void Update()
