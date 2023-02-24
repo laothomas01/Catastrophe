@@ -2,31 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FurnitureManager : MonoBehaviour
+public class ManageGameObjects : MonoBehaviour
 {
-        [SerializeField]
-        private int furnitureLayer;
-       private GameObject[] furnitures;
-
-    private int furnitureCount;
+    // Start is called before the first frame update
+    List<GameObject> furnitures;
+    public int layer;    
     void Start()
-
     {
-        
-         furnitures = FindGameObjectsInLayer(furnitureLayer);
-        //  Debug.Log(furnitures.Length);
-        furnitureCount = furnitures.Length;
+        furnitures = new List<GameObject>();
+        furnitures = FindGameObjectsInLayer(layer);
     }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        //update list of furniture objects
+         furnitures = FindGameObjectsInLayer(layer);
     }
-
-      private GameObject [] FindGameObjectsInLayer(int layer)
+    private List<GameObject> FindGameObjectsInLayer(int layer)
    {
+
         GameObject [] gameObjArray = (GameObject[]) FindObjectsOfType(typeof(GameObject));
+
+        // ArrayList gameObjList = 
         List<GameObject> gameObjList = new System.Collections.Generic.List<GameObject>();
         
         for(int i = 0; i < gameObjArray.Length; i++)
@@ -40,6 +36,11 @@ public class FurnitureManager : MonoBehaviour
         {
             return null;
         }
-        return gameObjList.ToArray();
+        return gameObjList;
+        // // return gameObjList.ToArray();
+   }
+   public int getFurnitureCount()
+   {
+    return furnitures.Count;
    }
 }

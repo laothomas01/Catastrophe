@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class PlayerAttack : MonoBehaviour
+
 {
     private PlayerMovement move;
-    private Camera camera;
+    // private Camera camera;
     private Vector3 attackDir;
 
     [SerializeField]
@@ -30,7 +31,6 @@ public class PlayerAttack : MonoBehaviour
     private float destroyTime;
  
     GameObject[] enemies;
- 
 
     [SerializeField]
     private Color originalColor;
@@ -40,35 +40,22 @@ public class PlayerAttack : MonoBehaviour
        private bool colorChanged;
     void Start()
     {
-
-            camera = Camera.main;
-            
         colorChanged = false;
-            originalColor = new Color();
+        originalColor = new Color();
         originalColors = new List<Color>();
         hitObj = new GameObject();
-
-        
         furnitureLayer = 9;
         destroyTime = 3;
-   
-  
-
         //look for all game objects with Enemy tag
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-      
-        
         maxAttackTime = 0.5f;
         attackTime = maxAttackTime;
         move = GetComponent<PlayerMovement>();
         attackDir = new Vector3();
         attacking = false;
     }
-
-
         void Update() {
-            
-
+        
             attackDir = Vector3.ClampMagnitude(attackDir,(attackDir * attackRange).magnitude);
             //@TODO: clamp down a min and max attack range
             Debug.DrawRay(transform.position,attackDir,Color.blue);
@@ -82,17 +69,7 @@ public class PlayerAttack : MonoBehaviour
             {
                 attackTime = 0;
             }
-
-
-
-           
-
-           
-  
             attackInputs();
-
-  
-
         }
     void FixedUpdate()
     {
@@ -110,15 +87,15 @@ public class PlayerAttack : MonoBehaviour
         {
                 hitObj = hit.transform.gameObject;
 
-              
-               if(hitObj != null)
-               {
-                 if(!colorChanged)
-                {
+
+        //        if(hitObj != null)
+        //        {
+        //          if(!colorChanged)
+        //         {
                    
-                    originalColor = hitObj.GetComponent<Renderer>().material.color;
-                    hitObj.GetComponent<Renderer>().material.color = Color.blue;
-                }
+        //             originalColor = hitObj.GetComponent<Renderer>().material.color;
+        //             hitObj.GetComponent<Renderer>().material.color = Color.blue;
+        //         }
                 
                if(attacking)
                {
@@ -127,51 +104,45 @@ public class PlayerAttack : MonoBehaviour
                 if(hitObj.gameObject.tag == "Pushable")
                 {
                     hitObj.transform.gameObject.GetComponent<Rigidbody>().AddForce(attackDir * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);
-                    
+                
                   
-                    if(DEBUG_CAMERA)
-                    {
-                        camera.GetComponent<Follow_Player>().setCanShake(true);
-                    }
-                    if(DEBUG_DESTROY)
-                    {
-                        // AlertEnemy(hit.transform.gameObject,3);
+        //             if(DEBUG_CAMERA)
+        //             {
+        //                 Camera.main.GetComponent<Follow_Player>().setCanShake(true);
+        //             }
+        //             if(DEBUG_DESTROY)
+        //             {
+        //                 // AlertEnemy(hit.transform.gameObject,3);
+
                         Destroy(hit.transform.gameObject,3);
-                    }
+        //             }
+
                 }
             
                }
               
        
                
-               }
+        //        }
 
-               colorChanged = true;
-        }
-        else
-        {
+        //        colorChanged = true;
+        // }
+        // else
+        // {
 
-            if(hitObj != null)
-            {
-                if(hitObj.layer == LayerMask.NameToLayer("Furniture"))
-            {
-                colorChanged = false;
-                hitObj.GetComponent<Renderer>().material.color = originalColor;
-            }
+        //     if(hitObj != null)
+        //     {
+        //         if(hitObj.layer == LayerMask.NameToLayer("Furniture"))
+        //     {
+        //         colorChanged = false;
+        //         hitObj.GetComponent<Renderer>().material.color = originalColor;
+        //     }
             
-            }
+        //     }
         
         }
-       
-        
-
-
+    }
    
-    }
-    //
-    private void OnCollisionEnter(Collision other) {
-            
-    }
     void attackInputs()
     {
 
@@ -215,22 +186,7 @@ public class PlayerAttack : MonoBehaviour
     }
 
 
-  public void ColorFurniture(GameObject furniture)
-   {
-      
-    //   int currSeenIndex = 0;
-    //   for(int i = 0; i < furnitures.Length; i++)
-    //   {
-    //     if(furnitures[i] == furniture)
-    //     {
-    //         currSeenIndex = i;
-    //     }
-        // else
-        // {
-        //     furnitures[currSeenIndex].GetComponent<Renderer>().material.color = Color.green; //  all furniture stays as its default color: currently set as green for testing
-        // }
-      
-   }
+ 
 
 
  }
