@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 lookDirection;
   
+    public GameObject mouseObj;
   
  
     Ray cursor_ray;
@@ -32,18 +33,19 @@ public class PlayerMovement : MonoBehaviour
         // hit = new RaycastHit();
         cursor_ray = new Ray();
         rb = GetComponent<Rigidbody>();
-
+        Cursor.visible = false;
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        Cursor.visible = false;
        
         movementInputs();
         //testing
         // Debug.DrawRay(transform.position,lookDirection,Color.blue);
-      
+
     }
 
     private void FixedUpdate()
@@ -62,10 +64,9 @@ public class PlayerMovement : MonoBehaviour
   if (Physics.Raycast(cursor_ray, out hit, Mathf.Infinity,layerMask))
         {
 
-
               //find mouse point on X-Z plane
                 mousePoint = new Vector3(hit.point.x,  transform.position.y, hit.point.z);
-                
+                mouseObj.transform.position = mousePoint;
                 lookDirection = mousePoint - transform.position;
                 //rotate transform.forward vector in direction of mouse point
                 this.transform.LookAt(mousePoint);

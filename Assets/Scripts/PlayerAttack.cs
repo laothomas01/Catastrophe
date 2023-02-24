@@ -1,16 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class PlayerAttack : MonoBehaviour
+
 {
     private PlayerMovement move;
+    // private Camera camera;
     private Vector3 attackDir;
 
     [SerializeField]
-    private int attackRange;  
+    private float attackRange;  
     [SerializeField]  
-    private bool canAttack;
+    private bool attacking;
+
     [SerializeField]
     private float forceAmount;
     [SerializeField]
@@ -18,36 +21,59 @@ public class PlayerAttack : MonoBehaviour
 
 [SerializeField]
     private float attackTime;
+    
     [SerializeField]
     private float maxAttackTime;
 
-
-    //collection of all enemies
+    [SerializeField]
+    bool DEBUG_CAMERA,DEBUG_DESTROY;
+    [SerializeField]
+    private float destroyTime;
+ 
     GameObject[] enemies;
+
+    [SerializeField]
+    private Color originalColor;
+    List<Color> originalColors;
+    int furnitureLayer;
+       GameObject hitObj;
+       private bool colorChanged;
+
+       
     void Start()
     {
-       
-       //initialize to maxAttackTime to allow first attack
-        
-        maxAttackTime = 1f;
+        Cursor.visible = false;
+
+        colorChanged = false;
+        originalColor = new Color();
+        originalColors = new List<Color>();
+        hitObj = new GameObject();
+        furnitureLayer = 9;
+        destroyTime = 3;
+        //look for all game objects with Enemy tag
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        maxAttackTime = 0.5f;
         attackTime = maxAttackTime;
         move = GetComponent<PlayerMovement>();
         attackDir = new Vector3();
+        attacking = false;
     }
-
-
         void Update() {
-            
-
-            Debug.DrawRay(transform.position,attackDir * attackRange,Color.blue);
         
-            if(attackTime < maxAttackTime)
+            attackDir = Vector3.ClampMagnitude(attackDir,(attackDir * attackRange).magnitude);
+            //@TODO: clamp down a min and max attack range
+            Debug.DrawRay(transform.position,attackDir,Color.blue);
+
+        if(attackTime < maxAttackTime)
             {
                 attackTime += Time.deltaTime;
             }
+
+            if(attacking)
+            {
+                attackTime = 0;
+            }
             attackInputs();
-
-
         }
     void FixedUpdate()
     {
@@ -57,54 +83,101 @@ public class PlayerAttack : MonoBehaviour
          //e.g: 1 << 9 checks layer 9 ("Furniture layer") 
         int layerMask = 1 << 9;
 
-        // This would cast rays only against colliders in layer 8.
-        //We want to collide againast layer 8
 
         attackDir = move.getLookDirection();
-        // attackDir = Vector3.ClampMagnitude(attack)
 
-        //@TODO 200 = testing attack range
-        if(Physics.Raycast(transform.position,attackDir,out hit,200,layerMask))
+        GameObject tmpCurrHit;
+        if(Physics.Raycast(transform.position,attackDir,out hit,attackDir.magnitude,layerMask))
         {
-            
-                    //attack in look direction
-                    if(canAttack && attackTime >= maxAttackTime)
-                    {
+                hitObj = hit.transform.gameObject;
+                tmpCurrHit = hitObj;
 
-                        Debug.Log("ATTACKING");
+                if(tmpCurrHit != null)
+                {
+               
 
-                        GameObject hit_obj = hit.transform.gameObject;
-                    
-                         if(hit_obj.tag == "Pushable")
+                        if(!colorChanged)
                         {
-                            hit.transform.GetComponent<Rigidbody>().AddForce(attackDir * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);
-                            // Destroy(hit_obj,2);
+                            //save original color
+                            originalColor = hitObj.GetComponent<Renderer>().material.color;
+                            //change color
+                            hitObj.GetComponent<Renderer>().material.color = Color.blue;
+                            colorChanged = true;
                         }
-                        attackTime = 0;
+                }
+                
+               if(attacking)
+               {
+        
+        
+                if(hitObj.gameObject.tag == "Pushable")
+                {
+                    hitObj.transform.gameObject.GetComponent<Rigidbody>().AddForce(attackDir * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);  
+        //             if(DEBUG_CAMERA)
+        //             {
+        //                 Camera.main.GetComponent<Follow_Player>().setCanShake(true);
+        //             }
+        //             if(DEBUG_DESTROY)
+        //             {
+        //                 // AlertEnemy(hit.transform.gameObject,3);
+                        Destroy(hit.transform.gameObject,destroyTime);
+                }
             
-                    }
-                   
-        }
-    }
-    void attackInputs()
-    {
+               }
+              
+       
+               
+        //        }
 
-        if(Input.GetKeyDown(KeyCode.Mouse0))
-        {
-                canAttack = true;
+        //        colorChanged = true;
+        // }
+        // else
+        // {
+
+        //     if(hitObj != null)
+        //     {
+        //         if(hitObj.layer == LayerMask.NameToLayer("Furniture"))
+        //     {
+        //         colorChanged = false;
+        //         hitObj.GetComponent<Renderer>().material.color = originalColor;
+        //     }
+            
+        //     }
+        
         }
         else
         {
-                canAttack = false;
+                if(hitObj != null)
+                {
+                    if(colorChanged)
+                    {
+                        hitObj.GetComponent<Renderer>().material.color = originalColor;
+                        colorChanged = false;
+                    }
+                }
         }
-    
-        
-        
+    }
+   
+    void attackInputs()
+    {
+
+        //set attack flag
+        if(Input.GetKeyDown(KeyCode.Mouse0) && attackTime >= maxAttackTime)
+        {
+                   
+                setAttack(true);
+        }
+        else
+        {
+               setAttack(false);
+
+        }
+
     }
 
 
 //calls enemy 
- void AlertEnemy(GameObject furniture)
+ void AlertEnemy(GameObject furniture,float destroyTime)
     {
         //there is always going to be atleast one enemy around
         GameObject closestEnemy = enemies[0];
@@ -120,7 +193,15 @@ public class PlayerAttack : MonoBehaviour
             }
         }
         closestEnemy.GetComponent<EnemyController>().InspectFurniture(furniture.transform);
-        //time out destroy
-        Destroy(furniture);
+        Destroy(furniture,destroyTime);
     }
-}
+    public void setAttack(bool attack)
+    {
+        this.attacking = attack;
+    }
+
+
+ 
+
+
+ }
