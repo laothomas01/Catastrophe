@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class ManageGameObjects : MonoBehaviour
 {
-    // Start is called before the first frame update
-    List<GameObject> furnitures;
-    public int layer;    
+    // // Start is called before the first frame update
+    // List<GameObject> furnitures;
+    // public int layer;    
     void Start()
     {
-        furnitures = new List<GameObject>();
-        furnitures = FindGameObjectsInLayer(layer);
+        // furnitures = new List<GameObject>();
+        // layer = 9;
+        // furnitures = FindGameObjectsInLayer(layer);
+
     }
     void Update()
     {
-        //update list of furniture objects
-            furnitures = FindGameObjectsInLayer(layer);
+        // //update list of furniture objects
+        //     furnitures = FindGameObjectsInLayer(layer);
     }
-    private List<GameObject> FindGameObjectsInLayer(int layer)
+    public List<GameObject> FindGameObjectsInLayer(int layer)
    {
 
         GameObject [] gameObjArray = (GameObject[]) FindObjectsOfType(typeof(GameObject));
@@ -39,12 +41,12 @@ public class ManageGameObjects : MonoBehaviour
         return gameObjList;
         // // return gameObjList.ToArray();
    }
-   public int getFurnitureCount()
-   {
-        return furnitures.Count;
-   }
-   public List<GameObject> getFurnitures()
-   {
-        return furnitures;
-   }
+//    public int getFurnitureCount()
+//    {
+//         return furnitures.Count;
+//    }
+//    public List<GameObject> getFurnitures()
+//    {
+//         return furnitures;
+//    }
 }

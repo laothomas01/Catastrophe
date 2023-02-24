@@ -9,12 +9,18 @@ public class Score : MonoBehaviour
     private int currFurnitureCount = 0;
     
     private TextMeshProUGUI textMesh;
+    // ManageGameObjects objManage_Script;
+    // public GameObject objManage;
     ManageGameObjects objManage_Script;
+    List<GameObject> objects;
+    public int layer;
     void Start()
     {
         textMesh = this.GetComponent<TextMeshProUGUI>();
+        // objManage_Script = objManage.GetComponent<ManageGameObjects>();
         objManage_Script = GameObject.Find("GameObjectManager").GetComponent<ManageGameObjects>();
-        maxFurnitureCount = objManage_Script.getFurnitureCount();
+        objects = objManage_Script.FindGameObjectsInLayer(layer);
+        maxFurnitureCount = objects.Count;
         currFurnitureCount = maxFurnitureCount;
         textMesh.text = currFurnitureCount.ToString() + "/" + maxFurnitureCount.ToString();
     }
@@ -23,17 +29,19 @@ public class Score : MonoBehaviour
     void Update()
     {
         
-         if(objManage_Script.getFurnitures() != null)
-         {
-               currFurnitureCount = objManage_Script.getFurnitureCount();
-         }
-         else
-         {
-            currFurnitureCount= 0;
-         }
-    
+            objects = objManage_Script.FindGameObjectsInLayer(layer);
+            if(objects != null)
+            {
+            currFurnitureCount = objects.Count;
 
-        textMesh.text = currFurnitureCount.ToString() + "/" + maxFurnitureCount.ToString();
+            }
+            else
+            {
+            currFurnitureCount = 0;
+            }
+            textMesh.text = currFurnitureCount.ToString() + "/" + maxFurnitureCount.ToString();
+
+        
         
     }
     public void setCurrCount(int c)
