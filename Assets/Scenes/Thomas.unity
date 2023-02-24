@@ -741,7 +741,7 @@ GameObject:
   - component: {fileID: 319225522}
   - component: {fileID: 319225521}
   m_Layer: 5
-  m_Name: ScoreCanvas
+  m_Name: ScoreScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1202,7 +1202,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee6a3577e23d55b6e877faf5987f6520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObjManager: {fileID: 1856220422}
 --- !u!1 &891772787
 GameObject:
   m_ObjectHideFlags: 0
@@ -1344,6 +1343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c62a647367b083c53bcb4cb65bc5f5d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseMenu: {fileID: 1241096836}
 --- !u!1 &972519950
 GameObject:
   m_ObjectHideFlags: 0
@@ -1631,13 +1631,14 @@ GameObject:
   - component: {fileID: 1241096840}
   - component: {fileID: 1241096839}
   - component: {fileID: 1241096838}
+  - component: {fileID: 1241096843}
   m_Layer: 0
-  m_Name: PauseCanvas
+  m_Name: PauseScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1241096837
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1760,6 +1761,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1241096843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1241096836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab2f2ecce804f1c58b0561c94c86e7b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1278472567
 GameObject:
   m_ObjectHideFlags: 0

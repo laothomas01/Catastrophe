@@ -4,18 +4,17 @@ using UnityEngine;
 using TMPro;
 public class Score : MonoBehaviour
 {
-    private int maxFurnitureCount = 0;
+    private int maxFurnitureCount;
     private int tmpMax = 0;
     private int currFurnitureCount = 0;
     
-    public ManageGameObjects gameObjManager;
     private TextMeshProUGUI textMesh;
-
+    ManageGameObjects objManage_Script;
     void Start()
     {
         textMesh = this.GetComponent<TextMeshProUGUI>();
-        gameObjManager = gameObjManager.GetComponent<ManageGameObjects>();
-        maxFurnitureCount = gameObjManager.getFurnitureCount();
+        objManage_Script = GameObject.Find("GameObjectManager").GetComponent<ManageGameObjects>();
+        maxFurnitureCount = objManage_Script.getFurnitureCount();
         currFurnitureCount = maxFurnitureCount;
         textMesh.text = currFurnitureCount.ToString() + "/" + maxFurnitureCount.ToString();
     }
@@ -24,15 +23,15 @@ public class Score : MonoBehaviour
     void Update()
     {
         
-        if(gameObjManager.getFurnitures() != null)
-        {
-            currFurnitureCount = gameObjManager.getFurnitureCount();
-            Debug.Log(currFurnitureCount);
-        }
-        else
-        {
-            currFurnitureCount = 0;
-        }
+         if(objManage_Script.getFurnitures() != null)
+         {
+               currFurnitureCount = objManage_Script.getFurnitureCount();
+         }
+         else
+         {
+            currFurnitureCount= 0;
+         }
+    
 
         textMesh.text = currFurnitureCount.ToString() + "/" + maxFurnitureCount.ToString();
         
