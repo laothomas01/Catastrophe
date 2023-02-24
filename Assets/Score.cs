@@ -23,10 +23,17 @@ public class Score : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currFurnitureCount = gameObjManager.getFurnitureCount();
-        // Debug.Log(maxFurnitureCount);
-        // tmpMax = maxFurnitureCount;
-        // currFurnitureCount = tmpMax;
+        
+        if(gameObjManager.getFurnitures() != null)
+        {
+            currFurnitureCount = gameObjManager.getFurnitureCount();
+            Debug.Log(currFurnitureCount);
+        }
+        else
+        {
+            currFurnitureCount = 0;
+        }
+
         textMesh.text = currFurnitureCount.ToString() + "/" + maxFurnitureCount.ToString();
         
     }

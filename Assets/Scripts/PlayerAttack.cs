@@ -38,8 +38,12 @@ public class PlayerAttack : MonoBehaviour
     int furnitureLayer;
        GameObject hitObj;
        private bool colorChanged;
+
+       
     void Start()
     {
+        Cursor.visible = false;
+
         colorChanged = false;
         originalColor = new Color();
         originalColors = new List<Color>();
@@ -81,21 +85,26 @@ public class PlayerAttack : MonoBehaviour
 
 
         attackDir = move.getLookDirection();
-        // Debug.Log(hitObj.name);
 
+        GameObject tmpCurrHit;
         if(Physics.Raycast(transform.position,attackDir,out hit,attackDir.magnitude,layerMask))
         {
                 hitObj = hit.transform.gameObject;
+                tmpCurrHit = hitObj;
 
+                if(tmpCurrHit != null)
+                {
+               
 
-        //        if(hitObj != null)
-        //        {
-        //          if(!colorChanged)
-        //         {
-                   
-        //             originalColor = hitObj.GetComponent<Renderer>().material.color;
-        //             hitObj.GetComponent<Renderer>().material.color = Color.blue;
-        //         }
+                        if(!colorChanged)
+                        {
+                            //save original color
+                            originalColor = hitObj.GetComponent<Renderer>().material.color;
+                            //change color
+                            hitObj.GetComponent<Renderer>().material.color = Color.blue;
+                            colorChanged = true;
+                        }
+                }
                 
                if(attacking)
                {
@@ -103,9 +112,7 @@ public class PlayerAttack : MonoBehaviour
         
                 if(hitObj.gameObject.tag == "Pushable")
                 {
-                    hitObj.transform.gameObject.GetComponent<Rigidbody>().AddForce(attackDir * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);
-                
-                  
+                    hitObj.transform.gameObject.GetComponent<Rigidbody>().AddForce(attackDir * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);  
         //             if(DEBUG_CAMERA)
         //             {
         //                 Camera.main.GetComponent<Follow_Player>().setCanShake(true);
@@ -113,10 +120,7 @@ public class PlayerAttack : MonoBehaviour
         //             if(DEBUG_DESTROY)
         //             {
         //                 // AlertEnemy(hit.transform.gameObject,3);
-
-                        Destroy(hit.transform.gameObject,3);
-        //             }
-
+                        Destroy(hit.transform.gameObject,destroyTime);
                 }
             
                }
@@ -140,6 +144,17 @@ public class PlayerAttack : MonoBehaviour
             
         //     }
         
+        }
+        else
+        {
+                if(hitObj != null)
+                {
+                    if(colorChanged)
+                    {
+                        hitObj.GetComponent<Renderer>().material.color = originalColor;
+                        colorChanged = false;
+                    }
+                }
         }
     }
    

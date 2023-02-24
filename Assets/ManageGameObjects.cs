@@ -15,7 +15,7 @@ public class ManageGameObjects : MonoBehaviour
     void Update()
     {
         //update list of furniture objects
-         furnitures = FindGameObjectsInLayer(layer);
+            furnitures = FindGameObjectsInLayer(layer);
     }
     private List<GameObject> FindGameObjectsInLayer(int layer)
    {
@@ -41,6 +41,10 @@ public class ManageGameObjects : MonoBehaviour
    }
    public int getFurnitureCount()
    {
-    return furnitures.Count;
+        return furnitures.Count;
+   }
+   public List<GameObject> getFurnitures()
+   {
+        return furnitures;
    }
 }
