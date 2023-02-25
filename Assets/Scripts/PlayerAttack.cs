@@ -101,10 +101,7 @@ public class PlayerAttack : MonoBehaviour
          // Bit shift the index of the layer (9) to get a bit mask
 
          //e.g: 1 << 9 checks layer 9 ("Furniture layer") 
-     
-
-
-
+    
 //temp variable to compare current and seen hit object
         if(Physics.Raycast(transform.position,maxAttackDirection,out hit,(maxAttackDirection).magnitude,layerMask))
         {
@@ -140,25 +137,21 @@ public class PlayerAttack : MonoBehaviour
                    //pushing
                     if(hit.transform.gameObject.tag == "Pushable")
                     {
-                     hit.transform.gameObject.GetComponent<Rigidbody>().isKinematic = false;
 
+                     hit.transform.gameObject.GetComponent<Rigidbody>().isKinematic = false;
                           hit.transform.gameObject.GetComponent<Rigidbody>().WakeUp();
                     hit.transform.gameObject.GetComponent<Rigidbody>().AddForce(maxAttackDirection * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse); 
-                  
+                    FindObjectOfType<AudioManager>().Play("punch");
                      Camera.main.GetComponent<Follow_Player>().setCanShake(true); 
                    
-                    // FindObjectOfType<AudioManager>().Play("push");
                     }
                     //throwing
                     else if(hit.transform.gameObject.tag == "Throwable")
                     {
                         if(isHolding)
                         {
-                                // FindObjectOfType<AudioManager>().Play("pick_up");
-
                                  hit.transform.gameObject.GetComponent<Rigidbody>().AddForce(maxAttackDirection * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);  
                                 Camera.main.GetComponent<Follow_Player>().setCanShake(true);    
-                                // hit.transform.SetParent(null);
                                 setHolding(false);
                         }
                     }
@@ -169,17 +162,14 @@ public class PlayerAttack : MonoBehaviour
             {
                 if(hit.transform.gameObject.tag == "Throwable")
                  {
-                        // FindObjectOfType<AudioManager>().Play("pick_up_item");
-                    //move object while holding
-                        //  hit.transform.SetParent(this.transform);
                         hit.transform.position = this.transform.position + maxAttackDirection;
+                         FindObjectOfType<AudioManager>().Play("pickup");
                 }
                 else
                 {
-                        // FindObjectOfType<AudioManager>().Play("drop_item");
-
-                    //drop object
                     setHolding(false);
+                    FindObjectOfType<AudioManager>().Play("drop");
+
                 }
 
             }

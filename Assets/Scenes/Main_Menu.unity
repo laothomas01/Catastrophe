@@ -183,6 +183,7 @@ MonoBehaviour:
   exit_button: {fileID: 2145701228}
   option_button: {fileID: 0}
   title_card: {fileID: 1006401185}
+  play_scene_name: Thomas
 --- !u!1 &383700319
 GameObject:
   m_ObjectHideFlags: 0

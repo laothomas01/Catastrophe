@@ -6,28 +6,15 @@ public class ObjectCollision : MonoBehaviour
 {
     
   void OnCollisionEnter(Collision col) {
-    // if(col.gameObject.layer == LayerMask.NameToLayer("Player"))
-    // {
-    //     return;
-    // }
-  }
-    // void OnTriggerEnter(Collider col) {
-    //     if(col.gameObject.layer == LayerMask.NameToLayer("Player"))
-    //     {
-    //             this.gameObject.GetComponent<Rigidbody>().isKinematic = true;
-    //     }       
-    // }
-    //  void OnTriggerExit(Collider col) {
-    //      if(col.gameObject.layer == LayerMask.NameToLayer("Player"))
-    //     {
-    //             this.gameObject.GetComponent<Rigidbody>().isKinematic =false;
-    //             this.gameObject.GetComponent<Rigidbody>().WakeUp();
-    //     }    
-    // }
-
-    void OnDestroy() {
-            // FindObjectOfType<AudioManager>().Play("brokenwood");
+    if(col.gameObject.layer == LayerMask.NameToLayer("Furniture") || col.gameObject.layer == LayerMask.NameToLayer("Walls"))
+    {
+        FindObjectOfType<AudioManager>().Play("brokenwood");
+            Destroy(this.gameObject);
     }
+ 
+  }
+
+
      
    
 }

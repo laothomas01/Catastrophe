@@ -41,7 +41,6 @@ public class Score : MonoBehaviour
             else
             {
             currFurnitureCount = 0;
-             SceneManager.LoadScene("Win_Screen");
             }
             textMesh.text = currFurnitureCount.ToString() + "/" + maxFurnitureCount.ToString();
 
