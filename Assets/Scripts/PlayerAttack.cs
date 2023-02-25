@@ -51,7 +51,6 @@ public class PlayerAttack : MonoBehaviour
     {
         isHolding = false;
         seenObjs = new HashSet<GameObject>();
-        Cursor.visible = false;
         colorChanged = false;
         originalColor = new Color();
         hitObj = new GameObject();
@@ -77,7 +76,7 @@ public class PlayerAttack : MonoBehaviour
 
                 maxAttackDirection = moveScript.getLookDirection();
                 maxAttackDirection = Vector3.ClampMagnitude(maxAttackDirection,attackRange);
-               
+               Debug.Log(maxAttackDirection.magnitude);
                 Debug.DrawRay(transform.position,maxAttackDirection,Color.red);
 
 
@@ -141,35 +140,15 @@ public class PlayerAttack : MonoBehaviour
                         if(isHolding)
                         {
                                  hit.transform.gameObject.GetComponent<Rigidbody>().AddForce(maxAttackDirection * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);  
-                                Camera.main.GetComponent<Follow_Player>().setCanShake(true);
+                                Camera.main.GetComponent<Follow_Player>().setCanShake(true);    
                     Destroy(hit.transform.gameObject,destroyTime); 
                         setHolding(false);
                         }
                     }
 
-                   
-
-                    
-
-                    //play shake sound
-
                }
 
 
-            //    else if(isAttacking && isHolding)
-            //    {
-            //      if(isHolding)
-
-            //         {
-            //              hit.transform.gameObject.GetComponent<Rigidbody>().AddForce(maxAttackDirection * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);  
-                         
-            //              isHolding = false;
-
-            //         }
-            //         //play shake sound
-            //          Camera.main.GetComponent<Follow_Player>().setCanShake(true);
-
-            //         Destroy(hit.transform.gameObject,destroyTime); 
             //    }
             
             if(isHolding)
@@ -186,10 +165,7 @@ public class PlayerAttack : MonoBehaviour
                 }
 
             }
-            else
-            {
-                this.transform.GetChild(1).SetParent(null);
-            }
+         
               
         }
         else

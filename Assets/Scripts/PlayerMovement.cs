@@ -35,7 +35,6 @@ public class PlayerMovement : MonoBehaviour
         // hit = new RaycastHit();
         cursor_ray = new Ray();
         rb = GetComponent<Rigidbody>();
-        Cursor.visible = false;
         DEBUG_LOOK_DIR = false;
 
     }
@@ -43,7 +42,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Cursor.visible = false;
        
         movementInputs();
         //testing
@@ -77,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
                 mouseObj.transform.position = mousePoint;
                 lookDirection = mousePoint - transform.position;
                 //rotate transform.forward vector in direction of mouse point
+                this.transform.LookAt(mousePoint);
                 this.transform.LookAt(mousePoint);
 
                 
