@@ -13,7 +13,7 @@ public class ManageGameObjects : MonoBehaviour
         {
             furnitures[i].AddComponent<ObjectCollision>();
         }
-        // Debug.Log(furnitures[0].GetComponent<ObjectCollision>());
+        Debug.Log(furnitures.Count);
    
         
     }

@@ -77,10 +77,7 @@ public class PlayerAttack : MonoBehaviour
                 attackCoolDownTimer += Time.deltaTime;
             }
 
-        if (isAttacking)
-        {
-            Debug.Log("Attacking");
-        }
+
                 //animator.SetBool("HeavyAttacking", isAttacking);
                 maxAttackDirection = moveScript.getLookDirection();
                 maxAttackDirection = Vector3.ClampMagnitude(maxAttackDirection,attackRange);
@@ -91,6 +88,8 @@ public class PlayerAttack : MonoBehaviour
             
                 attackCoolDownTimer = 0;
             }
+
+            Debug.DrawRay(this.transform.position,maxAttackDirection,Color.red);
 
 
             attackInputs();
@@ -137,12 +136,14 @@ public class PlayerAttack : MonoBehaviour
                    //pushing
                     if(hit.transform.gameObject.tag == "Pushable")
                     {
-
-                     hit.transform.gameObject.GetComponent<Rigidbody>().isKinematic = false;
-                          hit.transform.gameObject.GetComponent<Rigidbody>().WakeUp();
+                        Debug.Log("Hit" + hit.transform.gameObject);
                     hit.transform.gameObject.GetComponent<Rigidbody>().AddForce(maxAttackDirection * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse); 
-                    FindObjectOfType<AudioManager>().Play("punch");
-                     Camera.main.GetComponent<Follow_Player>().setCanShake(true); 
+                    // FindObjectOfType<AudioManager>().Play("punch");
+                     Camera.main.GetComponent<Follow_Player>().setCanShake(true);
+
+                    //  FindObjectOfType<AudioManager>().Play("brokenwood");
+
+                     Destroy(hit.transform.gameObject); 
                    
                     }
                     //throwing
@@ -150,8 +151,15 @@ public class PlayerAttack : MonoBehaviour
                     {
                         if(isHolding)
                         {
-                                 hit.transform.gameObject.GetComponent<Rigidbody>().AddForce(maxAttackDirection * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);  
-                                Camera.main.GetComponent<Follow_Player>().setCanShake(true);    
+                                hit.transform.gameObject.GetComponent<Rigidbody>().AddForce(maxAttackDirection * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);  
+                                 FindObjectOfType<AudioManager>().Play("throw");
+                                
+                                Camera.main.GetComponent<Follow_Player>().setCanShake(true);   
+
+
+                                // FindObjectOfType<AudioManager>().Play("brokenwood");
+
+                                Destroy(hit.transform.gameObject); 
                                 setHolding(false);
                         }
                     }
@@ -163,12 +171,12 @@ public class PlayerAttack : MonoBehaviour
                 if(hit.transform.gameObject.tag == "Throwable")
                  {
                         hit.transform.position = this.transform.position + maxAttackDirection;
-                         FindObjectOfType<AudioManager>().Play("pickup");
+                        //  FindObjectOfType<AudioManager>().Play("pickup");
                 }
                 else
                 {
                     setHolding(false);
-                    FindObjectOfType<AudioManager>().Play("drop");
+                    // FindObjectOfType<AudioManager>().Play("drop");
 
                 }
 
