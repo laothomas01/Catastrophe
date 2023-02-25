@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Thomas.unity
     guid: b3669400d4b67654185ffd469c4e5bdd
+  - enabled: 1
+    path: Assets/Scenes/Win_Screen.unity
+    guid: 9d94bba44835b6882b746988a9133b4d
   m_configObjects: {}
