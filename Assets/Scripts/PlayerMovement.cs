@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
     //       Debug.DrawRay(transform.position,lookDirection,Color.blue);
     //   }
 
-      
+
 
     }
 
@@ -108,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void movementInputs()
     {
-        //switch between the values of 1,0,-1 based on the input
+         //switch between the values of 1,0,-1 based on the input
         move.x = Input.GetAxisRaw("Horizontal");
         move.y = Input.GetAxisRaw("Vertical");
 
@@ -117,12 +117,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-<<<<<<< Updated upstream
             animator.SetBool("isRunning", true);
-            speedMultiplier = 500;
-=======
             speedMultiplier = 300;
->>>>>>> Stashed changes
         }
         else
         {
