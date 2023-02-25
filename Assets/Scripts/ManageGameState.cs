@@ -38,14 +38,14 @@ public class ManageGameState : MonoBehaviour
             ResetGame();
         }
         
-        if(score.GetComponent<Score>().getCurrCount() == 0)
-        {
-                    timeBeforeWinning += Time.deltaTime;
-                    if(timeBeforeWinning > maxTimeBeforeWin)
-                    {
-                        winGame();
-                    }
-        }
+        // if(score.GetComponent<Score>().getCurrCount() == 0)
+        // {
+        //             timeBeforeWinning += Time.deltaTime;
+        //             if(timeBeforeWinning > maxTimeBeforeWin)
+        //             {
+        //                 winGame();
+        //             }
+        // }
         Cursor.visible = visibleCursor;
     }    
 
