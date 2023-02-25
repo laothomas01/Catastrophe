@@ -4,14 +4,26 @@ using UnityEngine;
 
 public class ManageGameObjects : MonoBehaviour
 {
+    List<GameObject> furnitures;
       void Start()
     {
-       
+        furnitures = FindGameObjectsInLayer(9);
+            
+        for(int i = 0; i < furnitures.Count; i++)
+        {
+            furnitures[i].AddComponent<ObjectCollision>();
+        }
+        Debug.Log(furnitures[0].GetComponent<ObjectCollision>());
+   
+        
     }
+   
     void Update()
     {
     
     }
+
+   
     public List<GameObject> FindGameObjectsInLayer(int layer)
    {
 

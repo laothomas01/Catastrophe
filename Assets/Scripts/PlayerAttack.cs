@@ -135,21 +135,21 @@ public class PlayerAttack : MonoBehaviour
                     {
                     hit.transform.gameObject.GetComponent<Rigidbody>().AddForce(maxAttackDirection * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse); 
                      Camera.main.GetComponent<Follow_Player>().setCanShake(true); 
-
+                    // FindObjectOfType<AudioManager>().Play("push");
                     }
                     //throwing
                     else if(hit.transform.gameObject.tag == "Throwable")
-                    
                     {
                         if(isHolding)
                         {
+                                // FindObjectOfType<AudioManager>().Play("pick_up");
+
                                  hit.transform.gameObject.GetComponent<Rigidbody>().AddForce(maxAttackDirection * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);  
                                 Camera.main.GetComponent<Follow_Player>().setCanShake(true);    
-                                hit.transform.SetParent(null);
+                                // hit.transform.SetParent(null);
                                 setHolding(false);
                         }
                     }
-                    Destroy(hit.transform.gameObject);
 
                }
 
@@ -157,11 +157,16 @@ public class PlayerAttack : MonoBehaviour
             {
                 if(hit.transform.gameObject.tag == "Throwable")
                  {
-                         hit.transform.SetParent(this.transform);
+                        // FindObjectOfType<AudioManager>().Play("pick_up_item");
+                    //move object while holding
+                        //  hit.transform.SetParent(this.transform);
                         hit.transform.position = this.transform.position + maxAttackDirection;
                 }
                 else
                 {
+                        // FindObjectOfType<AudioManager>().Play("drop_item");
+
+                    //drop object
                     setHolding(false);
                 }
 
