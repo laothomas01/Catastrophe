@@ -47,10 +47,10 @@ public class PlayerMovement : MonoBehaviour
        
         movementInputs();
         //testing
-      if(DEBUG_LOOK_DIR)
-      {
-          Debug.DrawRay(transform.position,lookDirection,Color.blue);
-      }
+    //   if(DEBUG_LOOK_DIR)
+    //   {
+    //       Debug.DrawRay(transform.position,lookDirection,Color.blue);
+    //   }
 
       
 
@@ -78,9 +78,6 @@ public class PlayerMovement : MonoBehaviour
                 lookDirection = mousePoint - transform.position;
                 //rotate transform.forward vector in direction of mouse point
                 this.transform.LookAt(mousePoint);
-                this.transform.LookAt(mousePoint);
-
-                
         }
 
 
@@ -120,8 +117,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
+<<<<<<< Updated upstream
             animator.SetBool("isRunning", true);
             speedMultiplier = 500;
+=======
+            speedMultiplier = 300;
+>>>>>>> Stashed changes
         }
         else
         {

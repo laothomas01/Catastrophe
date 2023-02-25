@@ -6,12 +6,19 @@ public class ManageGameState : MonoBehaviour
 {
     public GameObject pauseMenu = null;
     public GameObject gameOverScreen = null;
+    public GameObject score = null;
     bool visibleCursor;
     
     bool isPaused;
     bool gameOver;
+
+    float timeBeforeWinning;
+    float maxTimeBeforeWin;
     void Start()
     {
+        timeBeforeWinning = 0;
+        maxTimeBeforeWin = 4;
+        ;
         Time.timeScale = 1;
 
         visibleCursor = false;
@@ -26,7 +33,19 @@ public class ManageGameState : MonoBehaviour
         {
            togglePause();
         }
-
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            ResetGame();
+        }
+        
+        if(score.GetComponent<Score>().getCurrCount() == 0)
+        {
+                    timeBeforeWinning += Time.deltaTime;
+                    if(timeBeforeWinning > maxTimeBeforeWin)
+                    {
+                        winGame();
+                    }
+        }
         Cursor.visible = visibleCursor;
     }    
 
@@ -36,7 +55,7 @@ public class ManageGameState : MonoBehaviour
     }
     public void togglePause()
     {
-            Cursor.visible = visibleCursor;
+               Cursor.visible = visibleCursor;
             isPaused = !isPaused;
             visibleCursor = !visibleCursor;
             Time.timeScale = isPaused ? 0 : 1;       
@@ -45,7 +64,7 @@ public class ManageGameState : MonoBehaviour
     }
     public void toggleGameOverScreen()
     {
-            isPaused = !isPaused;
+               isPaused = !isPaused;
             visibleCursor = !visibleCursor;
              Cursor.visible = visibleCursor;
 
@@ -60,6 +79,17 @@ public class ManageGameState : MonoBehaviour
     {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+    
+    public void winGame()
+    {
+             SceneManager.LoadScene("Win_Screen");
+
+    }
+    public void backToMainMenu()
+    {
+        SceneManager.LoadScene("Main_Menu");
+    }
+
     
 
        
