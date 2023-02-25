@@ -76,9 +76,6 @@ public class PlayerAttack : MonoBehaviour
 
                 maxAttackDirection = moveScript.getLookDirection();
                 maxAttackDirection = Vector3.ClampMagnitude(maxAttackDirection,attackRange);
-               Debug.Log(maxAttackDirection.magnitude);
-                Debug.DrawRay(transform.position,maxAttackDirection,Color.red);
-
 
              if(isAttacking)
             {
@@ -87,7 +84,6 @@ public class PlayerAttack : MonoBehaviour
                 attackCoolDownTimer = 0;
             }
 
-            Debug.Log("HOLDING:" + isHolding);
 
             attackInputs();
         }
@@ -231,7 +227,6 @@ public class PlayerAttack : MonoBehaviour
             float currDistance = Vector3.Distance(enemy.transform.position, furniture.transform.position);
             if ( currDistance <= closestDistance)
             {
-                Debug.Log("Enemy Name " + enemy.name + " curr distance " + currDistance + "closestDistance " + closestDistance );
                 closestEnemy = enemy;
                 closestDistance = currDistance;
             }

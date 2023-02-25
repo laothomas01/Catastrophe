@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class Score : MonoBehaviour
 {
     private int maxFurnitureCount;
-    private int tmpMax = 0;
     private int currFurnitureCount = 0;
     
     private TextMeshProUGUI textMesh;
