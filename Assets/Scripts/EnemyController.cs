@@ -63,11 +63,11 @@ public class EnemyController : MonoBehaviour
 
     bool AgentReachedDestination(NavMeshAgent a)
     {
-        if (triggered && !agent.pathPending)
+        if (triggered && !a.pathPending)
         {
-            if (agent.remainingDistance <= agent.stoppingDistance)
+            if (a.remainingDistance <= a.stoppingDistance)
             {
-                if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+                if (!a.hasPath || a.velocity.sqrMagnitude == 0f)
                 {
                     return true;
                 }
