@@ -50,7 +50,7 @@ public class ManageGameState : MonoBehaviour
              Cursor.visible = visibleCursor;
 
             Time.timeScale = isPaused ? 0 : 1;  
-        gameOverScreen.SetActive(isPaused);
+            gameOverScreen.SetActive(isPaused);
     }
     public void toggleRetry()
     {

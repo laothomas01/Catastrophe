@@ -46,9 +46,10 @@ public class PlayerAttack : MonoBehaviour
 
 [SerializeField]
     bool isHolding;
-       
+    HashSet<GameObject> destroyedObjs;
     void Start()
     {
+        destroyedObjs = new HashSet<GameObject>();
         isHolding = false;
         seenObjs = new HashSet<GameObject>();
         colorChanged = false;
@@ -123,20 +124,20 @@ public class PlayerAttack : MonoBehaviour
                 
 
 
-                
+
+//performing attack                
                if(isAttacking)
                {
         
                    
+                   //pushing
                     if(hit.transform.gameObject.tag == "Pushable")
                     {
                     hit.transform.gameObject.GetComponent<Rigidbody>().AddForce(maxAttackDirection * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse); 
                      Camera.main.GetComponent<Follow_Player>().setCanShake(true); 
-                   //give destroying task to game object manager: feed destroyed objects into array, and destroy them
-                   //reduce redundant work
-                    Destroy(hit.transform.gameObject,destroyTime); 
-                   
+
                     }
+                    //throwing
                     else if(hit.transform.gameObject.tag == "Throwable")
                     
                     {
@@ -144,23 +145,20 @@ public class PlayerAttack : MonoBehaviour
                         {
                                  hit.transform.gameObject.GetComponent<Rigidbody>().AddForce(maxAttackDirection * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);  
                                 Camera.main.GetComponent<Follow_Player>().setCanShake(true);    
-                    Destroy(hit.transform.gameObject,destroyTime); 
-                        setHolding(false);
+                                hit.transform.SetParent(null);
+                                setHolding(false);
                         }
                     }
+                    Destroy(hit.transform.gameObject);
 
                }
 
-
-            //    }
-            
             if(isHolding)
             {
-                    if(hit.transform.gameObject.tag == "Throwable")
+                if(hit.transform.gameObject.tag == "Throwable")
                  {
                          hit.transform.SetParent(this.transform);
                         hit.transform.position = this.transform.position + maxAttackDirection;
-
                 }
                 else
                 {
