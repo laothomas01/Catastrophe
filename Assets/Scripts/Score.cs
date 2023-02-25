@@ -36,7 +36,7 @@ public class Score : MonoBehaviour
             if(objects != null)
             {
             currFurnitureCount = objects.Count;
-           
+            
             }
             else
             {
