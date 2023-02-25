@@ -114,7 +114,14 @@ public class PlayerAttack : MonoBehaviour
                 {
                     
                     originalColor = hit.transform.GetComponent<Renderer>().material.color;
-                    hit.transform.GetComponent<Renderer>().material.color = Color.blue;
+                    if(hit.transform.gameObject.tag == "Pushable")
+                    {
+                        hit.transform.GetComponent<Renderer>().material.color = Color.blue;
+                    }
+                    else if(hit.transform.gameObject.tag == "Throwable")
+                    {
+                         hit.transform.GetComponent<Renderer>().material.color = Color.yellow;
+                    }
                     colorChanged = true;
                 }
                 
