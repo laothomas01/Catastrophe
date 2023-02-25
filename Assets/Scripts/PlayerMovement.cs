@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     private Vector3 moveDir;
 
+    public Animator animator;
+
     private Vector3 mousePoint;
 
     private Vector3 lookDirection;
@@ -27,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        
+        animator = gameObject.GetComponent<Animator>();
         // lookDirection = new Vector3();
         speedMultiplier = 1;
         moveDir = new Vector3();
@@ -109,15 +111,21 @@ public class PlayerMovement : MonoBehaviour
     }
     public void movementInputs()
     {
-         //switch between the values of 1,0,-1 based on the input
+        //switch between the values of 1,0,-1 based on the input
         move.x = Input.GetAxisRaw("Horizontal");
         move.y = Input.GetAxisRaw("Vertical");
-        if(Input.GetKey(KeyCode.LeftShift))
+
+        animator.SetBool("isWalking", move.x != 0 || move.y != 0);
+        animator.SetBool("HeavyAttacking", Input.GetMouseButtonDown(0));
+
+        if (Input.GetKey(KeyCode.LeftShift))
         {
+            animator.SetBool("isRunning", true);
             speedMultiplier = 500;
         }
         else
         {
+            animator.SetBool("isRunning", false);
             speedMultiplier = 200;
         }
     }

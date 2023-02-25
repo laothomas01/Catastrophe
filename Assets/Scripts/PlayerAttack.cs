@@ -6,6 +6,8 @@ public class PlayerAttack : MonoBehaviour
 
 {
     private PlayerMovement moveScript;
+    private Animator animator;
+
     // private Camera camera;
     private Vector3 maxAttackDirection;
 
@@ -62,6 +64,7 @@ public class PlayerAttack : MonoBehaviour
         maxAttackCoolDown = 0;
         attackCoolDownTimer = maxAttackCoolDown;
         moveScript = GetComponent<PlayerMovement>();
+        animator = gameObject.GetComponent<Animator>();
         maxAttackDirection = new Vector3();
         isAttacking = false;
         layerMask = 1 << 9;
@@ -74,7 +77,11 @@ public class PlayerAttack : MonoBehaviour
                 attackCoolDownTimer += Time.deltaTime;
             }
 
-
+        if (isAttacking)
+        {
+            Debug.Log("Attacking");
+        }
+                //animator.SetBool("HeavyAttacking", isAttacking);
                 maxAttackDirection = moveScript.getLookDirection();
                 maxAttackDirection = Vector3.ClampMagnitude(maxAttackDirection,attackRange);
 

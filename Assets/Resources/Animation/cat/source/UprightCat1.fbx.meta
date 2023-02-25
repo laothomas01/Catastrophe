@@ -1,17 +1,29 @@
 fileFormatVersion: 2
-guid: a389c887a9771450ba14d24abdac11af
+guid: de045181620f24839a2cb8e8f0cacb80
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable:
   - first:
+      74: 6326996014655697729
+    second: Character001|Character001|Character001|Character001|idle+attack01+attack02+r
+  - first:
       74: 3635655301737938189
     second: Character001|Character001|idle+attack01+attack02+roar+die+eat+Get_Hit+walk01
   - first:
-      74: 885944232402757753
-    second: Armature|Action
+      74: -9209520260075250423
+    second: Armature|Armature|Armature|Action|Armature|Action
+  - first:
+      74: -5873745562306674204
+    second: Armature|Armature|Armature|Armature|idle+attack01+attack02+roar+die+eat+
+  - first:
+      74: 5879094348641182827
+    second: Armature|Armature|Armature|Character001|idle+attack01+attack02+roar+die+
   - first:
       74: 4886028251661348693
     second: Armature|Armature|idle+attack01+attack02+roar+die+eat+Get_Hit+walk01+Run
+  - first:
+      74: 5715449909775023913
+    second: Armature|Character001|Character001|Character001|idle+attack01+attack02+r
   - first:
       74: 4929140392691353126
     second: Armature|Character001|idle+attack01+attack02+roar+die+eat+Get_Hit+walk01
