@@ -133,8 +133,13 @@ public class PlayerAttack : MonoBehaviour
                    //pushing
                     if(hit.transform.gameObject.tag == "Pushable")
                     {
+                     hit.transform.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+
+                          hit.transform.gameObject.GetComponent<Rigidbody>().WakeUp();
                     hit.transform.gameObject.GetComponent<Rigidbody>().AddForce(maxAttackDirection * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse); 
+                  
                      Camera.main.GetComponent<Follow_Player>().setCanShake(true); 
+                   
                     // FindObjectOfType<AudioManager>().Play("push");
                     }
                     //throwing
