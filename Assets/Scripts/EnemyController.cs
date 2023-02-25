@@ -18,7 +18,11 @@ public class EnemyController : MonoBehaviour
     public float lerpSpeed,rotateTime,rotateAmount, playerDetectDistance;
     private float rotateRight, rotateLeft, timer, rotateTimer;
     private bool rotating=false,triggered=false;
+    public Transform face,lookPoint;
     private Quaternion currentRotation;
+    public Vector3 faceAngles;
+
+    Animator animator;
 
     //patrolling
     public Vector3[] patrolPoints;
@@ -27,6 +31,7 @@ public class EnemyController : MonoBehaviour
 
     void Start()
     {
+        animator = gameObject.GetComponent<Animator>();
         patrolWaitTimer = waitBetweenPatrol;
         rotateTimer = 0;
         rotateRight = rotateAmount;
@@ -39,17 +44,18 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.DrawRay(face.position, new Vector3(face.forward.x + faceAngles.x,face.forward.y + faceAngles.y, face.forward.z + faceAngles.z) *playerDetectDistance);
         if (Input.GetKey(KeyCode.Space))
         {
             LookAround();
         }
+
         if (AgentReachedDestination(agent))
         {
             LookAround();
         }
-
+        animator.SetBool("isWalking", agent.velocity.magnitude > 0);
         Patrol();
-
     }
 
     public void InspectFurniture(Transform furniture)
@@ -57,6 +63,7 @@ public class EnemyController : MonoBehaviour
         triggered = true;
         rotateRight = rotateLeft = 90;
         rotating = false;
+        
         agent.SetDestination(furniture.position);
        
     }
@@ -126,14 +133,24 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        RaycastHit hit;
-        int layerMask = 1 << 7;
-        Debug.DrawRay(transform.position, transform.forward * playerDetectDistance);
-        if (Physics.Raycast(transform.position, transform.forward, out hit, playerDetectDistance, layerMask))
-        {   // if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
-            
+        RaycastHit hit,hit2;
+        int layerMask = 1 << 8;
+        Debug.DrawRay(lookPoint.position, lookPoint.forward * playerDetectDistance);
+        if (Physics.Raycast(lookPoint.position, lookPoint.forward, out hit, playerDetectDistance, ~layerMask))
+        {
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
                 Debug.Log("GAME OVER");
-            
+            }
+
+        }
+        if (Physics.Raycast(face.position, new Vector3(face.forward.x + faceAngles.x, face.forward.y + faceAngles.y, face.forward.z + faceAngles.z), out hit2, playerDetectDistance, ~layerMask))
+        {
+ 
+            if (hit2.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                Debug.Log("GAME OVER from 2");
+            }
 
         }
     }
