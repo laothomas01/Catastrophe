@@ -8,7 +8,6 @@ public class PlayerAttack : MonoBehaviour
     private PlayerMovement moveScript;
     // private Camera camera;
     private Vector3 maxAttackDirection;
-    private Vector3 minAttackDirection;
 
     [SerializeField]
     private float attackRange;  
@@ -39,13 +38,18 @@ public class PlayerAttack : MonoBehaviour
     
     int layerMask;
        GameObject hitObj;
+
    
        private bool colorChanged;
 
     HashSet<GameObject> seenObjs;
+
+[SerializeField]
+    bool isHolding;
        
     void Start()
     {
+        isHolding = false;
         seenObjs = new HashSet<GameObject>();
         Cursor.visible = false;
         colorChanged = false;
@@ -62,7 +66,6 @@ public class PlayerAttack : MonoBehaviour
         isAttacking = false;
         layerMask = 1 << 9;
         DEBUG_ATTACK_DIR = true;
-        minAttackDirection = new Vector3();
     }
         void Update() {
           
@@ -85,6 +88,8 @@ public class PlayerAttack : MonoBehaviour
                 attackCoolDownTimer = 0;
             }
 
+            Debug.Log("HOLDING:" + isHolding);
+
             attackInputs();
         }
     void FixedUpdate()
@@ -96,7 +101,6 @@ public class PlayerAttack : MonoBehaviour
      
 
 
-        // maxAttackDirection = moveScript.getLookDirection();
 
 //temp variable to compare current and seen hit object
         if(Physics.Raycast(transform.position,maxAttackDirection,out hit,(maxAttackDirection).magnitude,layerMask))
@@ -115,21 +119,78 @@ public class PlayerAttack : MonoBehaviour
                     colorChanged = true;
                 }
                 
+
+
                 
                if(isAttacking)
                {
         
-                    Debug.Log("HIT!");
+                   
+                    if(hit.transform.gameObject.tag == "Pushable")
+                    {
+                    hit.transform.gameObject.GetComponent<Rigidbody>().AddForce(maxAttackDirection * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse); 
+                     Camera.main.GetComponent<Follow_Player>().setCanShake(true); 
+                   //give destroying task to game object manager: feed destroyed objects into array, and destroy them
+                   //reduce redundant work
+                    Destroy(hit.transform.gameObject,destroyTime); 
+                   
+                    }
+                    else if(hit.transform.gameObject.tag == "Throwable")
                     
-                    hit.transform.gameObject.GetComponent<Rigidbody>().AddForce(maxAttackDirection * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);  
+                    {
+                        if(isHolding)
+                        {
+                                 hit.transform.gameObject.GetComponent<Rigidbody>().AddForce(maxAttackDirection * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);  
+                                Camera.main.GetComponent<Follow_Player>().setCanShake(true);
+                    Destroy(hit.transform.gameObject,destroyTime); 
+                        setHolding(false);
+                        }
+                    }
 
-                     Camera.main.GetComponent<Follow_Player>().setCanShake(true);
+                   
 
-                    Destroy(hit.transform.gameObject); 
-            
-            
+                    
+
+                    //play shake sound
+
                }
-       
+
+
+            //    else if(isAttacking && isHolding)
+            //    {
+            //      if(isHolding)
+
+            //         {
+            //              hit.transform.gameObject.GetComponent<Rigidbody>().AddForce(maxAttackDirection * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);  
+                         
+            //              isHolding = false;
+
+            //         }
+            //         //play shake sound
+            //          Camera.main.GetComponent<Follow_Player>().setCanShake(true);
+
+            //         Destroy(hit.transform.gameObject,destroyTime); 
+            //    }
+            
+            if(isHolding)
+            {
+                    if(hit.transform.gameObject.tag == "Throwable")
+                 {
+                         hit.transform.SetParent(this.transform);
+                        hit.transform.position = this.transform.position + maxAttackDirection;
+
+                }
+                else
+                {
+                    setHolding(false);
+                }
+
+            }
+            else
+            {
+                this.transform.GetChild(1).SetParent(null);
+            }
+              
         }
         else
         {
@@ -147,7 +208,7 @@ public class PlayerAttack : MonoBehaviour
 
             
         }
-   
+    
     }
    
     void attackInputs()
@@ -167,6 +228,11 @@ public class PlayerAttack : MonoBehaviour
                setAttack(false);
 
         }
+        if(Input.GetKeyDown(KeyCode.Mouse1))
+        {
+           isHolding = !isHolding;
+        }
+        
 
     }
 
@@ -193,6 +259,9 @@ public class PlayerAttack : MonoBehaviour
     public void setAttack(bool attack)
     {
         this.isAttacking = attack;
+    }    public void setHolding(bool hold)
+    {
+        this.isHolding = hold;
     }
 
 
