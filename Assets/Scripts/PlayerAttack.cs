@@ -273,18 +273,18 @@ public class PlayerAttack : MonoBehaviour
         {
             Destroy(furniture);
         }
-        
-        //foreach (GameObject enemy in enemies)
-        //{
-        //    float currDistance = Vector3.Distance(enemy.transform.position, furniture.transform.position);
-        //    if ( currDistance <= closestDistance)
-        //    {
-        //        closestEnemy = enemy;
-        //        closestDistance = currDistance;
-        //    }
-        //}
-        //closestEnemy.GetComponent<EnemyController>().InspectFurniture(furn.transform);
-        
+
+        foreach (GameObject enemy in enemies)
+        {
+            float currDistance = Vector3.Distance(enemy.transform.position, furniture.transform.position);
+            if (currDistance <= closestDistance)
+            {
+                closestEnemy = enemy;
+                closestDistance = currDistance;
+            }
+        }
+        closestEnemy.GetComponent<EnemyController>().InspectFurniture(furn.transform);
+
     }
     public void setAttack(bool attack)
     {

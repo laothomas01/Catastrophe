@@ -139,6 +139,10 @@ PrefabInstance:
       value: -0.27
       objectReference: {fileID: 0}
     - target: {fileID: 2357659931431924969, guid: 791eee04539ad4dc78b4209129099830, type: 3}
+      propertyPath: gameOverScreen
+      value: 
+      objectReference: {fileID: 6106936760264775530}
+    - target: {fileID: 2357659931431924969, guid: 791eee04539ad4dc78b4209129099830, type: 3}
       propertyPath: waitBetweenPatrol
       value: 10
       objectReference: {fileID: 0}
@@ -367,7 +371,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 152233919}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: lookPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1160,7 +1164,7 @@ Rigidbody:
   m_GameObject: {fileID: 627415714}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -1299,7 +1303,7 @@ Rigidbody:
   m_GameObject: {fileID: 710364024}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -1492,8 +1496,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2796522787616575228}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 50
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 1
@@ -1661,7 +1665,7 @@ Rigidbody:
   m_GameObject: {fileID: 795940935}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -2481,6 +2485,10 @@ PrefabInstance:
       value: -0.27
       objectReference: {fileID: 0}
     - target: {fileID: 2357659931431924969, guid: 791eee04539ad4dc78b4209129099830, type: 3}
+      propertyPath: gameOverScreen
+      value: 
+      objectReference: {fileID: 6106936760264775530}
+    - target: {fileID: 2357659931431924969, guid: 791eee04539ad4dc78b4209129099830, type: 3}
       propertyPath: waitBetweenPatrol
       value: 10
       objectReference: {fileID: 0}
@@ -2704,6 +2712,10 @@ PrefabInstance:
       value: -0.27
       objectReference: {fileID: 0}
     - target: {fileID: 2357659931431924969, guid: 791eee04539ad4dc78b4209129099830, type: 3}
+      propertyPath: gameOverScreen
+      value: 
+      objectReference: {fileID: 6106936760264775530}
+    - target: {fileID: 2357659931431924969, guid: 791eee04539ad4dc78b4209129099830, type: 3}
       propertyPath: waitBetweenPatrol
       value: 10
       objectReference: {fileID: 0}
@@ -2861,13 +2873,13 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2796522788620671415}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 1
 --- !u!1 &1393751937
 GameObject:
@@ -3340,7 +3352,7 @@ Rigidbody:
   m_GameObject: {fileID: 1529207869}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -4771,13 +4783,13 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2796522788931758215}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 1
 --- !u!1 &2124982099
 GameObject:
@@ -5133,7 +5145,6 @@ GameObject:
   - component: {fileID: 33448702850984054}
   - component: {fileID: 23986612190736590}
   - component: {fileID: 64884159765788586}
-  - component: {fileID: 64884159765788587}
   m_Layer: 9
   m_Name: microwave 1
   m_TagString: Untagged
@@ -6761,13 +6772,13 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1390344672143484}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 1
 --- !u!64 &4010117310012330
 MeshCollider:
@@ -6842,7 +6853,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4865186109333057}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4022885956126449
 Transform:
@@ -6870,7 +6881,8 @@ Transform:
   m_LocalPosition: {x: 0.7705119, y: 1.2253339, z: -0.24933065}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4022886191291625}
   m_Father: {fileID: 4865186109333057}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6881,13 +6893,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1982925659276559}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
-  m_LocalPosition: {x: 0.27966717, y: 1.2253339, z: -0.24933065}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.4908448, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4865186109333057}
-  m_RootOrder: 6
+  m_Father: {fileID: 4022886044925630}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4022886352557646
 Transform:
@@ -6902,7 +6914,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4865186109333057}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4022886695910774
 Transform:
@@ -7069,7 +7081,7 @@ Rigidbody:
   m_GameObject: {fileID: 1757434356603628}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -7119,7 +7131,7 @@ Rigidbody:
   m_GameObject: {fileID: 1757434050490817}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -7169,7 +7181,7 @@ Rigidbody:
   m_GameObject: {fileID: 1757434765901349}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -7235,7 +7247,7 @@ Rigidbody:
   m_GameObject: {fileID: 1757435815307462}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 10
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -7315,7 +7327,7 @@ Rigidbody:
   m_GameObject: {fileID: 1284847123452747}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -7366,7 +7378,7 @@ Rigidbody:
   m_GameObject: {fileID: 1284847524933077}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -7437,7 +7449,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 90
   m_CollisionDetection: 1
 --- !u!4 &4229719583193569
 Transform:
@@ -7533,7 +7545,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4865186109333057}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &4306603049397248
 Transform:
@@ -7699,7 +7711,7 @@ Rigidbody:
   m_GameObject: {fileID: 1833517266122848}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -7751,7 +7763,7 @@ Rigidbody:
   m_GameObject: {fileID: 1833518493055502}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -8012,7 +8024,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4865186109333057}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &4722649338702481
 Transform:
@@ -8233,7 +8245,7 @@ Rigidbody:
   m_GameObject: {fileID: 1748535867002890}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -8274,7 +8286,6 @@ Transform:
   - {fileID: 4988563204350969}
   - {fileID: 4022885956126449}
   - {fileID: 4022886044925630}
-  - {fileID: 4022886191291625}
   - {fileID: 4022885728611276}
   - {fileID: 4022886352557646}
   - {fileID: 4276206779593448}
@@ -8307,10 +8318,10 @@ Rigidbody:
   m_GameObject: {fileID: 1748535111943273}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 1
@@ -12296,7 +12307,7 @@ Rigidbody:
   m_GameObject: {fileID: 1756630781821783}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -12355,7 +12366,7 @@ Rigidbody:
   m_GameObject: {fileID: 1756628997922169}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -12830,22 +12841,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300002, guid: d7f2ead0f57364e5bbcda9f679e509a0, type: 3}
---- !u!54 &64884159765788587
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1034419854010650}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!64 &64892686017454655
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -13079,7 +13074,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8264156309345351933}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigchest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13190,7 +13185,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2482283434794500941}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigRLeg2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13274,7 +13269,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6607120595323837357}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigLLegPlatform.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13432,7 +13427,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5155047062025601065}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigLLegPlatform_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13950,7 +13945,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 578539566470072040}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigTail2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13966,7 +13961,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 379703807955120071}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigTail4_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13982,7 +13977,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8174074415844192916}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigSpine1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13998,7 +13993,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8876771419987339131}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigRLegPlatform.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14074,7 +14069,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2928756850389551426}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigRLegPlatform.001_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14134,7 +14129,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1650471478337189647}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigTail1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14379,7 +14374,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8244083412957900790}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigLLeg2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14479,7 +14474,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9032228357336876886}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigLLegPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14511,7 +14506,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7352912246630262332}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigHub005_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14559,7 +14554,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8166399744493930058}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigSpine3.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14575,7 +14570,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7891949355094045096}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigLLegDigit11_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14691,7 +14686,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4293696891896531110}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigLLeg1.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14753,7 +14748,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2017079747070635967}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigLLegAnkle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14881,7 +14876,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1492681626285492138}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 412.90002, y: 56.5, z: 255.2}
+  m_LocalPosition: {x: 412.90002, y: 13.1, z: 255.2}
   m_LocalScale: {x: 30, y: 30, z: 30}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14912,7 +14907,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6704626558755376266}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigRLegDigit11_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14970,9 +14965,9 @@ GameObject:
   - component: {fileID: 2338441609345614734}
   - component: {fileID: 2338441609345614733}
   - component: {fileID: 2338441609345614732}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cat
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15009,7 +15004,7 @@ MonoBehaviour:
   forceAmount: 60
   forceMultiplier: 10
   attackCoolDownTimer: 0
-  maxAttackCoolDown: 5
+  maxAttackCoolDown: 1
   DEBUG_CAMERA: 1
   DEBUG_DESTROY: 1
   destroyTime: 0
@@ -15041,7 +15036,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7992313786340309853}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigPelvis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15057,7 +15052,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8074067836581259527}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigRLeg2.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15225,7 +15220,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3806175898430402465}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigSpine2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15297,7 +15292,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9044602399033668587}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigRLegPlatform_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15380,7 +15375,7 @@ GameObject:
   - component: {fileID: 4453992792260952658}
   m_Layer: 9
   m_Name: Gaming Screen
-  m_TagString: Untagged
+  m_TagString: Throwable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15422,7 +15417,7 @@ GameObject:
   - component: {fileID: 4453992793364936803}
   m_Layer: 9
   m_Name: Gaming Screen (2)
-  m_TagString: Untagged
+  m_TagString: Throwable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15443,7 +15438,7 @@ GameObject:
   - component: {fileID: 4453992792785439059}
   m_Layer: 9
   m_Name: Gaming Screen (1)
-  m_TagString: Untagged
+  m_TagString: Throwable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15807,7 +15802,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7522609594134976617}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigRLeg1.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15897,7 +15892,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8738759930358886007}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigLLegAnkle.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15913,7 +15908,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 815392580664866419}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigSpine2.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16013,7 +16008,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1402523480724719036}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigRLegCollarbone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16395,7 +16390,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1031396449270405663}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigRLeg1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16595,7 +16590,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2079187130391311669}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigLLeg1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16782,7 +16777,7 @@ Rigidbody:
   m_GameObject: {fileID: 523270633024311751}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -16834,14 +16829,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 62123768921676049}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 80
+  m_CollisionDetection: 1
 --- !u!114 &4339427168683559952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16982,14 +16977,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2796522787319243653}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 80
+  m_CollisionDetection: 1
 --- !u!114 &4453992792260952658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17131,7 +17126,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7495002175602259920}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigHub005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17154,7 +17149,7 @@ GameObject:
   - component: {fileID: 8995399779765294137}
   m_Layer: 9
   m_Name: Laptop
-  m_TagString: Untagged
+  m_TagString: Throwable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17521,7 +17516,7 @@ GameObject:
   - component: {fileID: 9089346812857142751}
   m_Layer: 9
   m_Name: Armchair (2)
-  m_TagString: Untagged
+  m_TagString: Throwable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -17606,7 +17601,7 @@ GameObject:
   - component: {fileID: 9089346813440846034}
   m_Layer: 9
   m_Name: Armchair (3)
-  m_TagString: Untagged
+  m_TagString: Throwable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -17949,7 +17944,7 @@ Rigidbody:
   m_GameObject: {fileID: 3432693226296422539}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -17995,7 +17990,7 @@ Rigidbody:
   m_GameObject: {fileID: 3432693226804478927}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -18041,7 +18036,7 @@ Rigidbody:
   m_GameObject: {fileID: 3432693226542283475}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -18087,7 +18082,7 @@ Rigidbody:
   m_GameObject: {fileID: 3432693224971953052}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -18177,7 +18172,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6764299004243301413}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigRLegAnkle.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18285,7 +18280,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1513184954558614447}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigSpine3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18881,7 +18876,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6307526296076437934}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18945,7 +18940,7 @@ Rigidbody:
   m_GameObject: {fileID: 4167892175121168587}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -19075,7 +19070,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 806430395355997805}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigSpine1.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19107,7 +19102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8956413182983790854}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigRLeg3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19358,7 +19353,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 152982489816990006}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Object001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21822,7 +21817,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8172045038954112506}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigTail4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21916,7 +21911,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5431442546199962313}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigLLegDigit11.001_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22348,7 +22343,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4959282759340228815}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigTail3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22506,7 +22501,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2890833742279598006}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigLLegPlatform.001_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22966,7 +22961,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3077773478806312495}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Character001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23035,14 +23030,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6738868874434856655}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 80
+  m_CollisionDetection: 1
 --- !u!114 &7016976213652476882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23166,7 +23161,7 @@ Rigidbody:
   m_GameObject: {fileID: 6474193119977197437}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -23513,7 +23508,7 @@ Rigidbody:
   m_GameObject: {fileID: 6437274062559618919}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -23553,7 +23548,7 @@ Rigidbody:
   m_GameObject: {fileID: 6437274062869769272}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -23606,7 +23601,7 @@ Rigidbody:
   m_GameObject: {fileID: 6437274062033456209}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -23659,7 +23654,7 @@ Rigidbody:
   m_GameObject: {fileID: 6437274061592613171}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -23810,7 +23805,7 @@ Rigidbody:
   m_GameObject: {fileID: 1492681625273986139}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -23869,7 +23864,7 @@ Rigidbody:
   m_GameObject: {fileID: 1492681625241353355}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -23915,7 +23910,7 @@ Rigidbody:
   m_GameObject: {fileID: 1492681625040188157}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -23961,7 +23956,7 @@ Rigidbody:
   m_GameObject: {fileID: 1492681624924327795}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -24019,14 +24014,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1492681626285492138}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 50
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &7529727871142629623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24066,7 +24061,7 @@ Rigidbody:
   m_GameObject: {fileID: 1492681626043168340}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -24111,14 +24106,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2985879187902390557}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 80
+  m_CollisionDetection: 1
 --- !u!114 &7569658162271923326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24157,14 +24152,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2985879187959311688}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 80
+  m_CollisionDetection: 1
 --- !u!114 &7569658162332442667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24203,14 +24198,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2985879187974321845}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 80
+  m_CollisionDetection: 1
 --- !u!114 &7569658162333957078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24249,14 +24244,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2985879188000946788}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 80
+  m_CollisionDetection: 1
 --- !u!114 &7569658162374702855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24295,14 +24290,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2985879187712739760}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 80
+  m_CollisionDetection: 1
 --- !u!114 &7569658162612290771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24341,14 +24336,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2985879188611456845}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 80
+  m_CollisionDetection: 1
 --- !u!114 &7569658162703700526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24387,14 +24382,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2985879188463564071}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 80
+  m_CollisionDetection: 1
 --- !u!114 &7569658162834831432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24433,14 +24428,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2985879188704410706}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 80
+  m_CollisionDetection: 1
 --- !u!114 &7569658163600355637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24734,7 +24729,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3093155220669154128}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigLLeg2.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24751,7 +24746,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3609036939473731311}
   - component: {fileID: 5251692960324231268}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: lion_mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25089,14 +25084,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1552517021322306765}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 50
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &7949734187114313853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25169,7 +25164,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4381342200709543884}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigRLegPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25209,7 +25204,7 @@ Rigidbody:
   m_GameObject: {fileID: 5545186943998693814}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -25282,14 +25277,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7726589910044150622}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 50
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &8086952991537703565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25356,14 +25351,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7726589910205820586}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 50
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &8086952991610949505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25473,7 +25468,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2824531399021269609}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigLLegDigit11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25489,7 +25484,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5429964729662930952}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigRLegDigit11.001_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25842,7 +25837,7 @@ GameObject:
   - component: {fileID: 9106246787094265787}
   m_Layer: 9
   m_Name: Nightstand (6)
-  m_TagString: Untagged
+  m_TagString: Throwable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25926,7 +25921,7 @@ GameObject:
   - component: {fileID: 9106246788051935401}
   m_Layer: 9
   m_Name: Nightstand (4)
-  m_TagString: Untagged
+  m_TagString: Throwable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25990,7 +25985,7 @@ Rigidbody:
   m_GameObject: {fileID: 6854795606123394399}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -26036,10 +26031,10 @@ Rigidbody:
   m_GameObject: {fileID: 6854795606717420564}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 1
@@ -26082,7 +26077,7 @@ Rigidbody:
   m_GameObject: {fileID: 6854795607098507885}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -26128,7 +26123,7 @@ Rigidbody:
   m_GameObject: {fileID: 6854795607715807753}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -26173,14 +26168,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6854795607777566473}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 50
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &8439710967941347919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26220,7 +26215,7 @@ Rigidbody:
   m_GameObject: {fileID: 6854795607365217518}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -26260,7 +26255,7 @@ Rigidbody:
   m_GameObject: {fileID: 5270983342674519501}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -26312,14 +26307,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5270983342621716518}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 50
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &8485415383971964219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26345,7 +26340,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5946536878067064785}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigLLeg3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26403,7 +26398,7 @@ Rigidbody:
   m_GameObject: {fileID: 7849786196387456374}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -26477,7 +26472,7 @@ Rigidbody:
   m_GameObject: {fileID: 7849786196503835729}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -26533,7 +26528,7 @@ Rigidbody:
   m_GameObject: {fileID: 5020720176573523016}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -26573,7 +26568,7 @@ Rigidbody:
   m_GameObject: {fileID: 5020720177180925571}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -26620,7 +26615,7 @@ Rigidbody:
   m_GameObject: {fileID: 8286149140654662770}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -26680,7 +26675,7 @@ Rigidbody:
   m_GameObject: {fileID: 8286149140440772451}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -26727,7 +26722,7 @@ Rigidbody:
   m_GameObject: {fileID: 8286149141292108962}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -26774,7 +26769,7 @@ Rigidbody:
   m_GameObject: {fileID: 8286149141180546132}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -26834,7 +26829,7 @@ Rigidbody:
   m_GameObject: {fileID: 8286149140943309825}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -26882,7 +26877,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6989340666209874235}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigRLegDigit11.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26918,14 +26913,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8833899440285301452}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 80
+  m_CollisionDetection: 1
 --- !u!114 &8833899440285301454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26967,7 +26962,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 757105588812753698}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigLLegDigit11.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26999,7 +26994,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6182225449095068358}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigRLegAnkle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27023,7 +27018,7 @@ Rigidbody:
   m_GameObject: {fileID: 4647283406398622506}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -27076,7 +27071,7 @@ Rigidbody:
   m_GameObject: {fileID: 4647283407121660308}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -27115,14 +27110,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4625794167689625896}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 80
+  m_CollisionDetection: 1
 --- !u!114 &8995399779765294137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27193,7 +27188,7 @@ Rigidbody:
   m_GameObject: {fileID: 5089573832396794336}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -27239,7 +27234,7 @@ Rigidbody:
   m_GameObject: {fileID: 5089573832329776297}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -27271,7 +27266,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2045269296369705938}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CATRigRLegDigit11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27295,7 +27290,7 @@ Rigidbody:
   m_GameObject: {fileID: 4812047810856634044}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -27348,7 +27343,7 @@ Rigidbody:
   m_GameObject: {fileID: 4812047810813726600}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -27388,7 +27383,7 @@ Rigidbody:
   m_GameObject: {fileID: 4812047810704470636}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -27427,14 +27422,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4812047810584287426}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 80
+  m_CollisionDetection: 1
 --- !u!114 &9089346812857142751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27467,14 +27462,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4812047810572340603}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 50
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &9089346812978075750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27508,7 +27503,7 @@ Rigidbody:
   m_GameObject: {fileID: 4812047811402781947}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -27547,14 +27542,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4812047811183328719}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 80
+  m_CollisionDetection: 1
 --- !u!114 &9089346813440846034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27801,7 +27796,7 @@ Rigidbody:
   m_GameObject: {fileID: 9099488132361596640}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -27854,7 +27849,7 @@ Rigidbody:
   m_GameObject: {fileID: 9099488132686991789}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -27907,7 +27902,7 @@ Rigidbody:
   m_GameObject: {fileID: 9099488132773366205}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -27960,7 +27955,7 @@ Rigidbody:
   m_GameObject: {fileID: 9099488132804749175}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -28014,7 +28009,7 @@ Rigidbody:
   m_GameObject: {fileID: 9099488132916528590}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -28080,7 +28075,7 @@ Rigidbody:
   m_GameObject: {fileID: 9099488133138338583}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -28132,14 +28127,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9105635370017588153}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 50
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 36
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &9105635370017588155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28179,14 +28174,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8436424730933521208}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 50
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &9106246786848960900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28226,14 +28221,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8436424730696475907}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 80
+  m_CollisionDetection: 1
 --- !u!114 &9106246787094265787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28274,7 +28269,7 @@ Rigidbody:
   m_GameObject: {fileID: 8436424731448175351}
   serializedVersion: 2
   m_Mass: 100
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -28320,14 +28315,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8436424731995937676}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 50
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &9106246787907207480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28367,14 +28362,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8436424731851291165}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 10
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 80
+  m_CollisionDetection: 1
 --- !u!114 &9106246788051935401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28414,14 +28409,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8436424731636277579}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
+  m_Mass: 50
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &9106246788292049907
 MonoBehaviour:
   m_ObjectHideFlags: 0
