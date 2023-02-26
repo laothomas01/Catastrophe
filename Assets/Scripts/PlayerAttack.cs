@@ -10,6 +10,7 @@ public class PlayerAttack : MonoBehaviour
 
     // private Camera camera;
     private Vector3 maxAttackDirection;
+    public Transform lookPoint;
 
     [SerializeField]
     private float attackRange;  
@@ -89,7 +90,7 @@ public class PlayerAttack : MonoBehaviour
                 attackCoolDownTimer = 0;
             }
 
-            Debug.DrawRay(this.transform.position,maxAttackDirection,Color.red);
+            Debug.DrawRay(lookPoint.position,maxAttackDirection,Color.red);
 
 
             attackInputs();
@@ -102,7 +103,7 @@ public class PlayerAttack : MonoBehaviour
          //e.g: 1 << 9 checks layer 9 ("Furniture layer") 
     
 //temp variable to compare current and seen hit object
-        if(Physics.Raycast(transform.position,maxAttackDirection,out hit,(maxAttackDirection).magnitude,layerMask))
+        if(Physics.Raycast(lookPoint.position,lookPoint.forward,out hit,(maxAttackDirection).magnitude,layerMask))
         {
 
             //store data of hit object into global variable
@@ -116,13 +117,32 @@ public class PlayerAttack : MonoBehaviour
                     originalColor = hit.transform.GetComponent<Renderer>().material.color;
                     if(hit.transform.gameObject.tag == "Pushable")
                     {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        AlertEnemy(hit.transform.gameObject,0);
+                        //Destroy(hit.transform.gameObject);
+                    }
                         hit.transform.GetComponent<Renderer>().material.color = Color.blue;
                     }
                     else if(hit.transform.gameObject.tag == "Throwable")
                     {
-                         hit.transform.GetComponent<Renderer>().material.color = Color.yellow;
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        AlertEnemy(hit.transform.gameObject, 0);
+                        //Destroy(hit.transform.gameObject);
                     }
-                    colorChanged = true;
+                    hit.transform.GetComponent<Renderer>().material.color = Color.yellow;
+                    }
+                    else if (hit.transform.gameObject.tag == "Heavy")
+                    {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        AlertEnemy(hit.transform.gameObject, 0);
+                        //Destroy(hit.transform.gameObject);
+                    }
+                    hit.transform.GetComponent<Renderer>().material.color = Color.red;
+                    }
+                colorChanged = true;
                 }
                 
 
@@ -131,8 +151,8 @@ public class PlayerAttack : MonoBehaviour
 //performing attack                
                if(isAttacking)
                {
-        
-                   
+                Debug.Log("Attacking" + hit.transform.gameObject.name);
+                Debug.Log(hit.transform.gameObject.tag);
                    //pushing
                     if(hit.transform.gameObject.tag == "Pushable")
                     {
@@ -143,7 +163,8 @@ public class PlayerAttack : MonoBehaviour
 
                     //  FindObjectOfType<AudioManager>().Play("brokenwood");
 
-                     Destroy(hit.transform.gameObject); 
+                    //Destroy(hit.transform.gameObject);
+                    AlertEnemy(hit.transform.gameObject, 2);
                    
                     }
                     //throwing
@@ -154,15 +175,21 @@ public class PlayerAttack : MonoBehaviour
                                 hit.transform.gameObject.GetComponent<Rigidbody>().AddForce(maxAttackDirection * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);  
                                  FindObjectOfType<AudioManager>().Play("throw");
                                 
-                                Camera.main.GetComponent<Follow_Player>().setCanShake(true);   
+                                
 
 
-                                // FindObjectOfType<AudioManager>().Play("brokenwood");
+                        // FindObjectOfType<AudioManager>().Play("brokenwood");
 
-                                Destroy(hit.transform.gameObject); 
-                                setHolding(false);
+                        //Destroy(hit.transform.gameObject);
+                        AlertEnemy(hit.transform.gameObject, 2);
+                        setHolding(false);
                         }
                     }
+                    else if(hit.transform.gameObject.tag == "Heavy")
+                {
+                    AlertEnemy(hit.transform.gameObject, 0);
+                    Camera.main.GetComponent<Follow_Player>().setCanShake(true);
+                }
 
                }
 
@@ -245,7 +272,7 @@ public class PlayerAttack : MonoBehaviour
             }
         }
         closestEnemy.GetComponent<EnemyController>().InspectFurniture(furniture.transform);
-        Destroy(furniture,destroyTime);
+        Destroy(furniture);
     }
     public void setAttack(bool attack)
     {
