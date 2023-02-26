@@ -19,6 +19,7 @@ public class EnemyController : MonoBehaviour
     private float rotateRight, rotateLeft, timer, rotateTimer;
     private bool rotating=false,triggered=false;
     public Transform face,lookPoint;
+    public GameObject gameOverScreen;
     private Quaternion currentRotation;
     public Vector3 faceAngles;
 
@@ -140,7 +141,7 @@ public class EnemyController : MonoBehaviour
         {
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                Debug.Log("GAME OVER");
+                gameOverScreen.SetActive(true);
             }
 
         }
@@ -149,7 +150,7 @@ public class EnemyController : MonoBehaviour
  
             if (hit2.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                Debug.Log("GAME OVER from 2");
+                gameOverScreen.SetActive(true);
             }
 
         }
