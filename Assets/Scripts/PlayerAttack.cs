@@ -80,6 +80,7 @@ public class PlayerAttack : MonoBehaviour
 
                 //animator.SetBool("HeavyAttacking", isAttacking);
                 maxAttackDirection = moveScript.getLookDirection();
+                maxAttackDirection.y = 20;
                 maxAttackDirection = Vector3.ClampMagnitude(maxAttackDirection,attackRange);
 
              if(isAttacking)
@@ -89,7 +90,7 @@ public class PlayerAttack : MonoBehaviour
                 attackCoolDownTimer = 0;
             }
 
-            Debug.DrawRay(this.transform.position,maxAttackDirection,Color.red);
+            // Debug.DrawRay(this.transform.position,maxAttackDirection,Color.red);
 
 
             attackInputs();

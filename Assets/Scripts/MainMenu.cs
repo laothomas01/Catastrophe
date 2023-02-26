@@ -25,7 +25,7 @@ public class MainMenu : MonoBehaviour
             //     exitGame = false;
             //     options = false;
             //     canSelect = true;
-
+            playGame = false;
 
     }
     public void PlayGame()
@@ -33,8 +33,10 @@ public class MainMenu : MonoBehaviour
 
     //    Debug.Log(playGame);
     //     playGame = !playGame;
+            SceneManager.LoadScene(play_scene_name);
 
-                SceneManager.LoadScene(play_scene_name);
+                // playGame = true;
+                //  FindObjectOfType<AudioManager>().Play("trash_cat");
      
             
     }
@@ -42,17 +44,30 @@ public class MainMenu : MonoBehaviour
     {
 
 
+
+//             if(playGame)
+//             {
+             
+          
+
+
+//          play_button.transform.position += new Vector3(1 * UIAnimationSpeed_X * Time.deltaTime,-1 * UIAnimationSpeed_Y * Time.deltaTime,0);
+//             exit_button.transform.position += new Vector3(0,-1 * UIAnimationSpeed_Y * Time.deltaTime,0);
+//             title_card.transform.position += new Vector3(0,1 * UIAnimationSpeed_Y * Time.deltaTime,0);
+
+// if( UIAnimationTime > maxUIAnimationTime)
+//             {
+
+
+
+       
+            
         //tongue and cheek animation
             // if(playGame)
             // {
-            //       play_button.transform.position += new Vector3(1 * UIAnimationSpeed_X * Time.deltaTime,-1 * UIAnimationSpeed_Y * Time.deltaTime,0);
-            // exit_button.transform.position += new Vector3(0,-1 * UIAnimationSpeed_Y * Time.deltaTime,0);
-            // title_card.transform.position += new Vector3(0,1 * UIAnimationSpeed_Y * Time.deltaTime,0);
-
-            // if( UIAnimationTime > maxUIAnimationTime)
-            // {
-            // }
-            // UIAnimationTime += Time.deltaTime;
+         
+            
+           
 
             // }
 
