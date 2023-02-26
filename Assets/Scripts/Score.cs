@@ -12,37 +12,46 @@ public class Score : MonoBehaviour
     // ManageGameObjects objManage_Script;
     // public GameObject objManage;
     ManageGameObjects objManage_Script;
+    public GameObject winScreen;
     List<GameObject> objects;
+    GameObject[] heavy;
+    GameObject[] pushable;
     public int layer;
     void Start()
     {
         textMesh = this.GetComponent<TextMeshProUGUI>();
         // objManage_Script = objManage.GetComponent<ManageGameObjects>();
-        objManage_Script = GameObject.Find("GameObjectManager").GetComponent<ManageGameObjects>();
-        objects = objManage_Script.FindGameObjectsInLayer(layer);
-        if(objects != null)
-        {
-            maxFurnitureCount = objects.Count;
+        //objManage_Script = GameObject.Find("GameObjectManager").GetComponent<ManageGameObjects>();
+        //objects = GameObject.FindGameObjectsWithTag("Heavy");
+        heavy = GameObject.FindGameObjectsWithTag("Heavy");
+        pushable = GameObject.FindGameObjectsWithTag("Pushable");
+        try{
+            maxFurnitureCount = heavy.Length + pushable.Length;
         }
+        catch
+        {
+            Debug.Log("Null exception");
+        }
+        
         currFurnitureCount = maxFurnitureCount;
-        textMesh.text = currFurnitureCount.ToString() + "/" + maxFurnitureCount.ToString();
+        textMesh.SetText(currFurnitureCount.ToString() + "/" + maxFurnitureCount.ToString());
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-            objects = objManage_Script.FindGameObjectsInLayer(layer);
-            if(objects != null)
-            {
-            currFurnitureCount = objects.Count;
+            heavy = GameObject.FindGameObjectsWithTag("Heavy");
+            pushable = GameObject.FindGameObjectsWithTag("Pushable");
+        if (heavy != null && pushable != null)
+        {
+            currFurnitureCount = (heavy.Length + pushable.Length);
+            textMesh.SetText(currFurnitureCount.ToString() + "/" + maxFurnitureCount.ToString());
+        }
             
-            }
-            else
-            {
-            currFurnitureCount = 0;
-            }
-            textMesh.text = currFurnitureCount.ToString() + "/" + maxFurnitureCount.ToString();
+        if (currFurnitureCount == 0)
+        {
+            winScreen.SetActive(true);
+        }
 
         
         
