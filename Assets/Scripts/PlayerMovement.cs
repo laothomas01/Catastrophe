@@ -81,11 +81,11 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        moveDir = 
+        moveDir =
             //moving in look direction via Verticle button
-            (transform.forward * move.y) + 
+            (transform.forward * move.y);
             //moving sideways via Horizontal button
-            (transform.right * move.x);
+            //+(transform.right * move.x);
             //move in look direction
         rb.AddForce(moveDir.normalized * moveSpeed * speedMultiplier * Time.fixedDeltaTime, ForceMode.Force);
     }
@@ -109,7 +109,7 @@ public class PlayerMovement : MonoBehaviour
     public void movementInputs()
     {
          //switch between the values of 1,0,-1 based on the input
-        move.x = Input.GetAxisRaw("Horizontal");
+        //move.x = Input.GetAxisRaw("Horizontal");
         move.y = Input.GetAxisRaw("Vertical");
 
         animator.SetBool("isWalking", move.x != 0 || move.y != 0);
@@ -117,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            animator.SetBool("isRunning", true);
+            animator.SetBool("isRunning", animator.GetBool("isWalking"));
             speedMultiplier = 300;
         }
         else
