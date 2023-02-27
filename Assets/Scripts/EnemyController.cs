@@ -143,7 +143,7 @@ public class EnemyController : MonoBehaviour
         {
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                gameOverScreen.SetActive(true);
+                gameOverScreen.GetComponent<GameOver>().toggleGameOverScreen();
             }
 
         }
@@ -152,7 +152,7 @@ public class EnemyController : MonoBehaviour
  
             if (hit2.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                gameOverScreen.SetActive(true);
+                gameOverScreen.GetComponent<GameOver>().toggleGameOverScreen();
             }
 
         }

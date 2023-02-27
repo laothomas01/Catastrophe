@@ -4,12 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class GameOver : MonoBehaviour
 {
-    bool visibleCursor;
     bool gameOver;
     void Start()
     {
-     visibleCursor = false;
-        gameOver = false;
     }
 
     // Update is called once per frame
@@ -19,14 +16,15 @@ public class GameOver : MonoBehaviour
     }
       public void toggleGameOverScreen()
     {
-          Cursor.visible = visibleCursor;
-            gameOver = !gameOver;
-            visibleCursor = !visibleCursor;
-            Time.timeScale = gameOver ? 0 : 1;  
-            this.gameObject.SetActive(gameOver);    
+
+            Cursor.visible = true;
+            Time.timeScale = 0;
+            this.gameObject.SetActive(true);
     }
     public void retryButton()
     {
+        Time.timeScale = 1;
+        Cursor.visible = false;
          SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void goToMainMenu()
