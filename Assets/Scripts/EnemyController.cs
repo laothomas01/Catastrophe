@@ -15,7 +15,7 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     public Transform cat;
     NavMeshAgent agent;
-    public float lerpSpeed,rotateTime,rotateAmount, playerDetectDistance;
+    public float lerpSpeed,rotateTime,rotateAmount, playerDetectDistance, faceDetectDistance;
     private float rotateRight, rotateLeft, timer, rotateTimer;
     private bool rotating=false,triggered=false;
     public Transform face,lookPoint;
@@ -47,7 +47,7 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawRay(face.position, new Vector3(face.forward.x + faceAngles.x,face.forward.y + faceAngles.y, face.forward.z + faceAngles.z) *playerDetectDistance);
+        Debug.DrawRay(face.position, new Vector3(face.forward.x + faceAngles.x,face.forward.y + faceAngles.y, face.forward.z + faceAngles.z) *faceDetectDistance);
         if (Input.GetKey(KeyCode.Space))
         {
             LookAround();
@@ -147,7 +147,7 @@ public class EnemyController : MonoBehaviour
             }
 
         }
-        if (Physics.Raycast(face.position, new Vector3(face.forward.x + faceAngles.x, face.forward.y + faceAngles.y, face.forward.z + faceAngles.z), out hit2, playerDetectDistance, ~layerMask))
+        if (Physics.Raycast(face.position, new Vector3(face.forward.x + faceAngles.x, face.forward.y + faceAngles.y, face.forward.z + faceAngles.z), out hit2, faceDetectDistance, ~layerMask))
         {
  
             if (hit2.transform.gameObject.layer == LayerMask.NameToLayer("Player"))

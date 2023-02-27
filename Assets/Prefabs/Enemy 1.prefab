@@ -1072,11 +1072,12 @@ MonoBehaviour:
   lerpSpeed: 0.1
   rotateTime: 3
   rotateAmount: 90
-  playerDetectDistance: 300
+  playerDetectDistance: 120
+  faceDetectDistance: 120
   face: {fileID: 6885382498804949639}
   lookPoint: {fileID: 712762561327567786}
   gameOverScreen: {fileID: 0}
-  faceAngles: {x: 0, y: 0, z: 0}
+  faceAngles: {x: 0, y: -0.64, z: 0}
   patrolPoints: []
   waitBetweenPatrol: 3
 --- !u!1 &3527113047998948234
