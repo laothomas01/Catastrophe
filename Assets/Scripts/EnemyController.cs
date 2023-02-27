@@ -23,8 +23,7 @@ public class EnemyController : MonoBehaviour
     private Quaternion currentRotation;
     public Vector3 faceAngles;
 
-    public float viewAngle;
-    public float viewRadius;
+
 
     Animator animator;
 
@@ -133,11 +132,6 @@ public class EnemyController : MonoBehaviour
             }
         }
 
-    }
-
-    public Vector3 GetAnglesPov(float angle)
-    {
-        return new Vector3(Mathf.Sin(angle * Mathf.Deg2Rad), 0, Mathf.Cos(angle * Mathf.Deg2Rad));
     }
 
     private void FixedUpdate()
