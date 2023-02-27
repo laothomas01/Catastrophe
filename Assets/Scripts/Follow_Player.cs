@@ -39,6 +39,8 @@ public class Follow_Player : MonoBehaviour
 	}
     void Start() {
         canShake = false;
+        Time.timeScale = 1;
+        Cursor.visible = false;
     }
 
     void Update()
