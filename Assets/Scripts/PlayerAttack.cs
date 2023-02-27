@@ -5,258 +5,54 @@ using TMPro;
 public class PlayerAttack : MonoBehaviour
 
 {
-    private PlayerMovement moveScript;
-    private Animator animator;
-
-    // private Camera camera;
-    private Vector3 maxAttackDirection;
+    private Camera cam;
     public Transform lookPoint;
-
-    [SerializeField]
-    private float attackRange;  
-    [SerializeField]  
-    private bool isAttacking;
+    public float hitDistance;
+    
 
     [SerializeField]
     private float forceAmount;
     [SerializeField]
     private float forceMultiplier;
 
-[SerializeField]
-    private float attackCoolDownTimer;
-    
-    [SerializeField]
-    private float maxAttackCoolDown;
+    Rigidbody rb;
 
-    [SerializeField]
-    bool DEBUG_CAMERA,DEBUG_DESTROY;
-    [SerializeField]
-    private float destroyTime;
- 
     GameObject[] enemies;
-    public bool DEBUG_ATTACK_DIR;
-    [SerializeField]
-    private Color originalColor;
-    int furnitureLayer;
     
+    private Color originalColor;
+
     int layerMask;
-       GameObject hitObj;
+    GameObject hitObj;
+    private bool colorChanged;
+    AudioManager audioManager;
 
-   
-       private bool colorChanged;
 
-    HashSet<GameObject> seenObjs;
-
-[SerializeField]
-    bool isHolding;
-    HashSet<GameObject> destroyedObjs;
     void Start()
     {
-        destroyedObjs = new HashSet<GameObject>();
-        isHolding = false;
-        seenObjs = new HashSet<GameObject>();
+        rb = null;
         colorChanged = false;
         originalColor = new Color();
         hitObj = new GameObject();
-        furnitureLayer = 9;
-        destroyTime = 3;
+        cam = Camera.main;
+        
         //look for all game objects with Enemy tag
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        maxAttackCoolDown = 0;
-        attackCoolDownTimer = maxAttackCoolDown;
-        moveScript = GetComponent<PlayerMovement>();
-        animator = gameObject.GetComponent<Animator>();
-        maxAttackDirection = new Vector3();
-        isAttacking = false;
-        layerMask = 1 << 9;
-        DEBUG_ATTACK_DIR = true;
+        layerMask = 1 << 7; //ignore layer
+
+        audioManager = FindObjectOfType<AudioManager>();
     }
-        void Update() {
-          
-            if(attackCoolDownTimer < maxAttackCoolDown)
-            {
-                attackCoolDownTimer += Time.deltaTime;
-            }
+    void Update() {
 
-
-                //animator.SetBool("HeavyAttacking", isAttacking);
-                maxAttackDirection = moveScript.getLookDirection();
-                maxAttackDirection.y = 20;
-                maxAttackDirection = Vector3.ClampMagnitude(maxAttackDirection,attackRange);
-
-             if(isAttacking)
-            {
-  
-            
-                attackCoolDownTimer = 0;
-            }
-
-            Debug.DrawRay(lookPoint.position,maxAttackDirection,Color.red);
-
-
-            attackInputs();
-        }
-    void FixedUpdate()
+    //isAttacking = ;
+    if (Input.GetMouseButtonDown(0))
     {
-        RaycastHit hit;
-         // Bit shift the index of the layer (9) to get a bit mask
-
-         //e.g: 1 << 9 checks layer 9 ("Furniture layer") 
-    
-//temp variable to compare current and seen hit object
-        if(Physics.Raycast(lookPoint.position,lookPoint.forward,out hit,(maxAttackDirection).magnitude,layerMask))
-        {
-
-            //store data of hit object into global variable
-
-                hitObj = hit.transform.gameObject;
-                
-                
-                if(!colorChanged)
-                {
-                    
-                    originalColor = hit.transform.GetComponent<Renderer>().material.color;
-                    if(hit.transform.gameObject.tag == "Pushable")
-                    {
-                    //if (Input.GetMouseButtonDown(0))
-                    //{
-                    //    Debug.Log("Mousepressed");
-                    //    //AlertEnemy(hit.transform.gameObject, 0);
-                    //    Destroy(hit.transform.gameObject);
-                    //}
-                    hit.transform.GetComponent<Renderer>().material.color = Color.blue;
-                    }
-                    else if(hit.transform.gameObject.tag == "Throwable")
-                    {
-                    //if (Input.GetMouseButtonDown(0))
-                    //{
-                    //    //AlertEnemy(hit.transform.gameObject, 0);
-                    //    Destroy(hit.transform.gameObject);
-                    //}
-                    hit.transform.GetComponent<Renderer>().material.color = Color.yellow;
-                    }
-                    else if (hit.transform.gameObject.tag == "Heavy")
-                    {
-                    //if (Input.GetMouseButtonDown(0))
-                    //{
-                    //    //AlertEnemy(hit.transform.gameObject, 0);
-                    //    Destroy(hit.transform.gameObject);
-                    //}
-                    hit.transform.GetComponent<Renderer>().material.color = Color.red;
-                    }
-                colorChanged = true;
-                }
-                
-
-
-
-//performing attack                
-               if(isAttacking)
-               {
-   
-                Debug.Log(hit.transform.gameObject.tag);
-                   //pushing
-                    if(hit.transform.gameObject.tag == "Pushable")
-                    {
-                    hit.transform.gameObject.GetComponent<Rigidbody>().AddForce(lookPoint.forward * forceAmount * Time.fixedDeltaTime ,ForceMode.Impulse); 
-                    // FindObjectOfType<AudioManager>().Play("punch");
-                     Camera.main.GetComponent<Follow_Player>().setCanShake(true);
-
-                     
-
-                    //Destroy(hit.transform.gameObject);
-                    AlertEnemy(hit.transform.gameObject, 2);
-                    FindObjectOfType<AudioManager>().Play("brokenwood");
-
-                }
-                    //throwing
-                    else if(hit.transform.gameObject.tag == "Throwable")
-                    {
-                        if(isHolding)
-                        {
-                                hit.transform.gameObject.GetComponent<Rigidbody>().AddForce(maxAttackDirection * forceAmount * forceMultiplier * Time.fixedDeltaTime ,ForceMode.Impulse);  
-                                 FindObjectOfType<AudioManager>().Play("throw");
-                                
-                                
-
-
-                        // FindObjectOfType<AudioManager>().Play("brokenwood");
-
-                        //Destroy(hit.transform.gameObject);
-                        AlertEnemy(hit.transform.gameObject, 2);
-                        setHolding(false);
-                        }
-                    }
-                    else if(hit.transform.gameObject.tag == "Heavy")
-                {
-                    AlertEnemy(hit.transform.gameObject, 0);
-                    Camera.main.GetComponent<Follow_Player>().setCanShake(true);
-                }
-
-               }
-
-            if(isHolding)
-            {
-                if(hit.transform.gameObject.tag == "Throwable")
-                 {
-                        hit.transform.position = this.transform.position + maxAttackDirection;
-                        //  FindObjectOfType<AudioManager>().Play("pickup");
-                }
-                else
-                {
-                    setHolding(false);
-                    // FindObjectOfType<AudioManager>().Play("drop");
-
-                }
-
-            }
-         
-              
-        }
-        else
-        {
-          
-          if(hitObj != null)
-
-          {
-            if(hitObj.layer == LayerMask.NameToLayer("Furniture"))
-          {
-            hitObj.GetComponent<Renderer>().material.color = originalColor;
-            colorChanged = false;
-            
-          }
-          }
-
-            
-        }
-    
+        Attack();
     }
-   
-    void attackInputs()
-    {
+     ChangeColor();
 
-        //set attack flag
-        if(Input.GetKeyDown(KeyCode.Mouse0))
-        {
-                   
-                if(attackCoolDownTimer >= maxAttackCoolDown)
-                {
-                    setAttack(true);
-                }
-        }
-        else
-        {
-               setAttack(false);
-
-        }
-        if(Input.GetKeyDown(KeyCode.Mouse1))
-        {
-           isHolding = !isHolding;
-        }
-        
+    Debug.DrawRay(lookPoint.position,lookPoint.forward*hitDistance,Color.red);
 
     }
-
 
 //calls enemy 
  void AlertEnemy(GameObject furniture,float destroyTime)
@@ -267,11 +63,12 @@ public class PlayerAttack : MonoBehaviour
         Transform furn = furniture.transform;
         if(destroyTime > 0)
         {
-            Destroy(furniture, destroyTime);
+            audioManager.Play("brokenwood");
         }
         else
         {
             Destroy(furniture);
+            audioManager.Play("brokenwood");
         }
 
         foreach (GameObject enemy in enemies)
@@ -286,16 +83,80 @@ public class PlayerAttack : MonoBehaviour
         closestEnemy.GetComponent<EnemyController>().InspectFurniture(furn.transform);
 
     }
-    public void setAttack(bool attack)
+
+
+    void ChangeColor()
     {
-        this.isAttacking = attack;
-    }    public void setHolding(bool hold)
-    {
-        this.isHolding = hold;
+        RaycastHit hit;
+
+        if (Physics.Raycast(lookPoint.position, lookPoint.forward, out hit, hitDistance, ~layerMask))
+        {
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Furniture"))
+            {
+                hitObj = hit.transform.gameObject;
+                Renderer renderer = hit.transform.GetComponent<Renderer>();
+
+                if (!colorChanged)
+                {
+                    originalColor = renderer.material.color;
+
+                    if (hitObj.tag == "Heavy")
+                    {
+                        renderer.material.color = Color.red;
+                    }
+
+                    else if (hitObj.tag == "Pushable")
+                    {
+                        renderer.material.color = Color.blue;
+                    }
+                    colorChanged = true;
+                }
+            }
+        }
+        else
+        {
+            if (hitObj != null)
+            {
+                if (hitObj.layer == LayerMask.NameToLayer("Furniture"))
+                {
+                    hitObj.GetComponent<Renderer>().material.color = originalColor;
+                    colorChanged = false;
+
+                }
+            }
+
+
+        }
     }
 
+    void Attack()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(lookPoint.position, lookPoint.forward, out hit, hitDistance, ~layerMask))
+        {
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Furniture"))
+            {
 
- 
+
+                hitObj = hit.transform.gameObject;
+                if (hitObj.tag == "Pushable")
+                {
+                    rb = hitObj.GetComponent<Rigidbody>() == null ? hitObj.AddComponent<Rigidbody>() : hitObj.GetComponent<Rigidbody>();
+                    rb.constraints = RigidbodyConstraints.FreezePositionY;
+                    rb.AddForce(lookPoint.forward * forceAmount * forceMultiplier, ForceMode.Impulse);
+                    cam.GetComponent<Follow_Player>().setCanShake(true);
+                    AlertEnemy(hit.transform.gameObject, 1);
+                    hitObj.AddComponent<ObjectCollision>();
+
+                }
+                else if (hitObj.tag == "Heavy")
+                {
+                    AlertEnemy(hit.transform.gameObject, 0);
+                    cam.GetComponent<Follow_Player>().setCanShake(true);
+                }
+            }
+        }
+    }
 
 
  }

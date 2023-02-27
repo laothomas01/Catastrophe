@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class ObjectCollision : MonoBehaviour
 {
-    
-  // void OnCollisionEnter(Collision col) {
-  //   if(col.gameObject.layer == LayerMask.NameToLayer("Walls"))
-  //   {
-  //           Destroy(this.gameObject);
-  //   }
 
-  // }
+    void OnCollisionEnter(Collision col)
+    {
+            Destroy(this.gameObject);
+
+    }
 
 
-     
-   
+
+
 }

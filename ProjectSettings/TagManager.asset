@@ -9,6 +9,7 @@ TagManager:
   - Throwable
   - Fluid
   - Heavy
+  - Walls
   layers:
   - Default
   - TransparentFX
