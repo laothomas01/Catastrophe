@@ -58,8 +58,11 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        CatDetected();
+        if (VisibleOnScreen())
+        {
+            CatDetected();
+        }
+        
         //Debug.DrawRay(face.position, new Vector3(face.forward.x + faceAngles.x,face.forward.y + faceAngles.y, face.forward.z + faceAngles.z) *faceDetectDistance);
         if (Input.GetKey(KeyCode.Space))
         {
@@ -72,6 +75,13 @@ public class EnemyController : MonoBehaviour
         }
         animator.SetBool("isWalking", agent.velocity.magnitude > 0);
         Patrol();
+    }
+
+    bool VisibleOnScreen()
+    {
+        Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
+        bool onScreen = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
+        return onScreen;
     }
 
     public void InspectFurniture(Transform furniture)
@@ -147,8 +157,8 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    private void FixedUpdate()
-    {
+    //private void FixedUpdate()
+    //{
         //RaycastHit hit,hit2;
         //int layerMask = 1 << 8;
         //Debug.DrawRay(lookPoint.position, lookPoint.forward * playerDetectDistance);
@@ -170,7 +180,7 @@ public class EnemyController : MonoBehaviour
 
         //}
 
-    }
+    //}
 
     Vector3 GetAnglesDir(float angle, bool globalAngle)
     {
@@ -272,4 +282,5 @@ public class EnemyController : MonoBehaviour
 
     }
 
+    
 }
