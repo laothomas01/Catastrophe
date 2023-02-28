@@ -130,14 +130,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2088503147247961473, guid: 791eee04539ad4dc78b4209129099830, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 54fdd95ba5a3643c2937c2bad60a6af8, type: 2}
     - target: {fileID: 2357659931431924966, guid: 791eee04539ad4dc78b4209129099830, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2357659931431924969, guid: 791eee04539ad4dc78b4209129099830, type: 3}
       propertyPath: cat
       value: 
       objectReference: {fileID: 3114240162779470128}
+    - target: {fileID: 2357659931431924969, guid: 791eee04539ad4dc78b4209129099830, type: 3}
+      propertyPath: viewAngle
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 2357659931431924969, guid: 791eee04539ad4dc78b4209129099830, type: 3}
+      propertyPath: viewRadius
+      value: 200
+      objectReference: {fileID: 0}
     - target: {fileID: 2357659931431924969, guid: 791eee04539ad4dc78b4209129099830, type: 3}
       propertyPath: faceAngles.y
       value: -0.64
@@ -146,6 +158,10 @@ PrefabInstance:
       propertyPath: gameOverScreen
       value: 
       objectReference: {fileID: 6106936760264775530}
+    - target: {fileID: 2357659931431924969, guid: 791eee04539ad4dc78b4209129099830, type: 3}
+      propertyPath: visionResoulution
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2357659931431924969, guid: 791eee04539ad4dc78b4209129099830, type: 3}
       propertyPath: waitBetweenPatrol
       value: 7

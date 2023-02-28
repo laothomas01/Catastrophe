@@ -9,19 +9,22 @@ public class EnemyController : MonoBehaviour
      * [X] Patrol patterns (list of positions that the enemy patrols in)
      * [X] Look around the room for a set amount of seconds and then go back
      * [X] If the Cat is spotted, game over
-     * [] Add animations
+     * [X] Add animations
      * [] Add sounds
      */
     // Start is called before the first frame update
     public Transform cat;
     NavMeshAgent agent;
-    public float lerpSpeed,rotateTime,rotateAmount, playerDetectDistance, faceDetectDistance;
+    public float lerpSpeed,rotateTime,rotateAmount;
     private float rotateRight, rotateLeft, timer, rotateTimer;
     private bool rotating=false,triggered=false;
-    public Transform face,lookPoint;
+    public Transform lookPoint;
     public GameObject gameOverScreen;
     private Quaternion currentRotation;
-    public Vector3 faceAngles;
+
+    //PlayerDetection
+    public MeshFilter viewMeshFilter;
+    Mesh viewMesh;
 
 
 
@@ -31,9 +34,17 @@ public class EnemyController : MonoBehaviour
     public Vector3[] patrolPoints;
     public float waitBetweenPatrol;
     private float patrolWaitTimer;
+    public float viewAngle;
+    public float viewRadius;
+    private float catDistance;
+    public float visionResoulution;
 
     void Start()
     {
+        viewMesh = new Mesh();
+        viewMesh.name = "View Mesh";
+        viewMeshFilter.mesh = viewMesh;
+
         animator = gameObject.GetComponent<Animator>();
         patrolWaitTimer = waitBetweenPatrol;
         rotateTimer = 0;
@@ -47,7 +58,9 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawRay(face.position, new Vector3(face.forward.x + faceAngles.x,face.forward.y + faceAngles.y, face.forward.z + faceAngles.z) *faceDetectDistance);
+
+        CatDetected();
+        //Debug.DrawRay(face.position, new Vector3(face.forward.x + faceAngles.x,face.forward.y + faceAngles.y, face.forward.z + faceAngles.z) *faceDetectDistance);
         if (Input.GetKey(KeyCode.Space))
         {
             LookAround();
@@ -136,27 +149,127 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        RaycastHit hit,hit2;
-        int layerMask = 1 << 8;
-        Debug.DrawRay(lookPoint.position, lookPoint.forward * playerDetectDistance);
-        if (Physics.Raycast(lookPoint.position, lookPoint.forward, out hit, playerDetectDistance, ~layerMask))
-        {
-            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
-            {
-                gameOverScreen.GetComponent<GameOver>().toggleGameOverScreen();
-            }
+        //RaycastHit hit,hit2;
+        //int layerMask = 1 << 8;
+        //Debug.DrawRay(lookPoint.position, lookPoint.forward * playerDetectDistance);
+        //if (Physics.Raycast(lookPoint.position, lookPoint.forward, out hit, playerDetectDistance, ~layerMask))
+        //{
+        //    if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
+        //    {
+        //       // gameOverScreen.GetComponent<GameOver>().toggleGameOverScreen();
+        //    }
 
-        }
-        if (Physics.Raycast(face.position, new Vector3(face.forward.x + faceAngles.x, face.forward.y + faceAngles.y, face.forward.z + faceAngles.z), out hit2, faceDetectDistance, ~layerMask))
-        {
+        //}
+        //if (Physics.Raycast(face.position, new Vector3(face.forward.x + faceAngles.x, face.forward.y + faceAngles.y, face.forward.z + faceAngles.z), out hit2, faceDetectDistance, ~layerMask))
+        //{
  
-            if (hit2.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
-            {
-                gameOverScreen.GetComponent<GameOver>().toggleGameOverScreen();
-            }
+        //    if (hit2.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
+        //    {
+        //        //gameOverScreen.GetComponent<GameOver>().toggleGameOverScreen();
+        //    }
 
+        //}
+
+    }
+
+    Vector3 GetAnglesDir(float angle, bool globalAngle)
+    {
+        if (!globalAngle)
+        {
+            angle += transform.eulerAngles.y;
+        }
+        return new Vector3(Mathf.Sin(angle * Mathf.Deg2Rad), 0, Mathf.Cos(angle * Mathf.Deg2Rad));
+    }
+
+   
+
+    void CatDetected()
+    {
+        DrawVision();
+        catDistance = Vector3.Distance(transform.position, cat.position);
+        if (catDistance <= viewRadius)
+        {
+            Vector3 catDir = (cat.position - transform.position).normalized;
+            if (Vector3.Angle(transform.forward, catDir) < viewAngle / 2)
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(lookPoint.transform.position, catDir, out hit, catDistance))
+                {
+                    //Debug.Log("GameOver");
+                    if (hit.transform.gameObject.tag == "Player")
+                    {
+                        gameOverScreen.GetComponent<GameOver>().toggleGameOverScreen();
+                    }
+                }
+            }
+        }
+
+    }
+
+    ViewCastInfo ViewCast(float globalAngle)
+    {
+        Vector3 dir = GetAnglesDir(globalAngle, true);
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, dir, out hit, viewRadius))
+        {
+            GameObject hitObject = hit.transform.gameObject;
+            if(hitObject.tag == "Walls" || hitObject.layer == LayerMask.NameToLayer("Furniture"))
+            return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
+        }
+            return new ViewCastInfo(false, transform.position + dir * viewRadius, viewRadius, globalAngle);
+    }
+
+    //Raycast info struct
+    public struct ViewCastInfo
+    {
+        public bool hit;
+        public Vector3 point;
+        public float dst;
+        public float angle;
+
+        public ViewCastInfo(bool _hit, Vector3 _point, float _dst, float _angle)
+        {
+            hit = _hit;
+            point = _point;
+            dst = _dst;
+            angle = _angle;
         }
     }
 
+
+    void DrawVision()
+    {
+        int rayCount = Mathf.RoundToInt(viewAngle * visionResoulution);
+        float rayAngleSize = viewAngle / rayCount;
+        List<Vector3> viewPoints = new List<Vector3>();
+        for (int i = 0; i <= rayCount; i++)
+        {
+            float angle = transform.eulerAngles.y - viewAngle / 2 + rayAngleSize * i;
+            ViewCastInfo newViewCast = ViewCast(angle);
+            viewPoints.Add(newViewCast.point);
+        }
+
+
+        int vertexCount = viewPoints.Count + 1;
+        Vector3[] vertices = new Vector3[vertexCount];
+        int[] triangles = new int[(vertexCount - 2) * 3];
+        vertices[0] = Vector3.zero;
+        for (int i = 0; i < vertexCount - 1; i++)
+        {
+            vertices[i + 1] = transform.InverseTransformPoint(viewPoints[i]);
+            if (i < vertexCount - 2)
+            {
+                triangles[i * 3] = 0;
+                triangles[i * 3 + 1] = 1 + 1;
+                triangles[i * 3 + 2] = i + 2;
+            }
+        }
+        viewMesh.Clear();
+        viewMesh.vertices = vertices;
+        viewMesh.triangles = triangles;
+        viewMesh.RecalculateNormals();
+
+    }
 
 }
