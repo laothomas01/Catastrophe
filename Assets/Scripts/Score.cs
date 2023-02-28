@@ -24,9 +24,9 @@ public class Score : MonoBehaviour
         //objManage_Script = GameObject.Find("GameObjectManager").GetComponent<ManageGameObjects>();
         //objects = GameObject.FindGameObjectsWithTag("Heavy");
         heavy = GameObject.FindGameObjectsWithTag("Heavy");
-        pushable = GameObject.FindGameObjectsWithTag("Pushable");
+        //pushable = GameObject.FindGameObjectsWithTag("Pushable");
         try{
-            maxFurnitureCount = heavy.Length + pushable.Length;
+            maxFurnitureCount = heavy.Length;
         }
         catch
         {
@@ -40,11 +40,13 @@ public class Score : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-            heavy = GameObject.FindGameObjectsWithTag("Heavy");
-            pushable = GameObject.FindGameObjectsWithTag("Pushable");
-        if (heavy != null && pushable != null)
+        heavy = GameObject.FindGameObjectsWithTag("Heavy");
+            //pushable = GameObject.FindGameObjectsWithTag("Pushable");
+        //if (heavy != null && pushable != null)
+        if (heavy != null)
         {
-            currFurnitureCount = (heavy.Length + pushable.Length);
+            //currFurnitureCount = (heavy.Length + pushable.Length);
+            currFurnitureCount = (heavy.Length);
             textMesh.SetText(currFurnitureCount.ToString() + "/" + maxFurnitureCount.ToString());
         }
             
