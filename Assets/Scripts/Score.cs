@@ -53,6 +53,7 @@ public class Score : MonoBehaviour
         if (currFurnitureCount == 0)
         {
             winScreen.SetActive(true);
+            winScreen.GetComponent<GameOver>().toggleGameOverScreen();
         }
 
         
