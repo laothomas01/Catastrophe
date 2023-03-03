@@ -143,6 +143,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3114240162779470128}
     - target: {fileID: 2357659931431924969, guid: 791eee04539ad4dc78b4209129099830, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2357659931431924969, guid: 791eee04539ad4dc78b4209129099830, type: 3}
       propertyPath: viewAngle
       value: 45
       objectReference: {fileID: 0}
@@ -281,6 +285,10 @@ PrefabInstance:
     - target: {fileID: 3167094434736877136, guid: 791eee04539ad4dc78b4209129099830, type: 3}
       propertyPath: m_Name
       value: Enemy 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3167094434736877136, guid: 791eee04539ad4dc78b4209129099830, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 791eee04539ad4dc78b4209129099830, type: 3}
@@ -4247,6 +4255,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3114240162779470128}
     - target: {fileID: 2357659931431924969, guid: 791eee04539ad4dc78b4209129099830, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2357659931431924969, guid: 791eee04539ad4dc78b4209129099830, type: 3}
       propertyPath: faceAngles.y
       value: -0.64
       objectReference: {fileID: 0}
@@ -4361,6 +4373,10 @@ PrefabInstance:
     - target: {fileID: 3167094434736877136, guid: 791eee04539ad4dc78b4209129099830, type: 3}
       propertyPath: m_Name
       value: Enemy 1 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3167094434736877136, guid: 791eee04539ad4dc78b4209129099830, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 791eee04539ad4dc78b4209129099830, type: 3}
@@ -4490,6 +4506,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3114240162779470128}
     - target: {fileID: 2357659931431924969, guid: 791eee04539ad4dc78b4209129099830, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2357659931431924969, guid: 791eee04539ad4dc78b4209129099830, type: 3}
       propertyPath: faceAngles.y
       value: -0.64
       objectReference: {fileID: 0}
@@ -4616,6 +4636,10 @@ PrefabInstance:
     - target: {fileID: 3167094434736877136, guid: 791eee04539ad4dc78b4209129099830, type: 3}
       propertyPath: m_Name
       value: Enemy 1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3167094434736877136, guid: 791eee04539ad4dc78b4209129099830, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 791eee04539ad4dc78b4209129099830, type: 3}

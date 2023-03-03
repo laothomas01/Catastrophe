@@ -57,8 +57,7 @@ public class PlayerAttack : MonoBehaviour
 //calls enemy 
  void AlertEnemy(GameObject furniture,float destroyTime)
     {
-        //there is always going to be atleast one enemy around
-        GameObject closestEnemy = enemies[0];
+        GameObject closestEnemy = enemies.Length > 0 ? enemies[0]: null;
         float closestDistance = Mathf.Infinity;
         Transform furn = furniture.transform;
         if(destroyTime > 0)
@@ -80,7 +79,10 @@ public class PlayerAttack : MonoBehaviour
                 closestDistance = currDistance;
             }
         }
-        closestEnemy.GetComponent<EnemyController>().InspectFurniture(furn.transform);
+        if(closestEnemy != null)
+        {
+            closestEnemy.GetComponent<EnemyController>().InspectFurniture(furn.transform);
+        }
 
     }
 
