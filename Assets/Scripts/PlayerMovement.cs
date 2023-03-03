@@ -5,27 +5,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 10f;
-    public float speedMultiplier = 10f;
-    private Vector3 move;
-    private Rigidbody rb;
-    private Vector3 moveDir;
-
+    public float moveSpeed, speedMultiplier;
+    private Vector3 move, moveDir, lookDirection, mousePoint;
     public Animator animator;
-
-    private Vector3 mousePoint;
-
-    private Vector3 lookDirection;
-  
     public GameObject mouseObj;
-  
- 
+    private Rigidbody rb;
     Ray cursor_ray;
-
-
-    public bool DEBUG_LOOK_DIR;
-
-    float testRadius;
 
     void Start()
     {
@@ -37,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
         // hit = new RaycastHit();
         cursor_ray = new Ray();
         rb = GetComponent<Rigidbody>();
-        DEBUG_LOOK_DIR = false;
+        //DEBUG_LOOK_DIR = false;
 
     }
 
@@ -54,6 +39,16 @@ public class PlayerMovement : MonoBehaviour
 
 
 
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        
     }
 
     private void FixedUpdate()
