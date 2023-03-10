@@ -9,7 +9,7 @@ public class PlayerAttack : MonoBehaviour
     public Transform lookPoint;
     public float hitDistance;
     
-
+    FieldOfView fov;
     [SerializeField]
     private float forceAmount;
     [SerializeField]
@@ -26,9 +26,10 @@ public class PlayerAttack : MonoBehaviour
     private bool colorChanged;
     AudioManager audioManager;
 
-
+    public LayerMask targetMask,obstacleMask;
     void Start()
     {
+        fov = GetComponent<FieldOfView>();
         rb = null;
         colorChanged = false;
         originalColor = new Color();
@@ -44,12 +45,14 @@ public class PlayerAttack : MonoBehaviour
     void Update() {
 
     //isAttacking = ;
-    if (Input.GetMouseButtonDown(0))
-    {
-        Attack();
-    }
-     ChangeColor();
+    // if (Input.GetMouseButtonDown(0))
+    // {
+    //     Attack();
+    // }
+     DetectFurniture();
 
+    Debug.DrawRay(lookPoint.position,lookPoint.forward*hitDistance,Color.red);
+    Debug.DrawRay(lookPoint.position,lookPoint.forward*hitDistance,Color.red);
     Debug.DrawRay(lookPoint.position,lookPoint.forward*hitDistance,Color.red);
 
     }
@@ -87,78 +90,96 @@ public class PlayerAttack : MonoBehaviour
     }
 
 
-    void ChangeColor()
+    void DetectFurniture()
     {
-        RaycastHit hit;
 
-        if (Physics.Raycast(lookPoint.position, lookPoint.forward, out hit, hitDistance, ~layerMask))
-        {
-            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Furniture"))
-            {
-                hitObj = hit.transform.gameObject;
-                Renderer renderer = hit.transform.GetComponent<Renderer>();
+            int stepCount = Mathf.RoundToInt(fov.getViewAngle() * fov.getMeshResolution() );
+            //size of singular view angle
+            float stepAngleSize = fov.getViewAngle() / stepCount;
+            // for(int i = 0; i <= stepCount; i++)
+            // {
+            //     // float angle = transform.eulerAngles.y - fov.getViewAngle()/2 + stepAngleSize * i;
+                
+            //     // Debug.DrawLine(lookPoint.position,lookPoint.forward * hitDistance * fov.DirFromAngle(fov.getViewAngle(),true) * fov.getViewRadius(),Color.red);
+            // }
+        // //     // if( < fov.getViewAngle()/2)
+        // //     // {
+        // //     //     float dstToTarget = Vector3.Distance
+        // //     // }
+        // // }
+        // // RaycastHit hit;
 
-                if (!colorChanged)
-                {
-                    originalColor = renderer.material.color;
+        // // if (Physics.Raycast(lookPoint.position, lookPoint.forward, out hit, hitDistance, ~layerMask))
+        // // {
+        // //     if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Furniture"))
+        // //     {
+        // //         hitObj = hit.transform.gameObject;
+        // //         Renderer renderer = hit.transform.GetComponent<Renderer>();
 
-                    if (hitObj.tag == "Heavy")
-                    {
-                        renderer.material.color = Color.red;
-                    }
+        // //         if (!colorChanged)
+        // //         {
+        // //             originalColor = renderer.material.color;
 
-                    else if (hitObj.tag == "Pushable")
-                    {
-                        renderer.material.color = Color.blue;
-                    }
-                    colorChanged = true;
-                }
-            }
-        }
-        else
-        {
-            if (hitObj != null)
-            {
-                if (hitObj.layer == LayerMask.NameToLayer("Furniture"))
-                {
-                    hitObj.GetComponent<Renderer>().material.color = originalColor;
-                    colorChanged = false;
+        // //             if (hitObj.tag == "Heavy")
+        // //             {
+        // //                 renderer.material.color = Color.red;
+        // //             }
 
-                }
-            }
+        // //             else if (hitObj.tag == "Pushable")
+        // //             {
+        // //                 renderer.material.color = Color.blue;
+        // //             }
+        // //             colorChanged = true;
+        // //         }
+        // //     }
+        // // }
+        // // else
+        // // {
+        // //     if (hitObj != null)
+        // //     {
+        // //         if (hitObj.layer == LayerMask.NameToLayer("Furniture"))
+        // //         {
+        // //             hitObj.GetComponent<Renderer>().material.color = originalColor;
+        // //             colorChanged = false;
+
+        // //         }
+        // //     }
 
 
-        }
+        // }
+
     }
 
     void Attack()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(lookPoint.position, lookPoint.forward, out hit, hitDistance, ~layerMask))
-        {
-            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Furniture"))
-            {
+        // RaycastHit hit;
+        // if (Physics.Raycast(lookPoint.position, lookPoint.forward, out hit, hitDistance, ~layerMask))
+        // {
+        //     if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Furniture"))
+        //     {
 
 
-                hitObj = hit.transform.gameObject;
-                if (hitObj.tag == "Pushable")
-                {
-                    rb = hitObj.GetComponent<Rigidbody>() == null ? hitObj.AddComponent<Rigidbody>() : hitObj.GetComponent<Rigidbody>();
-                    rb.constraints = RigidbodyConstraints.FreezePositionY;
-                    rb.AddForce(lookPoint.forward * forceAmount * forceMultiplier, ForceMode.Impulse);
-                    cam.GetComponent<Follow_Player>().setCanShake(true);
-                    AlertEnemy(hit.transform.gameObject, 1);
-                    hitObj.AddComponent<ObjectCollision>();
+        //         hitObj = hit.transform.gameObject;
+        //         if (hitObj.tag == "Pushable")
+        //         {
+        //             rb = hitObj.GetComponent<Rigidbody>() == null ? hitObj.AddComponent<Rigidbody>() : hitObj.GetComponent<Rigidbody>();
+        //             rb.constraints = RigidbodyConstraints.FreezePositionY;
+        //             rb.AddForce(lookPoint.forward * forceAmount * forceMultiplier, ForceMode.Impulse);
+        //             cam.GetComponent<Follow_Player>().setCanShake(true);
+        //             AlertEnemy(hit.transform.gameObject, 1);
+        //             hitObj.AddComponent<ObjectCollision>();
 
-                }
-                else if (hitObj.tag == "Heavy")
-                {
-                    AlertEnemy(hit.transform.gameObject, 0);
-                    cam.GetComponent<Follow_Player>().setCanShake(true);
-                }
-            }
-        }
-    }
+        //         }
+        //         else if (hitObj.tag == "Heavy")
+        //         {
+        //             AlertEnemy(hit.transform.gameObject, 0);
+        //             cam.GetComponent<Follow_Player>().setCanShake(true);
+        //         }
+        //     }
+        // }
+    } 
+    
+   
 
 
  }
