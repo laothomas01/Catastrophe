@@ -63,11 +63,11 @@ public class EnemyController : MonoBehaviour
             CatDetected();
         }
         
-        //Debug.DrawRay(face.position, new Vector3(face.forward.x + faceAngles.x,face.forward.y + faceAngles.y, face.forward.z + faceAngles.z) *faceDetectDistance);
-        if (Input.GetKey(KeyCode.Space))
-        {
-            LookAround();
-        }
+        // //Debug.DrawRay(face.position, new Vector3(face.forward.x + faceAngles.x,face.forward.y + faceAngles.y, face.forward.z + faceAngles.z) *faceDetectDistance);
+        // if (Input.GetKey(KeyCode.Space))
+        // {
+        //     LookAround();
+        // }
 
         if (AgentReachedDestination(agent))
         {

@@ -6,7 +6,8 @@ public class GameOver : MonoBehaviour
 {
     bool gameOver;
     void Start()
-    {
+    {   
+        Camera.main.GetComponent<Follow_Player>().setCanShake(false);
     }
 
     // Update is called once per frame
