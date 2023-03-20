@@ -11,6 +11,7 @@ public class FieldOfView : MonoBehaviour
     public float viewRadius;
     public float meshResolution;
 
+// offset by angle + point in specific direction
     public Vector3 DirFromAngle(float angle, bool globalAngle)
     {
         if (!globalAngle)

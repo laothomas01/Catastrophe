@@ -288,7 +288,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3167094434736877136, guid: 791eee04539ad4dc78b4209129099830, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 791eee04539ad4dc78b4209129099830, type: 3}
@@ -4376,7 +4376,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3167094434736877136, guid: 791eee04539ad4dc78b4209129099830, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 791eee04539ad4dc78b4209129099830, type: 3}
@@ -4639,7 +4639,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3167094434736877136, guid: 791eee04539ad4dc78b4209129099830, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 791eee04539ad4dc78b4209129099830, type: 3}
@@ -6949,8 +6949,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1956806205}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.1243, z: 0.1017}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13441,7 +13441,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2338441609345614730}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 162, y: 27.19999, z: 98}
+  m_LocalPosition: {x: 250.5, y: 27.19999, z: 148.3}
   m_LocalScale: {x: 150, y: 150, z: 150}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -13480,8 +13480,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visibleTargets: []
   viewAngle: 45
-  viewRadius: 45
-  meshResolution: 0.5
+  viewRadius: 30
+  meshResolution: 0.15
 --- !u!1 &3272042356782023949
 GameObject:
   m_ObjectHideFlags: 0
