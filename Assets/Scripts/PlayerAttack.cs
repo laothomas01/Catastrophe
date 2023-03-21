@@ -9,7 +9,7 @@ public class PlayerAttack : MonoBehaviour
     public Transform lookPoint;
     public float hitDistance;
     private Queue<GameObject> seenFurniture;
-    // private List<GameObject> seenFurniture;
+    private Queue<GameObject> destroyedObjects;
 
     FieldOfView fov;
     [SerializeField]
@@ -48,6 +48,7 @@ public class PlayerAttack : MonoBehaviour
         hitObj = new GameObject();
         cam = Camera.main;
         seenFurniture = new Queue<GameObject>();
+        destroyedObjects = new Queue<GameObject>();
         //look for all game objects with Enemy tag
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         layerMask = 1 << 7; //ignore layer
@@ -276,19 +277,21 @@ public class PlayerAttack : MonoBehaviour
 
                 if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Furniture"))
                 {
-                    float destroyTime;
-                    if (hit.transform.gameObject.tag == "Heavy")
+                    // float destroyTime;
+                    if (hit.transform.tag == "Heavy")
                     {
-                        destroyTime = 0;
-                        Destroy(hit.transform.gameObject, destroyTime);
+                        // destroyTime = 0
+                        // Destroy(hit.transform.gameObject, destroyTime);
                         // AlertEnemy(hit.transform.gameObject,0);
+                        destroyedObjects.Enqueue(hit.transform.gameObject);
                         cam.GetComponent<Follow_Player>().setCanShake(true);
+
                         break;
                     }
-                    else if (hit.transform.gameObject.tag == "Pushable")
+                    else if (hit.transform.tag == "Pushable")
                     {
                         GameObject target = hit.transform.gameObject;
-                        destroyTime = 0.5f;
+                        // destroyTime = 0.5f;
                         //dont give object rigid body if already has rigid body
                         if (target.GetComponent<Rigidbody>() == null)
                         {
@@ -297,6 +300,7 @@ public class PlayerAttack : MonoBehaviour
                         rb = target.GetComponent<Rigidbody>();
                         rb.AddForce(fov.DirFromAngle(angle, true) * forceAmount * forceMultiplier, ForceMode.Impulse);
                         rb.constraints = RigidbodyConstraints.FreezePositionY;
+                        destroyedObjects.Enqueue(hit.transform.gameObject);
                         // rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
                         /*
 
@@ -304,7 +308,8 @@ public class PlayerAttack : MonoBehaviour
 
                         */
 
-                        Destroy(hit.transform.gameObject, destroyTime);
+
+                        // Destroy(hit.transform.gameObject, destroyTime);
                         cam.GetComponent<Follow_Player>().setCanShake(true);
 
                         //break because we hit with 1 raycast and dont need to multiple the physics by N amount of raycasts
@@ -399,7 +404,27 @@ public class PlayerAttack : MonoBehaviour
             // viewPoints.Add(newViewCast.point);
 
         }
-        // i
+
+
+        if (destroyedObjects.Count > 0)
+        {
+            GameObject target = destroyedObjects.Dequeue();
+            if (target != null)
+            {
+                float destroyTime;
+                if (target.tag == "Heavy")
+                {
+                    destroyTime = 0;
+                    AlertEnemy(target, destroyTime);
+                }
+                else if (target.tag == "Pushable")
+                {
+                    destroyTime = 1.5f;
+                    AlertEnemy(target, destroyTime);
+                }
+            }
+        }
+
     }
 
 
