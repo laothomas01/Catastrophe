@@ -54,6 +54,7 @@ public class Score : MonoBehaviour
         {
             winScreen.SetActive(true);
             winScreen.GetComponent<GameOver>().toggleGameOverScreen();
+            Camera.main.GetComponent<Follow_Player>().setCanShake(false);
         }
 
         

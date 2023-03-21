@@ -27,7 +27,6 @@ public class PlayerAttack : MonoBehaviour
     GameObject hitObj;
     private bool colorChanged;
     AudioManager audioManager;
-
     Mesh viewMesh;
 
     public MeshFilter viewMeshFilter;
@@ -67,9 +66,6 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-
-        //      Debug.DrawRay(lookPoint.position,lookPoint.forward + ,Color.red);
-        // Debug.DrawRay(lookPoint.position,lookPoint.forward*hitDistance * 2,Color.blue);
         // Debug.DrawRay(lookPoint.position,lookPoint.forward*hitDistance * 4,Color.green);
         DetectFurniture();
 
@@ -124,14 +120,15 @@ public class PlayerAttack : MonoBehaviour
         rayCount = Mathf.RoundToInt(fov.getViewAngle() * fov.getMeshResolution());
         rayAngleSize = fov.getViewAngle() / rayCount;
 
-        Debug.Log(seenFurniture.Count);
+        // Debug.Log(seenFurniture.Count);
         for (int i = 0; i <= rayCount; ++i)
         {
             //the offset angle of the ray cast
             float fovDirectionAngle = transform.eulerAngles.y - fov.getViewAngle() / 2 + rayAngleSize * i;
+            // lookPoint.forward = fov.DirFromAngle(fovDirectionAngle, true);
 
             RaycastHit hit;
-
+            Debug.DrawRay(lookPoint.position, fov.DirFromAngle(fovDirectionAngle, true) * fov.getViewRadius(), Color.green);
             if (Physics.Raycast(lookPoint.position, fov.DirFromAngle(fovDirectionAngle, true), out hit, fov.getViewRadius()))
             {
 
@@ -161,7 +158,7 @@ public class PlayerAttack : MonoBehaviour
                     if (target != null)
                     {
                         target.GetComponent<Renderer>().material.color = Color.white;
-                        
+
                     }
                 }
             }
@@ -266,13 +263,12 @@ public class PlayerAttack : MonoBehaviour
 
         int rayCount = Mathf.RoundToInt(fov.getViewAngle() * fov.getMeshResolution());
         float rayAngleSize = fov.getViewAngle() / rayCount;
-        // List<Vector3> viewPoints = new List<Vector3>();
         for (int i = 0; i <= rayCount; i++)
         {
-            //the offset angle of the ray cast
+            //the offset angle of each ray cast
             float angle = transform.eulerAngles.y - fov.getViewAngle() / 2 + rayAngleSize * i;
 
-            Debug.DrawRay(lookPoint.position, fov.DirFromAngle(angle, true) * fov.getViewRadius(), Color.red);
+            // Debug.DrawRay(lookPoint.position, fov.DirFromAngle(angle, true) * fov.getViewRadius(), Color.red);
 
             RaycastHit hit;
             if (Physics.Raycast(lookPoint.position, fov.DirFromAngle(angle, true), out hit, fov.getViewRadius()))
@@ -280,17 +276,39 @@ public class PlayerAttack : MonoBehaviour
 
                 if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Furniture"))
                 {
+                    float destroyTime;
                     if (hit.transform.gameObject.tag == "Heavy")
                     {
-
-                        Destroy(hit.transform.gameObject, 0);
+                        destroyTime = 0;
+                        Destroy(hit.transform.gameObject, destroyTime);
                         // AlertEnemy(hit.transform.gameObject,0);
                         cam.GetComponent<Follow_Player>().setCanShake(true);
                         break;
                     }
-                    else if(hit.transform.gameObject.tag == "Pushable")
+                    else if (hit.transform.gameObject.tag == "Pushable")
                     {
-                        // rb = hit.transform.GetComponent<Rigidbody>();
+                        GameObject target = hit.transform.gameObject;
+                        destroyTime = 0.5f;
+                        //dont give object rigid body if already has rigid body
+                        if (target.GetComponent<Rigidbody>() == null)
+                        {
+                            target.AddComponent<Rigidbody>();
+                        }
+                        rb = target.GetComponent<Rigidbody>();
+                        rb.AddForce(fov.DirFromAngle(angle, true) * forceAmount * forceMultiplier, ForceMode.Impulse);
+                        rb.constraints = RigidbodyConstraints.FreezePositionY;
+                        // rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+                        /*
+
+                        Handle potential collisions with other furniture
+
+                        */
+
+                        Destroy(hit.transform.gameObject, destroyTime);
+                        cam.GetComponent<Follow_Player>().setCanShake(true);
+
+                        //break because we hit with 1 raycast and dont need to multiple the physics by N amount of raycasts
+                        break;
                     }
                 }
             }
