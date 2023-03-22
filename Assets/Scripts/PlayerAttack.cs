@@ -56,12 +56,7 @@ public class PlayerAttack : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
     }
 
-    //isAttacking = ;
-    // if (Input.GetMouseButtonDown(0))
-    // {
-    //     Attack();
-    // }
-    //  DrawVision();
+
 
 
 
@@ -90,6 +85,7 @@ public class PlayerAttack : MonoBehaviour
         Transform furn = furniture.transform;
         if (destroyTime > 0)
         {
+            Destroy(furniture, destroyTime);
             audioManager.Play("brokenwood");
         }
         else
@@ -121,104 +117,14 @@ public class PlayerAttack : MonoBehaviour
         rayCount = Mathf.RoundToInt(fov.getViewAngle() * fov.getMeshResolution());
         rayAngleSize = fov.getViewAngle() / rayCount;
 
-        // Debug.Log(rayCount);
 
-        // int i = 0;
-        // int j = rayCount - 1;
-        // while (i < j)
-        // {
-        //     if (i >= j)
-        //     {
-        //         i = 0;
-        //         j = rayCount - 1;
-        //     }
-        //     float left = transform.eulerAngles.y - fov.getViewAngle() / 2 + rayAngleSize * i;
-        //     float right = transform.eulerAngles.y - fov.getViewAngle() / 2 + rayAngleSize * j;
-
-        //     // Debug.Log(" i: " + i + " left: " + left + "," + " j: " + j + " right: " + right);
-        //     RaycastHit hit;
-        //     if (Physics.Raycast(lookPoint.position, fov.DirFromAngle(left, true) * fov.getViewRadius(), out hit, fov.getViewRadius())
-
-        //     // || Physics.Raycast(lookPoint.position, fov.DirFromAngle(right, true) * fov.getViewRadius(), out hit, fov.getViewRadius())
-
-        //     )
-        //     {
-
-        //         Debug.DrawRay(lookPoint.position, fov.DirFromAngle(left, true) * fov.getViewRadius(), Color.green);
-
-        //         Debug.Log("hit object:" + hit.transform.name);
-        //     }
-        //     // else if (Physics.Raycast(lookPoint.position, fov.DirFromAngle(right, true) * fov.getViewRadius(), out hit, fov.getViewRadius()))
-        //     // {
-
-        //     //     Debug.DrawRay(lookPoint.position, fov.DirFromAngle(right, true) * fov.getViewRadius(), Color.green);
-
-        //     //     Debug.Log("Ray: " + i + "at angle:" + right + "hit object:" + hit.transform.name);
-        //     // }
-        //     i++;
-        //     j--;
-        // }
-        // for (int i = 0,j = rayCount; i < rayCount; i++)
-        // {
-        //     float angle = transform.eulerAngles.y - fov.getViewAngle() / 2 + rayAngleSize * i;
-        //     // Debug.Log(" left side angle: " + i + " at " + angle + ":" + " right side angle: " + j + " at " + angle2);
-        //     RaycastHit hit;
-        //     if (Physics.Raycast(lookPoint.position, fov.DirFromAngle(angle, true) * fov.getViewRadius(), out hit, fov.getViewRadius()))
-        //     {
-        //         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Furniture"))
-        //         {
-
-        //             Debug.DrawRay(lookPoint.position, fov.DirFromAngle(angle, true) * fov.getViewRadius(), Color.green);
-
-        //             Debug.Log("Ray: " + i + "at angle:" + angle + "hit object:" + hit.transform.name);
-        //         }
-        //     }
-        //     // else if (Physics.Raycast(lookPoint.position, fov.DirFromAngle(angle2, true) * fov.getViewRadius(), out hit, fov.getViewRadius()))
-        //     // {
-        //     //     if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Furniture"))
-        //     //     {
-
-        //     //         // Debug.DrawRay(lookPoint.position, fov.DirFromAngle(angle, true) * fov.getViewRadius(), Color.green);
-
-        //     //         Debug.Log("Ray: " + j + "at angle:" + angle2 + "hit object:" + hit.transform.name);
-        //     //     }
-        //     // }
-        // }
-        // for (int j = rayCount; j >= 0; j--)
-        // {
-        //     float angle = transform.eulerAngles.y - fov.getViewAngle() / 2 + rayAngleSize * j;
-        //     // Debug.Log(" left side angle: " + i + " at " + angle + ":" + " right side angle: " + j + " at " + angle2);
-        //     RaycastHit hit;
-        //     if (Physics.Raycast(lookPoint.position, fov.DirFromAngle(angle, true) * fov.getViewRadius(), out hit, fov.getViewRadius()))
-        //     {
-        //         if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Furniture"))
-        //         {
-
-        //             Debug.DrawRay(lookPoint.position, fov.DirFromAngle(angle, true) * fov.getViewRadius(), Color.green);
-
-        //             Debug.Log("Ray: " + i + "at angle:" + angle + "hit object:" + hit.transform.name);
-        //         }
-        //     }
-        //     // else if (Physics.Raycast(lookPoint.position, fov.DirFromAngle(angle2, true) * fov.getViewRadius(), out hit, fov.getViewRadius()))
-        //     // {
-        //     //     if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Furniture"))
-        //     //     {
-
-        //     //         // Debug.DrawRay(lookPoint.position, fov.DirFromAngle(angle, true) * fov.getViewRadius(), Color.green);
-
-        //     //         Debug.Log("Ray: " + j + "at angle:" + angle2 + "hit object:" + hit.transform.name);
-        //     //     }
-        //     // }
-        // }
-
-
-
-        // Debug.Log(seenFurniture.Count);
+        //calculating index of maximum and minimum angle
         for (int i = 0, j = rayCount - 1; i < rayCount; i++, j--)
         {
 
             //the offset angle of the ray cast
             float angle = transform.eulerAngles.y - fov.getViewAngle() / 2 + rayAngleSize * i;
+
             if (j < 0)
             {
                 j = rayCount;
@@ -229,15 +135,14 @@ public class PlayerAttack : MonoBehaviour
             // lookPoint.forward = fov.DirFromAngle(fovDirectionAngle, true);
 
             RaycastHit hit;
-            Debug.DrawRay(lookPoint.position, fov.DirFromAngle(angle, true), Color.green);
+            // Debug.DrawRay(lookPoint.position, fov.DirFromAngle(angle, true), Color.green);
             if (Physics.Raycast(lookPoint.position, fov.DirFromAngle(angle, true), out hit, fov.getViewRadius()) || Physics.Raycast(lookPoint.position, fov.DirFromAngle(angle2, true), out hit, fov.getViewRadius()))
             {
 
                 if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Furniture"))
                 {
-                    Debug.DrawRay(lookPoint.position, fov.DirFromAngle(angle, true) * fov.getViewRadius(), Color.green);
+                    // Debug.DrawRay(lookPoint.position, fov.DirFromAngle(angle, true) * fov.getViewRadius(), Color.green);
 
-                    // Debug.Log("DETECTED:" + hit.transform.name);
                     if (!seenFurniture.Contains(hit.transform.gameObject))
                     {
                         Renderer render = hit.transform.GetComponent<Renderer>();
@@ -258,8 +163,6 @@ public class PlayerAttack : MonoBehaviour
 
             else
             {
-                // seenFurniture.Dequeue();
-                // Debug.Log("NOT SEEING ANYTHING!");
                 if (seenFurniture.Count > 0)
                 {
                     GameObject target = seenFurniture.Dequeue();
@@ -285,7 +188,7 @@ public class PlayerAttack : MonoBehaviour
         for (int i = 0; i <= rayCount; i++)
         {
             float angle = transform.eulerAngles.y - fov.getViewAngle() / 2 + rayAngleSize * i;
-            Debug.DrawLine(transform.position, transform.position + fov.DirFromAngle(angle, true) * fov.getViewRadius(), Color.red);
+            // Debug.DrawLine(transform.position, transform.position + fov.DirFromAngle(angle, true) * fov.getViewRadius(), Color.red);
             ViewCastInfo newViewCast = ViewCast(angle);
             viewPoints.Add(newViewCast.point);
         }
@@ -346,43 +249,30 @@ public class PlayerAttack : MonoBehaviour
 
     void Attack()
     {
-        // RaycastHit hit;
-        // if (Physics.Raycast(lookPoint.position, lookPoint.forward, out hit, hitDistance, ~layerMask))
-        // {
-        //     if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Furniture"))
-        //     {
-
-
-        //         hitObj = hit.transform.gameObject;
-        //         if (hitObj.tag == "Pushable")
-        //         {
-        //             rb = hitObj.GetComponent<Rigidbody>() == null ? hitObj.AddComponent<Rigidbody>() : hitObj.GetComponent<Rigidbody>();
-        //             rb.constraints = RigidbodyConstraints.FreezePositionY;
-        //             rb.AddForce(lookPoint.forward * forceAmount * forceMultiplier, ForceMode.Impulse);
-        //             cam.GetComponent<Follow_Player>().setCanShake(true);
-        //             AlertEnemy(hit.transform.gameObject, 1);
-        //             hitObj.AddComponent<ObjectCollision>();
-
-        //         }
-        //         else if (hitObj.tag == "Heavy")
-        //         {
-        //             AlertEnemy(hit.transform.gameObject, 0);
-        //             cam.GetComponent<Follow_Player>().setCanShake(true);
-        //         }
-        //     }
-        // }
 
         int rayCount = Mathf.RoundToInt(fov.getViewAngle() * fov.getMeshResolution());
         float rayAngleSize = fov.getViewAngle() / rayCount;
-        for (int i = 0; i <= rayCount; i++)
+
+
+        for (int i = 0, j = rayCount; i <= rayCount; i++, j--)
         {
-            //the offset angle of each ray cast
+
+
+            //minimum offset angle
             float angle = transform.eulerAngles.y - fov.getViewAngle() / 2 + rayAngleSize * i;
 
+
+            if (j < 0)
+            {
+                j = rayCount;
+            }
+            //maximum offset angle
+            float angle2 = transform.eulerAngles.y - fov.getViewAngle() / 2 + rayAngleSize * j;
             // Debug.DrawRay(lookPoint.position, fov.DirFromAngle(angle, true) * fov.getViewRadius(), Color.red);
 
             RaycastHit hit;
-            if (Physics.Raycast(lookPoint.position, fov.DirFromAngle(angle, true), out hit, fov.getViewRadius()))
+
+            if (Physics.Raycast(lookPoint.position, fov.DirFromAngle(angle, true), out hit, fov.getViewRadius()) || Physics.Raycast(lookPoint.position, fov.DirFromAngle(angle2, true), out hit, fov.getViewRadius()))
             {
 
                 if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Furniture"))
@@ -390,12 +280,8 @@ public class PlayerAttack : MonoBehaviour
                     // float destroyTime;
                     if (hit.transform.tag == "Heavy")
                     {
-                        // destroyTime = 0
-                        // Destroy(hit.transform.gameObject, destroyTime);
-                        // AlertEnemy(hit.transform.gameObject,0);
                         destroyedObjects.Enqueue(hit.transform.gameObject);
                         cam.GetComponent<Follow_Player>().setCanShake(true);
-
                         break;
                     }
                     else if (hit.transform.tag == "Pushable")
@@ -409,20 +295,18 @@ public class PlayerAttack : MonoBehaviour
                         }
                         rb = target.GetComponent<Rigidbody>();
                         rb.AddForce(fov.DirFromAngle(angle, true) * forceAmount * forceMultiplier, ForceMode.Impulse);
+
                         rb.constraints = RigidbodyConstraints.FreezePositionY;
-                        destroyedObjects.Enqueue(hit.transform.gameObject);
+
                         /*
 
                         Handle potential collisions with other furniture
 
                         */
 
-
-
-                        // Destroy(hit.transform.gameObject, destroyTime);
+                        destroyedObjects.Enqueue(target);
                         cam.GetComponent<Follow_Player>().setCanShake(true);
 
-                        //break because we hit with 1 raycast and dont need to multiple the physics by N amount of raycasts
                         break;
                     }
                 }
@@ -436,16 +320,14 @@ public class PlayerAttack : MonoBehaviour
             GameObject target = destroyedObjects.Dequeue();
             if (target != null)
             {
-                float destroyTime;
                 if (target.tag == "Heavy")
                 {
-                    destroyTime = 0;
-                    AlertEnemy(target, destroyTime);
+                    AlertEnemy(target, 0);
                 }
                 else if (target.tag == "Pushable")
                 {
-                    destroyTime = 1.5f;
-                    AlertEnemy(target, destroyTime);
+                    AlertEnemy(target, 0.5f);
+
                 }
             }
         }
