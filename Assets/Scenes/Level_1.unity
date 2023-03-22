@@ -8022,8 +8022,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 465, y: -35.80005}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 449.96793, y: -35.80005}
+  m_SizeDelta: {x: 202.1039, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2128438820
 CanvasRenderer:
@@ -13616,7 +13616,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visibleTargets: []
   viewAngle: 45
-  viewRadius: 30
+  viewRadius: 35
   meshResolution: 0.15
 --- !u!1 &3272042356782023949
 GameObject:
@@ -17449,7 +17449,7 @@ MonoBehaviour:
   sounds:
   - name: brokenwood
     clip: {fileID: 8300000, guid: b2f3820d32903ddb0b65fa8ccdf89609, type: 3}
-    volume: 0.309
+    volume: 0.071
     pitch: 1
     loop: 0
     source: {fileID: 0}
