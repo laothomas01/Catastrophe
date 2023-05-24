@@ -12,3 +12,5 @@ Game made for Ludwig's 2023 game Jam
 - Photoshop
 ## Game link
 https://flyingpigknuckle.itch.io/catastrophe
+## Game trailer
+https://www.youtube.com/watch?v=IXv69D-VswU&ab_channel=ThomasLao 
