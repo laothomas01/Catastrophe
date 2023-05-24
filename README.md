@@ -10,6 +10,7 @@ Game made for Ludwig's 2023 game Jam
 - C#
 - Blender
 - Photoshop
+- Unity Game Engine
 ## Game link
 https://flyingpigknuckle.itch.io/catastrophe
 ## Game trailer
