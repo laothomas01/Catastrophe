@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-
-public class AndroidControls : MonoBehaviour
+public class Movement_AndroidControls : MonoBehaviour
 {
     PlayerInput playerInput;
     Rigidbody rigidbody;
@@ -10,8 +9,10 @@ public class AndroidControls : MonoBehaviour
     Vector3 movementDir;
     Vector3 lookDirection;
     public float moveSpeed;
-    public float moveSpeedMultiplier;
+    public int moveSpeedMultiplier;
 
+    //temporary solution
+    bool isSprinting = false;
     void Awake()
     {
         animator = GetComponent<Animator>();
@@ -29,9 +30,10 @@ public class AndroidControls : MonoBehaviour
 
     void Update()
     {
-        movementInput = playerInput.actions["Movement"].ReadValue<Vector2>();
+        movementInput = playerInput.actions["Walk"].ReadValue<Vector2>();
+
         //@TODO: toggle sprint on/off with button 
-        Debug.Log(movementInput);
+        // Debug.Log(movementInput);
         lookDirection = new Vector3(movementInput.x, 0f, movementInput.y).normalized;
         if (lookDirection != Vector3.zero)
         {
@@ -45,6 +47,27 @@ public class AndroidControls : MonoBehaviour
             //direction is always "forward" aka positive but the angle differs
             movementInput.y *= -1;
         }
+
+        if(playerInput.actions["ToggleSprint"].triggered)
+        {
+            isSprinting = !isSprinting;
+            Debug.Log("isSprinting:" + isSprinting);
+        }
+
+        //perform walk animation if movement input not 0
+        animator.SetBool("isWalking", movementInput.x != 0 || movementInput.y != 0);
+        
+        if(isSprinting)
+        {
+            animator.SetBool("isRunning",animator.GetBool("isWalking"));
+            moveSpeedMultiplier = 300;
+        }
+        else
+        {
+            animator.SetBool("isRunning",false);
+            moveSpeedMultiplier = 200;
+        }
+        //  Debug.Log("isSprinting:" + isSprinting);
     }
 
     void FixedUpdate()
@@ -53,6 +76,5 @@ public class AndroidControls : MonoBehaviour
         //Calculate movement direction from joystick input
         movementDir = transform.forward * movementInput.y;
         rigidbody.AddForce(movementDir.normalized * moveSpeed * moveSpeedMultiplier * Time.fixedDeltaTime, ForceMode.Force);
-
     }
 }

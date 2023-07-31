@@ -24,40 +24,38 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     ""name"": ""PlayerInputActions"",
     ""maps"": [
         {
-            ""name"": ""Player_MouseKeyboard"",
+            ""name"": ""AndroidControls"",
             ""id"": ""1ea6d8e0-343e-4ee2-9bb8-5d587ab4fa8c"",
             ""actions"": [
                 {
-                    ""name"": ""Attack"",
-                    ""type"": ""Button"",
-                    ""id"": ""3f6bd082-9645-4386-8449-d83267b1007b"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Movement"",
+                    ""name"": ""Walk"",
                     ""type"": ""Value"",
                     ""id"": ""a76a7ddd-6107-4016-8f47-8156fdc4f32d"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ToggleAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""dbd3c3de-3a03-4d7b-bdbf-8c2a7e9d675c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleSprint"",
+                    ""type"": ""Button"",
+                    ""id"": ""b607b92f-27ed-4c0a-8d5f-60d2d00c0414"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""b951b2dc-9a69-4064-9f8b-c15c1364a295"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Attack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": """",
                     ""id"": ""36de2201-7068-401f-b3cb-75beeef1ba10"",
@@ -65,7 +63,29 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""Walk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3a2af07c-969c-4e1f-a900-0f133e399ee1"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""51f1b889-c238-4184-8958-13415a269254"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ToggleSprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -74,10 +94,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // Player_MouseKeyboard
-        m_Player_MouseKeyboard = asset.FindActionMap("Player_MouseKeyboard", throwIfNotFound: true);
-        m_Player_MouseKeyboard_Attack = m_Player_MouseKeyboard.FindAction("Attack", throwIfNotFound: true);
-        m_Player_MouseKeyboard_Movement = m_Player_MouseKeyboard.FindAction("Movement", throwIfNotFound: true);
+        // AndroidControls
+        m_AndroidControls = asset.FindActionMap("AndroidControls", throwIfNotFound: true);
+        m_AndroidControls_Walk = m_AndroidControls.FindAction("Walk", throwIfNotFound: true);
+        m_AndroidControls_ToggleAttack = m_AndroidControls.FindAction("ToggleAttack", throwIfNotFound: true);
+        m_AndroidControls_ToggleSprint = m_AndroidControls.FindAction("ToggleSprint", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -136,62 +157,71 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Player_MouseKeyboard
-    private readonly InputActionMap m_Player_MouseKeyboard;
-    private List<IPlayer_MouseKeyboardActions> m_Player_MouseKeyboardActionsCallbackInterfaces = new List<IPlayer_MouseKeyboardActions>();
-    private readonly InputAction m_Player_MouseKeyboard_Attack;
-    private readonly InputAction m_Player_MouseKeyboard_Movement;
-    public struct Player_MouseKeyboardActions
+    // AndroidControls
+    private readonly InputActionMap m_AndroidControls;
+    private List<IAndroidControlsActions> m_AndroidControlsActionsCallbackInterfaces = new List<IAndroidControlsActions>();
+    private readonly InputAction m_AndroidControls_Walk;
+    private readonly InputAction m_AndroidControls_ToggleAttack;
+    private readonly InputAction m_AndroidControls_ToggleSprint;
+    public struct AndroidControlsActions
     {
         private @PlayerInputActions m_Wrapper;
-        public Player_MouseKeyboardActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Attack => m_Wrapper.m_Player_MouseKeyboard_Attack;
-        public InputAction @Movement => m_Wrapper.m_Player_MouseKeyboard_Movement;
-        public InputActionMap Get() { return m_Wrapper.m_Player_MouseKeyboard; }
+        public AndroidControlsActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Walk => m_Wrapper.m_AndroidControls_Walk;
+        public InputAction @ToggleAttack => m_Wrapper.m_AndroidControls_ToggleAttack;
+        public InputAction @ToggleSprint => m_Wrapper.m_AndroidControls_ToggleSprint;
+        public InputActionMap Get() { return m_Wrapper.m_AndroidControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(Player_MouseKeyboardActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayer_MouseKeyboardActions instance)
+        public static implicit operator InputActionMap(AndroidControlsActions set) { return set.Get(); }
+        public void AddCallbacks(IAndroidControlsActions instance)
         {
-            if (instance == null || m_Wrapper.m_Player_MouseKeyboardActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_Player_MouseKeyboardActionsCallbackInterfaces.Add(instance);
-            @Attack.started += instance.OnAttack;
-            @Attack.performed += instance.OnAttack;
-            @Attack.canceled += instance.OnAttack;
-            @Movement.started += instance.OnMovement;
-            @Movement.performed += instance.OnMovement;
-            @Movement.canceled += instance.OnMovement;
+            if (instance == null || m_Wrapper.m_AndroidControlsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_AndroidControlsActionsCallbackInterfaces.Add(instance);
+            @Walk.started += instance.OnWalk;
+            @Walk.performed += instance.OnWalk;
+            @Walk.canceled += instance.OnWalk;
+            @ToggleAttack.started += instance.OnToggleAttack;
+            @ToggleAttack.performed += instance.OnToggleAttack;
+            @ToggleAttack.canceled += instance.OnToggleAttack;
+            @ToggleSprint.started += instance.OnToggleSprint;
+            @ToggleSprint.performed += instance.OnToggleSprint;
+            @ToggleSprint.canceled += instance.OnToggleSprint;
         }
 
-        private void UnregisterCallbacks(IPlayer_MouseKeyboardActions instance)
+        private void UnregisterCallbacks(IAndroidControlsActions instance)
         {
-            @Attack.started -= instance.OnAttack;
-            @Attack.performed -= instance.OnAttack;
-            @Attack.canceled -= instance.OnAttack;
-            @Movement.started -= instance.OnMovement;
-            @Movement.performed -= instance.OnMovement;
-            @Movement.canceled -= instance.OnMovement;
+            @Walk.started -= instance.OnWalk;
+            @Walk.performed -= instance.OnWalk;
+            @Walk.canceled -= instance.OnWalk;
+            @ToggleAttack.started -= instance.OnToggleAttack;
+            @ToggleAttack.performed -= instance.OnToggleAttack;
+            @ToggleAttack.canceled -= instance.OnToggleAttack;
+            @ToggleSprint.started -= instance.OnToggleSprint;
+            @ToggleSprint.performed -= instance.OnToggleSprint;
+            @ToggleSprint.canceled -= instance.OnToggleSprint;
         }
 
-        public void RemoveCallbacks(IPlayer_MouseKeyboardActions instance)
+        public void RemoveCallbacks(IAndroidControlsActions instance)
         {
-            if (m_Wrapper.m_Player_MouseKeyboardActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_AndroidControlsActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayer_MouseKeyboardActions instance)
+        public void SetCallbacks(IAndroidControlsActions instance)
         {
-            foreach (var item in m_Wrapper.m_Player_MouseKeyboardActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_AndroidControlsActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_Player_MouseKeyboardActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_AndroidControlsActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public Player_MouseKeyboardActions @Player_MouseKeyboard => new Player_MouseKeyboardActions(this);
-    public interface IPlayer_MouseKeyboardActions
+    public AndroidControlsActions @AndroidControls => new AndroidControlsActions(this);
+    public interface IAndroidControlsActions
     {
-        void OnAttack(InputAction.CallbackContext context);
-        void OnMovement(InputAction.CallbackContext context);
+        void OnWalk(InputAction.CallbackContext context);
+        void OnToggleAttack(InputAction.CallbackContext context);
+        void OnToggleSprint(InputAction.CallbackContext context);
     }
 }

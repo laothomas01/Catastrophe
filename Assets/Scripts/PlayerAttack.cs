@@ -1,15 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 public class PlayerAttack : MonoBehaviour
-
 {
     private Camera cam;
     public Transform lookPoint;
     public float hitDistance;
     
-
     [SerializeField]
     private float forceAmount;
     [SerializeField]
@@ -123,7 +118,6 @@ public class PlayerAttack : MonoBehaviour
                 {
                     hitObj.GetComponent<Renderer>().material.color = originalColor;
                     colorChanged = false;
-
                 }
             }
 
@@ -138,8 +132,6 @@ public class PlayerAttack : MonoBehaviour
         {
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Furniture"))
             {
-
-
                 hitObj = hit.transform.gameObject;
                 if (hitObj.tag == "Pushable")
                 {
