@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1240,7 +1240,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &422097713
 Transform:
   m_ObjectHideFlags: 0
@@ -3181,7 +3181,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!108 &843275056
 Light:
   m_ObjectHideFlags: 0
@@ -3274,7 +3274,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &861943485
 Transform:
   m_ObjectHideFlags: 0
@@ -3890,7 +3890,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1221850274
 Transform:
   m_ObjectHideFlags: 0
@@ -13857,7 +13857,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9ddfb45d17c3a749aedf5e5d1fd747f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitDistance: 0
+  attackFieldOfView: {fileID: 152233919}
+  hitDistance: 20
   attackForceAmount: 0
   attackForceMultiplier: 0
 --- !u!114 &3114240162779470134
@@ -13872,7 +13873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf91a3bce0aabb348af4759cd6186944, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0
+  moveSpeed: 150
   moveSpeedMultiplier: 0
 --- !u!1 &3272042356782023949
 GameObject:

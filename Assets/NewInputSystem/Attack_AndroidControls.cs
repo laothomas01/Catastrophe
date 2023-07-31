@@ -8,7 +8,7 @@ public class Attack_AndroidControls : MonoBehaviour
 
     //reference variable used for camera SFX triggered by player attack events
     Camera camera;
-    Transform attackFieldOfView;
+    public Transform attackFieldOfView;
     public float hitDistance;
     [SerializeField]
     float attackForceAmount;
@@ -38,11 +38,10 @@ public class Attack_AndroidControls : MonoBehaviour
         alertedEnemies = GameObject.FindGameObjectsWithTag("Enemy");
         furnitureLayerMask = 1 << 7;
         audioManager = FindObjectOfType<AudioManager>();
-        playerInput = GetComponent<PlayerInput>();
     }
     void Start()
     {
-
+        playerInput = GetComponent<PlayerInput>();
     }
 
     // Update is called once per frame
@@ -50,7 +49,7 @@ public class Attack_AndroidControls : MonoBehaviour
     {
         Attack(playerInput.actions["ToggleAttack"].triggered);
         // Debug.Log(playerInput.actions["Attack"].triggered);
-        // Debug.DrawRay(attackFieldOfView.position,attackFieldOfView.forward * hitDistance, Color.red);
+        Debug.DrawRay(attackFieldOfView.position, attackFieldOfView.forward * hitDistance, Color.red);
 
     }
     void ColorChanged()
@@ -95,34 +94,32 @@ public class Attack_AndroidControls : MonoBehaviour
     }
     void Attack(bool attack)
     {
-
-        animator.SetBool("HeavyAttacking",attack);
-        // Debug.Log("Attack!");
-        RaycastHit hit;
-        if(Physics.Raycast(attackFieldOfView.position,attackFieldOfView.forward,out hit,hitDistance,~furnitureLayerMask))
+        animator.SetBool("HeavyAttacking", attack);
+        if (attack)
         {
-            
+            RaycastHit hit;
+            if (Physics.Raycast(attackFieldOfView.position, attackFieldOfView.forward, out hit, hitDistance, ~furnitureLayerMask))
+            {
+                if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Furniture"))
+                {
+                    currentHitObj = hit.transform.gameObject;
+                    if (currentHitObj.tag == "Pushable")
+                    {
+                        rb = currentHitObj.GetComponent<Rigidbody>() == null ? currentHitObj.AddComponent<Rigidbody>() : currentHitObj.GetComponent<Rigidbody>();
+                        rb.constraints = RigidbodyConstraints.FreezePositionY;
+                        rb.AddForce(attackFieldOfView.forward * attackForceAmount * attackForceMultiplier, ForceMode.Impulse);
+                        camera.GetComponent<Follow_Player>().setCanShake(true);
+                        // AlertEnemy(hit.transform.gameObject, 1);
+                        currentHitObj.AddComponent<ObjectCollision>();
+
+                    }
+                    else if (currentHitObj.tag == "Heavy")
+                    {
+                        // AlertEnemy(hit.transform.gameObject, 0);
+                        camera.GetComponent<Follow_Player>().setCanShake(true);
+                    }
+                }
+            }
         }
-        // if (Physics.Raycast(attackFieldOfView.position, attackFieldOfView.forward, out hit,
-        //  hitDistance, ~furnitureLayerMask))
-        // {
-        //     if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Furniture"))
-        //     {
-        //         // if (currentHitObj.tag == "Pushable")
-        //         // {
-        //         //     rb = currentHitObj.GetComponent<Rigidbody>() == null ? currentHitObj.AddComponent<Rigidbody>() : currentHitObj.GetComponent<Rigidbody>();
-        //         //     rb.constraints = RigidbodyConstraints.FreezePositionY;
-        //         //     rb.AddForce(attackFieldOfView.forward * attackForceAmount * attackForceMultiplier, ForceMode.Impulse);
-        //         //     camera.GetComponent<Follow_Player>().setCanShake(true);
-        //         //     // AlertEnemy(hit.transform.gameObject, 1);
-        //         //     currentHitObj.AddComponent<ObjectCollision>();
-        //         // }
-        //         // else if (currentHitObj.tag == "Heavy")
-        //         // {
-        //         //     // AlertEnemy(hit.transform.gameObject, 0);
-        //         //     camera.GetComponent<Follow_Player>().setCanShake(true);
-        //         // }
-        //     }
-        // }
     }
 }
