@@ -56,27 +56,29 @@ public class Handheld_PlayerMovement : MonoBehaviour
         }
 
         //perform walk animation if movement input not 0
-        animator.SetBool("isWalking", movementInput.x != 0 || movementInput.y != 0);
+        // animator.SetBool("isWalking", movementInput.x != 0 || movementInput.y != 0);
         
         if(isSprinting)
         {
-            animator.SetBool("isRunning",animator.GetBool("isWalking"));
+            // animator.SetBool("isRunning",animator.GetBool("isWalking"));
             moveSpeedMultiplier = 300;
         }
         else
         {
-            animator.SetBool("isRunning",false);
+            // animator.SetBool("isRunning",false);
             moveSpeedMultiplier = 200;
         }
         //  Debug.Log("isSprinting:" + isSprinting);
+
+        movementDir = transform.forward * movementInput.y;
+
     }
 
     void FixedUpdate()
     {
 
         //Calculate movement direction from joystick input
-        movementDir = transform.forward * movementInput.y;
-        rigidbody.velocity = movementDir.normalized * moveSpeed * moveSpeedMultiplier * Time.deltaTime;
-        // rigidbody.AddForce(movementDir.normalized * moveSpeed * moveSpeedMultiplier * Time.fixedDeltaTime, ForceMode.Force);
+        // rigidbody.velocity = movementDir.normalized * moveSpeed * moveSpeedMultiplier * Time.deltaTime;
+        rigidbody.AddForce(movementDir.normalized * moveSpeed * moveSpeedMultiplier * Time.fixedDeltaTime, ForceMode.Force);
     }
 }
