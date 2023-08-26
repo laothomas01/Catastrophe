@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-public class Movement_AndroidControls : MonoBehaviour
+public class Handheld_PlayerMovement : MonoBehaviour
 {
+    //new Unity Input System object
     PlayerInput playerInput;
     Rigidbody rigidbody;
     Animator animator;
@@ -75,6 +76,7 @@ public class Movement_AndroidControls : MonoBehaviour
 
         //Calculate movement direction from joystick input
         movementDir = transform.forward * movementInput.y;
-        rigidbody.AddForce(movementDir.normalized * moveSpeed * moveSpeedMultiplier * Time.fixedDeltaTime, ForceMode.Force);
+        rigidbody.velocity = movementDir.normalized * moveSpeed * moveSpeedMultiplier * Time.deltaTime;
+        // rigidbody.AddForce(movementDir.normalized * moveSpeed * moveSpeedMultiplier * Time.fixedDeltaTime, ForceMode.Force);
     }
 }
