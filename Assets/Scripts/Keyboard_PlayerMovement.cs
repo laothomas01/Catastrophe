@@ -27,7 +27,7 @@ public class Keyboard_PlayerMovement : MonoBehaviour
     void Update()
     {
 
-        movementInputs();
+        handleMovementInputs();
         RaycastHit hit;
         int layerMask = 1 << 7;
 
@@ -79,7 +79,7 @@ public class Keyboard_PlayerMovement : MonoBehaviour
     {
         this.lookDirection = lookDir;
     }
-    public void movementInputs()
+    public void handleMovementInputs()
     {
         //switch between the values of 1,0,-1 based on the input
         //move.x = Input.GetAxisRaw("Horizontal");

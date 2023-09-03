@@ -31,25 +31,26 @@ public class Handheld_PlayerMovement : MonoBehaviour
 
     void Update()
     {
+
+        //joystick inputs
         movementInput = playerInput.actions["Walk"].ReadValue<Vector2>();
 
-        //@TODO: toggle sprint on/off with button 
-        // Debug.Log(movementInput);
+        //direction player should face
         lookDirection = new Vector3(movementInput.x, 0f, movementInput.y).normalized;
-        if (lookDirection != Vector3.zero)
-        {
-            transform.forward = lookDirection;
-        }
+
+        //if joystick direction is downward, 
         if (movementInput.y < 0)
         {
-            //i dont have proper terminology for this right now
-            //basically: we want to move in direction of joystick angle. 
-            // this is different from moving in a "negative"/backwards direction
-            //direction is always "forward" aka positive but the angle differs
-            movementInput.y *= -1;
+            movementInput.y = 1; 
         }
 
-        if(playerInput.actions["ToggleSprint"].triggered)
+        if (lookDirection != Vector3.zero)
+        {
+            transform.forward = lookDirection; // we want forward to be in a "positive" direction despite joystick up or down. we do not want to look backwards
+        }
+
+
+        if (playerInput.actions["ToggleSprint"].triggered)
         {
             isSprinting = !isSprinting;
             Debug.Log("isSprinting:" + isSprinting);
@@ -57,8 +58,8 @@ public class Handheld_PlayerMovement : MonoBehaviour
 
         //perform walk animation if movement input not 0
         // animator.SetBool("isWalking", movementInput.x != 0 || movementInput.y != 0);
-        
-        if(isSprinting)
+
+        if (isSprinting)
         {
             // animator.SetBool("isRunning",animator.GetBool("isWalking"));
             moveSpeedMultiplier = 300;
@@ -68,17 +69,13 @@ public class Handheld_PlayerMovement : MonoBehaviour
             // animator.SetBool("isRunning",false);
             moveSpeedMultiplier = 200;
         }
-        //  Debug.Log("isSprinting:" + isSprinting);
 
         movementDir = transform.forward * movementInput.y;
-
     }
 
     void FixedUpdate()
     {
 
-        //Calculate movement direction from joystick input
-        // rigidbody.velocity = movementDir.normalized * moveSpeed * moveSpeedMultiplier * Time.deltaTime;
         rigidbody.AddForce(movementDir.normalized * moveSpeed * moveSpeedMultiplier * Time.fixedDeltaTime, ForceMode.Force);
     }
 }

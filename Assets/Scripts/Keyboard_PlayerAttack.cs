@@ -1,8 +1,10 @@
 using UnityEngine;
 public class Keyboard_PlayerAttack : MonoBehaviour
 {
-    // private Camera cam;
-    public Transform lineOfSight; 
+    // Animator animator; // 
+
+    // private Camera cam; //we will handle this in another script maybe
+    public Transform lookPoint; // location where line of sight begins 
     public float lineOfSightDistance; //how far the player can see
     
     [SerializeField]
@@ -12,29 +14,27 @@ public class Keyboard_PlayerAttack : MonoBehaviour
 
     Rigidbody rigidBody;
 
-    // GameObject[] enemies;
+    // GameObject[] enemies; // put this into a script for destroyable furniture
     
-    private Color originalColor;
-
-    int layerMask;
-    GameObject hitObj;
-    private bool colorChanged;
-    AudioManager audioManager;
-
+    private Color originalDetectedFurnitureColor;
+    int furnitureLayerMask;
+    GameObject detectedFurniture;
+    private bool furnitureColorChanged;
+    // AudioManager audioManager;
 
     void Start()
     {
-        rigidBody = null;
-        colorChanged = false;
-        originalColor = new Color();
-        hitObj = new GameObject();
+          rigidBody = null;
+        furnitureColorChanged = false;
+        originalDetectedFurnitureColor = new Color();
+        detectedFurniture = null; 
         // cam = Camera.main;
         
         //look for all game objects with Enemy tag
         // enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        layerMask = 1 << 7; //ignore layer
+        furnitureLayerMask = 1 << 7; //ignore layer
 
-        audioManager = FindObjectOfType<AudioManager>();
+        // audioManager = FindObjectOfType<AudioManager>();
     }
     void Update() {
 
@@ -43,9 +43,9 @@ public class Keyboard_PlayerAttack : MonoBehaviour
     {
         Attack();
     }
-     ChangeColor();
+    HandleLineOfSight();
 
-    Debug.DrawRay(lineOfSight.position,lineOfSight.forward*lineOfSightDistance,Color.red);
+    Debug.DrawRay(lookPoint.position,lookPoint.forward*lineOfSightDistance,Color.red);
 
     }
 
@@ -81,43 +81,43 @@ public class Keyboard_PlayerAttack : MonoBehaviour
 
     //     }
 
-
-    void ChangeColor()
+    /// <summary>
+    /// Method: DetectFurniture
+    /// Approach: raycast from lookpoint position, if detected object has a furniture layer 
+    /// and its color has not been changed change its color
+    /// </summary>
+    void HandleLineOfSight()
     {
         RaycastHit hit;
-
-        if (Physics.Raycast(lineOfSight.position, lineOfSight.forward, out hit, lineOfSightDistance, ~layerMask))
+        if (Physics.Raycast(lookPoint.position, lookPoint.forward, out hit, lineOfSightDistance, ~furnitureLayerMask))
         {
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Furniture"))
             {
-                hitObj = hit.transform.gameObject;
-                Renderer renderer = hit.transform.GetComponent<Renderer>();
-
-                if (!colorChanged)
+                detectedFurniture = hit.transform.gameObject;
+                Renderer furnitureRenderer = hit.transform.GetComponent<Renderer>();
+                if (!furnitureColorChanged)
                 {
-                    originalColor = renderer.material.color;
-
-                    if (hitObj.tag == "Heavy")
+                    originalDetectedFurnitureColor = furnitureRenderer.material.color;
+                    if (detectedFurniture.tag == "Heavy")
                     {
-                        renderer.material.color = Color.red;
+                        furnitureRenderer.material.color = Color.red;
                     }
-
-                    else if (hitObj.tag == "Pushable")
+                    else if (detectedFurniture.tag == "Pushable")
                     {
-                        renderer.material.color = Color.blue;
+                        furnitureRenderer.material.color = Color.blue;
                     }
-                    colorChanged = true;
+                    furnitureColorChanged = true;
                 }
             }
         }
         else
         {
-            if (hitObj != null)
+            if (detectedFurniture != null)
             {
-                if (hitObj.layer == LayerMask.NameToLayer("Furniture"))
+                if (detectedFurniture.layer == LayerMask.NameToLayer("Furniture"))
                 {
-                    hitObj.GetComponent<Renderer>().material.color = originalColor;
-                    colorChanged = false;
+                    detectedFurniture.GetComponent<Renderer>().material.color = originalDetectedFurnitureColor;
+                    furnitureColorChanged = false;
                 }
             }
 
@@ -128,22 +128,22 @@ public class Keyboard_PlayerAttack : MonoBehaviour
     void Attack()
     {
         RaycastHit hit;
-        if (Physics.Raycast(lineOfSight.position, lineOfSight.forward, out hit, lineOfSightDistance, ~layerMask))
+        if (Physics.Raycast(lookPoint.position, lookPoint.forward, out hit, lineOfSightDistance, ~furnitureLayerMask))
         {
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Furniture"))
             {
-                hitObj = hit.transform.gameObject;
-                if (hitObj.tag == "Pushable")
+                detectedFurniture = hit.transform.gameObject;
+                if (detectedFurniture.tag == "Pushable")
                 {
-                    rigidBody = hitObj.GetComponent<Rigidbody>() == null ? hitObj.AddComponent<Rigidbody>() : hitObj.GetComponent<Rigidbody>();
+                    rigidBody = detectedFurniture.GetComponent<Rigidbody>() == null ? detectedFurniture.AddComponent<Rigidbody>() : detectedFurniture.GetComponent<Rigidbody>();
                     rigidBody.constraints = RigidbodyConstraints.FreezePositionY;
                     // rb.AddForce(lineOfSight.forward * forceAmount * forceMultiplier, ForceMode.Impulse); // pushing a game object
                     // cam.GetComponent<Follow_Player>().setCanShake(true);
                     // AlertEnemy(hit.transform.gameObject, 1);
-                    hitObj.AddComponent<ObjectCollision>();
+                    detectedFurniture.AddComponent<ObjectCollision>();
 
                 }
-                else if (hitObj.tag == "Heavy")
+                else if (detectedFurniture.tag == "Heavy")
                 {
                     // AlertEnemy(hit.transform.gameObject, 0);
                     // cam.GetComponent<Follow_Player>().setCanShake(true);

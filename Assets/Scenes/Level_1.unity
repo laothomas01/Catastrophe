@@ -851,7 +851,7 @@ GameObject:
   m_Component:
   - component: {fileID: 152233919}
   m_Layer: 7
-  m_Name: lookPoint
+  m_Name: lineOfSightTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1516,7 +1516,7 @@ GameObject:
   m_Component:
   - component: {fileID: 293680598}
   m_Layer: 7
-  m_Name: lookPoint
+  m_Name: lineOfSightTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3951,7 +3951,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &861943485
 Transform:
   m_ObjectHideFlags: 0
@@ -9121,8 +9121,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9ddfb45d17c3a749aedf5e5d1fd747f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackFieldOfView: {fileID: 293680598}
-  hitDistance: 20
+  lineOfSight: {fileID: 293680598}
+  lineOfSightDistance: 25
   attackForceAmount: 0
   attackForceMultiplier: 0
 --- !u!114 &1996491206
