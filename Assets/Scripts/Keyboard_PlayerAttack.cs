@@ -4,7 +4,7 @@ public class Keyboard_PlayerAttack : MonoBehaviour
     // Animator animator; // 
 
     // private Camera cam; //we will handle this in another script maybe
-    public Transform lookPoint; // location where line of sight begins 
+    public Transform lineOfSightStartPoint; // location where line of sight begins 
     public float lineOfSightDistance; //how far the player can see
     
     [SerializeField]
@@ -20,6 +20,8 @@ public class Keyboard_PlayerAttack : MonoBehaviour
     int furnitureLayerMask;
     GameObject detectedFurniture;
     private bool furnitureColorChanged;
+
+    //@TODO: move 
     // AudioManager audioManager;
 
     void Start()
@@ -45,7 +47,7 @@ public class Keyboard_PlayerAttack : MonoBehaviour
     }
     HandleLineOfSight();
 
-    Debug.DrawRay(lookPoint.position,lookPoint.forward*lineOfSightDistance,Color.red);
+    Debug.DrawRay(lineOfSightStartPoint.position,lineOfSightStartPoint.forward*lineOfSightDistance,Color.red);
 
     }
 
@@ -89,7 +91,7 @@ public class Keyboard_PlayerAttack : MonoBehaviour
     void HandleLineOfSight()
     {
         RaycastHit hit;
-        if (Physics.Raycast(lookPoint.position, lookPoint.forward, out hit, lineOfSightDistance, ~furnitureLayerMask))
+        if (Physics.Raycast(lineOfSightStartPoint.position, lineOfSightStartPoint.forward, out hit, lineOfSightDistance, ~furnitureLayerMask))
         {
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Furniture"))
             {
@@ -128,7 +130,7 @@ public class Keyboard_PlayerAttack : MonoBehaviour
     void Attack()
     {
         RaycastHit hit;
-        if (Physics.Raycast(lookPoint.position, lookPoint.forward, out hit, lineOfSightDistance, ~furnitureLayerMask))
+        if (Physics.Raycast(lineOfSightStartPoint.position, lineOfSightStartPoint.forward, out hit, lineOfSightDistance, ~furnitureLayerMask))
         {
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Furniture"))
             {
@@ -137,15 +139,20 @@ public class Keyboard_PlayerAttack : MonoBehaviour
                 {
                     rigidBody = detectedFurniture.GetComponent<Rigidbody>() == null ? detectedFurniture.AddComponent<Rigidbody>() : detectedFurniture.GetComponent<Rigidbody>();
                     rigidBody.constraints = RigidbodyConstraints.FreezePositionY;
-                    // rb.AddForce(lineOfSight.forward * forceAmount * forceMultiplier, ForceMode.Impulse); // pushing a game object
+
+                    rigidBody.AddForce(lineOfSightStartPoint.forward * forceAmount * forceMultiplier, ForceMode.Impulse); // pushing a game object
                     // cam.GetComponent<Follow_Player>().setCanShake(true);
                     // AlertEnemy(hit.transform.gameObject, 1);
-                    detectedFurniture.AddComponent<ObjectCollision>();
+                    Destroy(hit.transform.gameObject,1);
+                    
+                    // detectedFurniture.AddComponent<ObjectCollision>(); // toss this script and figure out another solution
 
                 }
                 else if (detectedFurniture.tag == "Heavy")
                 {
                     // AlertEnemy(hit.transform.gameObject, 0);
+                    Destroy(hit.transform.gameObject, 0);
+
                     // cam.GetComponent<Follow_Player>().setCanShake(true);
                 }
             }

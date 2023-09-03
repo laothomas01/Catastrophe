@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
 
 
         //===================== HANDLING DEVICE GAME CONTROLS ON LOAD =======================================================
+        
         //This is the Text for the Label at the top of the screen
         //Check if the device running this is a console
         if(SystemInfo.deviceType == DeviceType.Desktop)
@@ -25,17 +26,13 @@ public class GameManager : MonoBehaviour
             Keyboard_PlayerMovement keyboard = FindObjectOfType<Keyboard_PlayerMovement>(includeInactive: true);
            
             keyboard.gameObject.SetActive(true);
-
         }
-
 
         // if (SystemInfo.deviceType == DeviceType.Console)
         // {
         //     //Change the text of the label
         //     m_DeviceType = "Console";
         // }
-
-
 
         // //Check if the device running this is a handheld
         if (SystemInfo.deviceType == DeviceType.Handheld)
@@ -57,20 +54,20 @@ public class GameManager : MonoBehaviour
 
     }
 
-    GameObject FindInActiveObjectByName(string name)
-{
-    Transform[] objs = Resources.FindObjectsOfTypeAll<Transform>() as Transform[];
-    for (int i = 0; i < objs.Length; i++)
-    {
-        if (objs[i].hideFlags == HideFlags.None)
-        {
-            if (objs[i].name == name)
-            {
-                return objs[i].gameObject;
-            }
-        }
-    }
-    return null;
-}
+//     GameObject FindInActiveObjectByName(string name)
+// {
+//     Transform[] objs = Resources.FindObjectsOfTypeAll<Transform>() as Transform[];
+//     for (int i = 0; i < objs.Length; i++)
+//     {
+//         if (objs[i].hideFlags == HideFlags.None)
+//         {
+//             if (objs[i].name == name)
+//             {
+//                 return objs[i].gameObject;
+//             }
+//         }
+//     }
+//     return null;
+// }
 
 }

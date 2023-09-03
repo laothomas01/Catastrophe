@@ -6,7 +6,10 @@ public class Handheld_PlayerAttack : MonoBehaviour
 
     PlayerInput playerInput; // unit new input system
 
-    // Animator animator; // move to a player_animation manager
+
+//@TODO:  move to a player animation manager 
+    // Animator animator;
+    
 
     // private Camera cam; //we will handle this in another script maybe
     public Transform lineOfSightStartPoint; // location where line of sight begins 
@@ -19,13 +22,19 @@ public class Handheld_PlayerAttack : MonoBehaviour
 
     Rigidbody rigidBody;
 
+
+    // @TODO: move to a furniture script where we handle this function on an OnDestroy() function
+    // we will probably want to add behaviors to furniture in the future
+    // ex: exploding kitchen ovens
     // GameObject[] enemies; // put this into a script for destroyable furniture
-    
+
     private Color originalDetectedFurnitureColor;
     int furnitureLayerMask;
     GameObject detectedFurniture;
     private bool furnitureColorChanged;
-    // AudioManager audioManager; //move to an player_audiomanager script
+
+    //@TODO: move to a player audio manager script
+    // AudioManager audioManager;
     void Start()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -97,6 +106,15 @@ public class Handheld_PlayerAttack : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Method: Attack
+    /// Approach: use a raycast for handling palyer's line of sight, detect a furniture that is pushable or heavy.
+    ///           handle behavior of furniture based on type of furniture
+    /// </summary>
+    /// 
+
+    //@TODO: need to check if object has already been hit and destroyed to prevent camera shake spamming
     void Attack()
     {
         Debug.Log("Attack!");
@@ -112,15 +130,17 @@ public class Handheld_PlayerAttack : MonoBehaviour
                 {
                     rigidBody = detectedFurniture.GetComponent<Rigidbody>() == null ? detectedFurniture.AddComponent<Rigidbody>() : detectedFurniture.GetComponent<Rigidbody>();
                     rigidBody.constraints = RigidbodyConstraints.FreezePositionY;
-                    // rb.AddForce(lineOfSight.forward * forceAmount * forceMultiplier, ForceMode.Impulse); // pushing a game object
+                    rigidBody.AddForce(lineOfSightStartPoint.forward * forceAmount * forceMultiplier, ForceMode.Impulse); // pushing a game object
                     // cam.GetComponent<Follow_Player>().setCanShake(true);
                     // AlertEnemy(hit.transform.gameObject, 1);
-                    detectedFurniture.AddComponent<ObjectCollision>();
+                    Destroy(hit.transform.gameObject,1);
+                    // detectedFurniture.AddComponent<ObjectCollision>();
 
                 }
                 else if (detectedFurniture.tag == "Heavy")
-                {
+                {       
 
+                    Destroy(hit.transform.gameObject,0);
                     // AlertEnemy(hit.transform.gameObject, 0);
                     // camera.GetComponent<Follow_Player>().setCanShake(true);
                 }
