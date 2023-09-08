@@ -5,7 +5,7 @@ public class Handheld_PlayerMovement : MonoBehaviour
     //new Unity Input System object
     PlayerInput playerInput;
     Rigidbody rigidbody;
-    Animator animator;
+    Animator animator; // put into an animation manager script
     Vector3 movementInput;
     Vector3 movementDir;
     Vector3 lookDirection;
@@ -53,7 +53,7 @@ public class Handheld_PlayerMovement : MonoBehaviour
         if (playerInput.actions["ToggleSprint"].triggered)
         {
             isSprinting = !isSprinting;
-            Debug.Log("isSprinting:" + isSprinting);
+            // Debug.Log("isSprinting:" + isSprinting);
         }
 
         //perform walk animation if movement input not 0

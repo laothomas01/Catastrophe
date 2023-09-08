@@ -117,7 +117,6 @@ public class Handheld_PlayerAttack : MonoBehaviour
     //@TODO: need to check if object has already been hit and destroyed to prevent camera shake spamming
     void Attack()
     {
-        Debug.Log("Attack!");
         RaycastHit hit;
         // animator.SetBool("HeavyAttacking", true);
         if (Physics.Raycast(lineOfSightStartPoint.position, lineOfSightStartPoint.forward, out hit, lineOfSightDistance, ~furnitureLayerMask))
