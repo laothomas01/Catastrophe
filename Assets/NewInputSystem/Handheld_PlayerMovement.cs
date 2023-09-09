@@ -36,7 +36,7 @@ public class Handheld_PlayerMovement : MonoBehaviour
         movementInput = playerInput.actions["Walk"].ReadValue<Vector2>();
 
         //direction player should face
-        lookDirection = new Vector3(movementInput.x, 0f, movementInput.y).normalized;
+        lookDirection = new Vector3(movementInput.x, 0f, movementInput.y).normalized * Time.deltaTime;
 
         //if joystick direction is downward, 
         if (movementInput.y < 0)

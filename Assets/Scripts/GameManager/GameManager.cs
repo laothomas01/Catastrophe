@@ -9,17 +9,18 @@ public class GameManager : MonoBehaviour
     public string device_Name;
     ScoreManager scoreManager;
 
-    enum GameState
+    public GameObject pauseScreen;
+    public enum GameState
     {
-        GAME_WIN,
+
         GAME_OVER,
         GAME_PAUSE,
         GAME_PLAY
     }
-    GameState gameState;
+   public GameState currentGameState;
+    public GameState previousGameState;
     void Start()
     {
-        gameState = GameState.GAME_PLAY;
         scoreManager = FindObjectOfType<ScoreManager>();
         // Debug.Log(scoreManager.name);
         // ============================ HANDLING GAME STATES =======================================
@@ -66,24 +67,62 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
-        switch (gameState)
+        switch (currentGameState)
         {
             case GameState.GAME_PAUSE:
-                
+                CheckForPauseAndResume();
                 break;
             case GameState.GAME_OVER:
                 break;
-            case GameState.GAME_WIN:
+            case GameState.GAME_PLAY:
+                CheckForPauseAndResume();
                 break;
             default:
+                Debug.LogWarning("STATE DOES NOT EXIST!");
                 break;
         }
-        if(Input.GetKeyDown(KeyCode.Escape))
+
+        // if(Input.GetKeyDown(KeyCode.Escape))
+        // {
+        //     currentGameState = GameState.GAME_PAUSE;
+        // }
+        // lastGameState = currentGameState;
+
+    }
+    public void PauseGame()
+    {
+        previousGameState = currentGameState;
+        ChangeState(GameState.GAME_PAUSE);
+        Time.timeScale = 0f; // Stop the game
+        pauseScreen.SetActive(true);
+        Debug.Log("Game is paused");
+    }
+    public void ResumeGame()
+    {
+        ChangeState(previousGameState);
+        Time.timeScale = 1f;
+        pauseScreen.SetActive(false);
+        Debug.Log("Game is resumed");
+    }
+    public void ChangeState(GameState newState)
+    {
+        currentGameState = newState;
+    }
+    void CheckForPauseAndResume()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            gameState = GameState.GAME_PAUSE;
-            Debug.Log("Paused!");
+            if (currentGameState == GameState.GAME_PAUSE)
+            {
+                ResumeGame();
+            }
+            else
+            {
+                PauseGame();
+            }
         }
     }
+
 
 
     //     GameObject FindInActiveObjectByName(string name)
