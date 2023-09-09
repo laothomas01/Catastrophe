@@ -53,43 +53,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TogglePauseResume"",
+                    ""type"": ""Button"",
+                    ""id"": ""7026dc36-6e5b-4667-b2dc-49f27548a60b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""36de2201-7068-401f-b3cb-75beeef1ba10"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Walk"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3a2af07c-969c-4e1f-a900-0f133e399ee1"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ToggleAttack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""51f1b889-c238-4184-8958-13415a269254"",
-                    ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ToggleSprint"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
+            ""bindings"": []
         }
     ],
     ""controlSchemes"": []
@@ -99,6 +74,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_AndroidControls_Walk = m_AndroidControls.FindAction("Walk", throwIfNotFound: true);
         m_AndroidControls_ToggleAttack = m_AndroidControls.FindAction("ToggleAttack", throwIfNotFound: true);
         m_AndroidControls_ToggleSprint = m_AndroidControls.FindAction("ToggleSprint", throwIfNotFound: true);
+        m_AndroidControls_TogglePauseResume = m_AndroidControls.FindAction("TogglePauseResume", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -163,6 +139,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_AndroidControls_Walk;
     private readonly InputAction m_AndroidControls_ToggleAttack;
     private readonly InputAction m_AndroidControls_ToggleSprint;
+    private readonly InputAction m_AndroidControls_TogglePauseResume;
     public struct AndroidControlsActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -170,6 +147,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Walk => m_Wrapper.m_AndroidControls_Walk;
         public InputAction @ToggleAttack => m_Wrapper.m_AndroidControls_ToggleAttack;
         public InputAction @ToggleSprint => m_Wrapper.m_AndroidControls_ToggleSprint;
+        public InputAction @TogglePauseResume => m_Wrapper.m_AndroidControls_TogglePauseResume;
         public InputActionMap Get() { return m_Wrapper.m_AndroidControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -188,6 +166,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ToggleSprint.started += instance.OnToggleSprint;
             @ToggleSprint.performed += instance.OnToggleSprint;
             @ToggleSprint.canceled += instance.OnToggleSprint;
+            @TogglePauseResume.started += instance.OnTogglePauseResume;
+            @TogglePauseResume.performed += instance.OnTogglePauseResume;
+            @TogglePauseResume.canceled += instance.OnTogglePauseResume;
         }
 
         private void UnregisterCallbacks(IAndroidControlsActions instance)
@@ -201,6 +182,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ToggleSprint.started -= instance.OnToggleSprint;
             @ToggleSprint.performed -= instance.OnToggleSprint;
             @ToggleSprint.canceled -= instance.OnToggleSprint;
+            @TogglePauseResume.started -= instance.OnTogglePauseResume;
+            @TogglePauseResume.performed -= instance.OnTogglePauseResume;
+            @TogglePauseResume.canceled -= instance.OnTogglePauseResume;
         }
 
         public void RemoveCallbacks(IAndroidControlsActions instance)
@@ -223,5 +207,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnWalk(InputAction.CallbackContext context);
         void OnToggleAttack(InputAction.CallbackContext context);
         void OnToggleSprint(InputAction.CallbackContext context);
+        void OnTogglePauseResume(InputAction.CallbackContext context);
     }
 }

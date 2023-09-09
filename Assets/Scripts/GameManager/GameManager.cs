@@ -70,11 +70,15 @@ public class GameManager : MonoBehaviour
         switch (currentGameState)
         {
             case GameState.GAME_PAUSE:
+
+            //this is for PC controls
                 CheckForPauseAndResume();
                 break;
             case GameState.GAME_OVER:
                 break;
             case GameState.GAME_PLAY:
+
+                // this is for PC controls
                 CheckForPauseAndResume();
                 break;
             default:

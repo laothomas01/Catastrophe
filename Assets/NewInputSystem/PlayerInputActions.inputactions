@@ -31,43 +31,18 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "TogglePauseResume",
+                    "type": "Button",
+                    "id": "7026dc36-6e5b-4667-b2dc-49f27548a60b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "36de2201-7068-401f-b3cb-75beeef1ba10",
-                    "path": "<Gamepad>/leftStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Walk",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3a2af07c-969c-4e1f-a900-0f133e399ee1",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ToggleAttack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "51f1b889-c238-4184-8958-13415a269254",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ToggleSprint",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
+            "bindings": []
         }
     ],
     "controlSchemes": []
