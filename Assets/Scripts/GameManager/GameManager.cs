@@ -9,14 +9,16 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    
-    //i think we are mix matching unity's new input system and old input system and this is creating a mess
-    PlayerInput playerInput; 
-    // Start is called before the first frame update
-    public string device_Name;
+    //disable controls that are not used for current device
+    public GameObject playerControls;
+
+    //@TODO map desktop menu controls to new input system
+    PlayerInput gameMenuControls;
+
+    //@TODO might need to resize pause screen buttons for mobile
     public GameObject pauseScreen;
-    public GameObject mobilePlatform;
-    public GameObject desktopPlatform;
+    public GameObject handHeldDeviceUI;
+    // public GameObject desktopPlatform;
 
     public enum GameState
     {
@@ -28,28 +30,37 @@ public class GameManager : MonoBehaviour
     public GameState previousGameState;
     void Start()
     {
-        playerInput = GetComponent<PlayerInput>();
-        switch(SystemInfo.deviceType)
+
+        gameMenuControls = GetComponent<PlayerInput>();
+
+        switch (SystemInfo.deviceType)
         {
             case DeviceType.Desktop:
-                desktopPlatform.SetActive(true);
+                playerControls.GetComponent<Keyboard_PlayerAttack>().enabled = true;
+                playerControls.GetComponent<Keyboard_PlayerMovement>().enabled = true;
                 Component[] onScreenButton = pauseScreen.GetComponentsInChildren<OnScreenButton>();
-                foreach(OnScreenButton button in onScreenButton)
+                foreach (OnScreenButton button in onScreenButton)
                 {
                     button.enabled = false;
                 }
                 break;
             case DeviceType.Handheld:
-                mobilePlatform.SetActive(true);
-                   Component[] desktopButtons = pauseScreen.GetComponentsInChildren<Button>();
+
+
+                playerControls.GetComponent<Handheld_PlayerAttack>().enabled = true;
+                playerControls.GetComponent<Handheld_PlayerMovement>().enabled = true;
+
+
+                handHeldDeviceUI.SetActive(true);
+                Component[] desktopButtons = pauseScreen.GetComponentsInChildren<Button>();
                 foreach (Button button in desktopButtons)
                 {
                     button.enabled = false;
                 }
                 break;
             default:
-             Debug.LogError("Device Not Found!");
-             break;
+                Debug.LogError("Device Not Found!");
+                break;
         }
         // // scoreManager = FindObjectOfType<ScoreManager>();
         // // Debug.Log(scoreManager.name);
@@ -156,7 +167,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (playerInput.actions["TogglePauseResume"].triggered)
+        if (gameMenuControls.actions["TogglePauseResume"].triggered)
         {
             if (currentGameState == GameState.GAME_PAUSE)
             {

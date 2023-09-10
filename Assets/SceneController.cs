@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class SceneController : MonoBehaviour
 {
-    GameManager gameManager;
-    void Start()
-    {
-        gameManager = GetComponent<GameManager>();
-        Debug.Log(gameManager.device_Name);
-    }
+    // GameManager gameManager;
+    // void Start()
+    // {
+    //     gameManager = GetComponent<GameManager>();
+    //     // Debug.Log(gameManager.device_Name);
+    // }
 
-    // Update is called once per frame
-    void Update()
-    {
+    // // Update is called once per frame
+    // void Update()
+    // {
         
-    }
+    // }
 }
