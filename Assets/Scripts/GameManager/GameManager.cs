@@ -1,66 +1,89 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.OnScreen;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    PlayerInput playerInput;
     // Start is called before the first frame update
     public string device_Name;
-    ScoreManager scoreManager;
 
     public GameObject pauseScreen;
+    public GameObject mobilePlatform;
+    public GameObject desktopPlatform;
+
     public enum GameState
     {
-
         GAME_OVER,
         GAME_PAUSE,
         GAME_PLAY
     }
-   public GameState currentGameState;
+    public GameState currentGameState;
     public GameState previousGameState;
     void Start()
     {
-        scoreManager = FindObjectOfType<ScoreManager>();
-        // Debug.Log(scoreManager.name);
-        // ============================ HANDLING GAME STATES =======================================
+        playerInput = GetComponent<PlayerInput>();
+        switch(SystemInfo.deviceType)
+        {
+            case DeviceType.Desktop:
+                desktopPlatform.SetActive(true);
+                // pauseScreen.GetComponent<OnScreenButton>().enabled = false;
+                pauseScreen.GetComponentInChildren<OnScreenButton>().enabled = false;
+                break;
+            case DeviceType.Handheld:
+                mobilePlatform.SetActive(true);
+                pauseScreen.GetComponentInChildren<Button>().enabled = false;
+
+                break;
+            default:
+             Debug.LogError("Device Not Found!");
+             break;
+        }
+        // // scoreManager = FindObjectOfType<ScoreManager>();
+        // // Debug.Log(scoreManager.name);
+        // // ============================ HANDLING GAME STATES =======================================
 
 
 
-        // =========================================================================================
+        // // =========================================================================================
 
 
 
-        //===================== HANDLING DEVICE GAME CONTROLS ON LOAD =======================================================
+        // //===================== HANDLING DEVICE GAME CONTROLS ON LOAD =======================================================
 
-        //This is the Text for the Label at the top of the screen
-        //Check if the device running this is a console
-        // if(SystemInfo.deviceType == DeviceType.Desktop)
+        // //@TODO: use a switch statement!
+
+        // if (SystemInfo.deviceType == DeviceType.Desktop)
         // {
-        //     Keyboard_PlayerMovement keyboard = FindObjectOfType<Keyboard_PlayerMovement>(includeInactive: true);
 
-        //     keyboard.gameObject.SetActive(true);
+        //     // Keyboard_PlayerMovement keyboard = FindObjectOfType<Keyboard_PlayerMovement>(includeInactive: true);
+        //     desktopPlatform.SetActive(true);
+        //     pauseScreen.GetComponent<OnScreenButton>().enabled = false;
         // }
 
-        // if (SystemInfo.deviceType == DeviceType.Console)
-        // {
-        //     //Change the text of the label
-        //     m_DeviceType = "Console";
-        // }
+        // // if (SystemInfo.deviceType == DeviceType.Handheld)
+        // // {
+        // //     if(mobilePlatform != null)
+        // //     {
+        // //         mobilePlatform.SetActive(true);
+        // //     }
+        // //     else
+        // //     {
+        // //         Debug.LogError("mobileDeviceUI does not exist!");
+        // //     }
+            
+        // // }
 
-        // // //Check if the device running this is a handheld
-        // if (SystemInfo.deviceType == DeviceType.Handheld)
-        // {
-        //     // GameObject handHeldUI = FindInActiveObjectByName("handHeldUI");
-        //     GameObject handHeldDeviceUI = GameObject.Find("HandheldDeviceUI");
-        //     Debug.Log(handHeldDeviceUI);
 
-        // }
-
-        // //Check if the device running this is unknown
+        // //game does not support such device
         // if (SystemInfo.deviceType == DeviceType.Unknown)
         // {
-        //     m_DeviceType = "Unknown";
+        //     Debug.LogError("Device Not Found!");
         // }
 
         //========================================
@@ -70,8 +93,7 @@ public class GameManager : MonoBehaviour
         switch (currentGameState)
         {
             case GameState.GAME_PAUSE:
-
-            //this is for PC controls
+                //this is for PC controls
                 CheckForPauseAndResume();
                 break;
             case GameState.GAME_OVER:
@@ -114,6 +136,7 @@ public class GameManager : MonoBehaviour
     }
     void CheckForPauseAndResume()
     {
+        //if escape button pressed, toggle pause
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (currentGameState == GameState.GAME_PAUSE)
@@ -125,6 +148,27 @@ public class GameManager : MonoBehaviour
                 PauseGame();
             }
         }
+
+        if (playerInput.actions["TogglePauseResume"].triggered)
+        {
+            if (currentGameState == GameState.GAME_PAUSE)
+            {
+
+                ResumeGame();
+            }
+            else
+            {
+
+                PauseGame();
+            }
+        }
+
+        //if touched menu button via screen touch, toggle pause
+        /*
+        1) touch menu button
+        2) check current game state
+        3) handle touch event based on current game state
+        */
     }
 
 
