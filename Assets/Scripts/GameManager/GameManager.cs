@@ -9,10 +9,11 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    PlayerInput playerInput;
+    
+    //i think we are mix matching unity's new input system and old input system and this is creating a mess
+    PlayerInput playerInput; 
     // Start is called before the first frame update
     public string device_Name;
-
     public GameObject pauseScreen;
     public GameObject mobilePlatform;
     public GameObject desktopPlatform;
@@ -32,13 +33,19 @@ public class GameManager : MonoBehaviour
         {
             case DeviceType.Desktop:
                 desktopPlatform.SetActive(true);
-                // pauseScreen.GetComponent<OnScreenButton>().enabled = false;
-                pauseScreen.GetComponentInChildren<OnScreenButton>().enabled = false;
+                Component[] onScreenButton = pauseScreen.GetComponentsInChildren<OnScreenButton>();
+                foreach(OnScreenButton button in onScreenButton)
+                {
+                    button.enabled = false;
+                }
                 break;
             case DeviceType.Handheld:
                 mobilePlatform.SetActive(true);
-                pauseScreen.GetComponentInChildren<Button>().enabled = false;
-
+                   Component[] desktopButtons = pauseScreen.GetComponentsInChildren<Button>();
+                foreach (Button button in desktopButtons)
+                {
+                    button.enabled = false;
+                }
                 break;
             default:
              Debug.LogError("Device Not Found!");
@@ -76,7 +83,7 @@ public class GameManager : MonoBehaviour
         // //     {
         // //         Debug.LogError("mobileDeviceUI does not exist!");
         // //     }
-            
+
         // // }
 
 

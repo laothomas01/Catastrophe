@@ -110,6 +110,34 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""DesktopControls"",
+            ""id"": ""bad49675-7363-432d-a391-a4921d8e4f16"",
+            ""actions"": [
+                {
+                    ""name"": ""New action"",
+                    ""type"": ""Button"",
+                    ""id"": ""d522aa56-6d02-4aac-8a16-bf4516c3b4db"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""bb157957-fe56-4afa-a70b-db2a7a90edec"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""New action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -120,6 +148,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_AndroidControls_ToggleAttack = m_AndroidControls.FindAction("ToggleAttack", throwIfNotFound: true);
         m_AndroidControls_ToggleSprint = m_AndroidControls.FindAction("ToggleSprint", throwIfNotFound: true);
         m_AndroidControls_TogglePauseResume = m_AndroidControls.FindAction("TogglePauseResume", throwIfNotFound: true);
+        // DesktopControls
+        m_DesktopControls = asset.FindActionMap("DesktopControls", throwIfNotFound: true);
+        m_DesktopControls_Newaction = m_DesktopControls.FindAction("New action", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -247,11 +278,61 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public AndroidControlsActions @AndroidControls => new AndroidControlsActions(this);
+
+    // DesktopControls
+    private readonly InputActionMap m_DesktopControls;
+    private List<IDesktopControlsActions> m_DesktopControlsActionsCallbackInterfaces = new List<IDesktopControlsActions>();
+    private readonly InputAction m_DesktopControls_Newaction;
+    public struct DesktopControlsActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public DesktopControlsActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Newaction => m_Wrapper.m_DesktopControls_Newaction;
+        public InputActionMap Get() { return m_Wrapper.m_DesktopControls; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DesktopControlsActions set) { return set.Get(); }
+        public void AddCallbacks(IDesktopControlsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DesktopControlsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DesktopControlsActionsCallbackInterfaces.Add(instance);
+            @Newaction.started += instance.OnNewaction;
+            @Newaction.performed += instance.OnNewaction;
+            @Newaction.canceled += instance.OnNewaction;
+        }
+
+        private void UnregisterCallbacks(IDesktopControlsActions instance)
+        {
+            @Newaction.started -= instance.OnNewaction;
+            @Newaction.performed -= instance.OnNewaction;
+            @Newaction.canceled -= instance.OnNewaction;
+        }
+
+        public void RemoveCallbacks(IDesktopControlsActions instance)
+        {
+            if (m_Wrapper.m_DesktopControlsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IDesktopControlsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DesktopControlsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DesktopControlsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public DesktopControlsActions @DesktopControls => new DesktopControlsActions(this);
     public interface IAndroidControlsActions
     {
         void OnWalk(InputAction.CallbackContext context);
         void OnToggleAttack(InputAction.CallbackContext context);
         void OnToggleSprint(InputAction.CallbackContext context);
         void OnTogglePauseResume(InputAction.CallbackContext context);
+    }
+    public interface IDesktopControlsActions
+    {
+        void OnNewaction(InputAction.CallbackContext context);
     }
 }

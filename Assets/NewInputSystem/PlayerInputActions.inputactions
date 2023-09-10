@@ -88,6 +88,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "DesktopControls",
+            "id": "bad49675-7363-432d-a391-a4921d8e4f16",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "d522aa56-6d02-4aac-8a16-bf4516c3b4db",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "bb157957-fe56-4afa-a70b-db2a7a90edec",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
