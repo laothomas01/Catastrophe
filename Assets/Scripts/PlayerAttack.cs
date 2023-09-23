@@ -1,16 +1,10 @@
-// using System.Collections;
-// using System.Collections.Generic;
-using System.Collections;
-using System.Data.Common;
-using UnityEditor.PackageManager;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
 {
     PlayerMovement playerMovement; //want to use functionalities from this component to reduce code redundancy
-
-    // public int rayCastMagnitureMultiplier; 
     public int attackRange;
     int rayCount = 1;
     public Transform lookPoint;
@@ -18,7 +12,6 @@ public class PlayerAttack : MonoBehaviour
     Vector3 attackDirection;
     GameObject currentDetectedObject;
     Color originalObjectColor;
-    // int targetLayerMask_;
     private void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
@@ -26,37 +19,28 @@ public class PlayerAttack : MonoBehaviour
     }
     private void Update()
     {
-        handleFurnitureDetection();
+        HandlePlayerFurnitureInteraction();
     }
-    private void handleFurnitureDetection()
+
+    /*
+        can we condense this into an attack and object detection feature? 
+    */
+    private void HandlePlayerFurnitureInteraction()
     {
+        
         RaycastHit hit;
         attackDirection = Vector3.ClampMagnitude(playerMovement.getLookDirection(), attackRange);
         Debug.DrawRay(lookPoint.position, attackDirection, Color.red);
-        int targetLayerMask_ = 1 << 9;
+        int targetLayerMask_ = 1 << 9; // 1<< 9 = furniture layer
+
         if (Physics.Raycast(lookPoint.position, attackDirection, out hit, attackDirection.magnitude, targetLayerMask_))
         {
-            GameObject detectedObject = hit.transform.gameObject;
-            if(detectedObject != currentDetectedObject)
-            {
-                //Reset the color of the previously detected object
-                if(currentDetectedObject != null)
-                {
-                     Renderer previousRenderer = currentDetectedObject.GetComponent<Renderer>();
-                     previousRenderer.material.color = originalObjectColor;
-                }
-                Renderer renderer = detectedObject.GetComponent<Renderer>();
-                originalObjectColor = renderer.material.color;
-                renderer.material.color = Color.red;
-                //Update the current detected object refernce
-                currentDetectedObject = detectedObject;
-
-            }
+                handleDetection(hit.transform.gameObject);
         }
         else
         {
             // Reset the color of the previously detected object
-            if(currentDetectedObject != null)
+            if (currentDetectedObject != null)
             {
                 Renderer previousRenderer = currentDetectedObject.GetComponent<Renderer>();
                 previousRenderer.material.color = originalObjectColor;
@@ -123,6 +107,66 @@ public class PlayerAttack : MonoBehaviour
         //             }
 
     }
+    void handleDetection(GameObject gameObject)
+    {
+         if (gameObject.tag == "Heavy")
+            {
+                GameObject detectedObject = gameObject;
+                if (detectedObject != currentDetectedObject)
+                {
+                    //Reset the color of the previously detected object
+                    if (currentDetectedObject != null)
+                    {
+                        Renderer previousRenderer = currentDetectedObject.GetComponent<Renderer>();
+                        previousRenderer.material.color = originalObjectColor;
+                    }
+                    Renderer renderer = detectedObject.GetComponent<Renderer>();
+                    originalObjectColor = renderer.material.color;
+                    renderer.material.color = Color.red;
+                    //Update the current detected object refernce
+                    currentDetectedObject = detectedObject;
+
+                }
+        }
+        else if(gameObject.tag == "Pushable")
+            {
+                 GameObject detectedObject = gameObject;
+                if (detectedObject != currentDetectedObject)
+                {
+                    //Reset the color of the previously detected object
+                    if (currentDetectedObject != null)
+                    {
+                        Renderer previousRenderer = currentDetectedObject.GetComponent<Renderer>();
+                        previousRenderer.material.color = originalObjectColor;
+                    }
+                    Renderer renderer = detectedObject.GetComponent<Renderer>();
+                    originalObjectColor = renderer.material.color;
+                    renderer.material.color = Color.blue;
+                    //Update the current detected object refernce
+                    currentDetectedObject = detectedObject;
+
+                }
+            }
+    }
+
+    public void OnAttack(InputAction.CallbackContext contxt)
+    {
+        
+        switch(contxt.phase)
+        {
+            case InputActionPhase.Performed:
+            Debug.Log("Attacked");
+            if(currentDetectedObject.tag == "Heavy")
+            {
+                Destroy(currentDetectedObject,1);
+            }
+            break;
+            case InputActionPhase.Canceled:
+            Debug.Log("Not Attacking!");
+            break;
+        }
+    }
+    
 
 
 }

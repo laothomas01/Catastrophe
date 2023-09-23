@@ -1,7 +1,6 @@
 
 using UnityEngine;
 using UnityEngine.InputSystem;
-
 public class PlayerMovement : MonoBehaviour
 {
     public int moveSpeed_;
@@ -17,28 +16,11 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rigidbody_;
 
-    //unity input controls
-    public PlayerControls playerControls_;
-
-    //specific unity input controls
-    private InputAction move_;
-    private InputAction sprint_;
+   
     void Start()
     {
         rigidbody_ = GetComponent<Rigidbody>();
     }
-
-    void Awake()
-    {
-        playerControls_ = new PlayerControls();
-
-        move_ = playerControls_.Player.Move;
-        move_.Enable();
-        
-        sprint_ = playerControls_.Player.Sprint;
-        sprint_.Enable();
-    }
-
 
 
     void FixedUpdate()

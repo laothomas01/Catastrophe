@@ -13005,7 +13005,6 @@ GameObject:
   - component: {fileID: 2338441609345614734}
   - component: {fileID: 2338441609345614733}
   - component: {fileID: 3114240162779470129}
-  - component: {fileID: 3114240162779470130}
   - component: {fileID: 3114240162779470131}
   m_Layer: 7
   m_Name: Cat
@@ -13026,17 +13025,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 828cf57649649760daec54a66e5e56d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackRange: 30
   lookPoint: {fileID: 152233919}
-  hitDistance: 50
-  forceAmount: 40
-  forceMultiplier: 10
-  viewMeshFilter: {fileID: 1956806207}
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 512
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!54 &2338441609345614734
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -13596,22 +13586,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.094266295, y: 0.14487395, z: 0.24705602}
   m_Center: {x: -0.0028668912, y: 0.07794323, z: 0.035776496}
---- !u!114 &3114240162779470130
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2338441609345614730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ec1f78a583ab43b69d16747521770db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  visibleTargets: []
-  viewAngle: 45
-  viewRadius: 30
-  meshResolution: 0.15
 --- !u!114 &3114240162779470131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13658,11 +13632,35 @@ MonoBehaviour:
     m_ActionId: 11aa5b9c-10c1-48ca-bba7-63df63291bb5
     m_ActionName: Player/Look[/Mouse/delta]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2338441609345614733}
+        m_TargetAssemblyTypeName: PlayerAttack, Assembly-CSharp
+        m_MethodName: OnAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: db56c5a6-03cc-4461-bf17-cadbde24e335
     m_ActionName: Player/Fire[/Mouse/leftButton]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2338441609345614728}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: OnToggleSprint
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 6e32f078-64b9-46d9-879b-f04e6da0df88
     m_ActionName: Player/Sprint[/Keyboard/shift]
   - m_PersistentCalls:
