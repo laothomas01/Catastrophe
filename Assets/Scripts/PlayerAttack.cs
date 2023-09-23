@@ -1,6 +1,8 @@
 // using System.Collections;
 // using System.Collections.Generic;
 using System.Collections;
+using System.Data.Common;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,10 +16,13 @@ public class PlayerAttack : MonoBehaviour
     public Transform lookPoint;
     // int rayAngleSize 
     Vector3 attackDirection;
+    GameObject currentDetectedObject;
+    Color originalObjectColor;
+    // int targetLayerMask_;
     private void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
-        
+        currentDetectedObject = null;
     }
     private void Update()
     {
@@ -26,74 +31,100 @@ public class PlayerAttack : MonoBehaviour
     private void handleFurnitureDetection()
     {
         RaycastHit hit;
-        // raycastLength = playerMovement.getLookDirection().magnitude * attackRange;
-        // Vector3 lookDirection = playerMovement.getLookDirection();
-        // float raycastMagnitude = lookDirection.magnitude * rayCastMagnitureMultiplier;
-        // Vector3 raycastEndpoint = lookPoint.transform.position + lookDirection * raycastMagnitude;
-        // Debug.DrawRay(lookPoint.position,) 
-        attackDirection = Vector3.ClampMagnitude(playerMovement.getLookDirection(),attackRange);
-        Debug.DrawRay(lookPoint.position,attackDirection,Color.red);
-        
+        attackDirection = Vector3.ClampMagnitude(playerMovement.getLookDirection(), attackRange);
+        Debug.DrawRay(lookPoint.position, attackDirection, Color.red);
+        int targetLayerMask_ = 1 << 9;
+        if (Physics.Raycast(lookPoint.position, attackDirection, out hit, attackDirection.magnitude, targetLayerMask_))
+        {
+            GameObject detectedObject = hit.transform.gameObject;
+            if(detectedObject != currentDetectedObject)
+            {
+                //Reset the color of the previously detected object
+                if(currentDetectedObject != null)
+                {
+                     Renderer previousRenderer = currentDetectedObject.GetComponent<Renderer>();
+                     previousRenderer.material.color = originalObjectColor;
+                }
+                Renderer renderer = detectedObject.GetComponent<Renderer>();
+                originalObjectColor = renderer.material.color;
+                renderer.material.color = Color.red;
+                //Update the current detected object refernce
+                currentDetectedObject = detectedObject;
+
+            }
+        }
+        else
+        {
+            // Reset the color of the previously detected object
+            if(currentDetectedObject != null)
+            {
+                Renderer previousRenderer = currentDetectedObject.GetComponent<Renderer>();
+                previousRenderer.material.color = originalObjectColor;
+                currentDetectedObject = null;
+            }
+        }
+
+
         // if(Physics.Raycast(lookPoint.position,playerMovement.getLookDirection()))
         // Debug.DrawRay(lookPoint.position,);
-//  for (int i = 0, j = rayCount - 1; i < rayCount; i++, j--)
-//         {
+        //  for (int i = 0, j = rayCount - 1; i < rayCount; i++, j--)
+        //         {
 
-//             //the offset angle of the ray cast
-//             float angle = transform.eulerAngles.y - fov.getViewAngle() / 2 + rayAngleSize * i;
+        //             //the offset angle of the ray cast
+        //             float angle = transform.eulerAngles.y - fov.getViewAngle() / 2 + rayAngleSize * i;
 
-//             if (j < 0)
-//             {
-//                 j = rayCount;
-//             }
-//             // Debug.Log(" i: " + i + "," + " j: " + j);
-//             float angle2 = transform.eulerAngles.y - fov.getViewAngle() / 2 + rayAngleSize * j;
+        //             if (j < 0)
+        //             {
+        //                 j = rayCount;
+        //             }
+        //             // Debug.Log(" i: " + i + "," + " j: " + j);
+        //             float angle2 = transform.eulerAngles.y - fov.getViewAngle() / 2 + rayAngleSize * j;
 
-//             // lookPoint.forward = fov.DirFromAngle(fovDirectionAngle, true);
+        //             // lookPoint.forward = fov.DirFromAngle(fovDirectionAngle, true);
 
-//             RaycastHit hit;
-//             // Debug.DrawRay(lookPoint.position, fov.DirFromAngle(angle, true), Color.green);
-//             if (Physics.Raycast(lookPoint.position, fov.DirFromAngle(angle, true), out hit, fov.getViewRadius()) || Physics.Raycast(lookPoint.position, fov.DirFromAngle(angle2, true), out hit, fov.getViewRadius()))
-//             {
+        //             RaycastHit hit;
+        //             // Debug.DrawRay(lookPoint.position, fov.DirFromAngle(angle, true), Color.green);
+        //             if (Physics.Raycast(lookPoint.position, fov.DirFromAngle(angle, true), out hit, fov.getViewRadius()) || Physics.Raycast(lookPoint.position, fov.DirFromAngle(angle2, true), out hit, fov.getViewRadius()))
+        //             {
 
-//                 if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Furniture"))
-//                 {
-//                     // Debug.DrawRay(lookPoint.position, fov.DirFromAngle(angle, true) * fov.getViewRadius(), Color.green);
+        //                 if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Furniture"))
+        //                 {
+        //                     // Debug.DrawRay(lookPoint.position, fov.DirFromAngle(angle, true) * fov.getViewRadius(), Color.green);
 
-//                     if (!seenFurniture.Contains(hit.transform.gameObject))
-//                     {
-//                         Renderer render = hit.transform.GetComponent<Renderer>();
-//                         if (hit.transform.tag == "Heavy")
-//                         {
-//                             render.material.color = Color.red;
-//                         }
-//                         else if (hit.transform.tag == "Pushable")
-//                         {
-//                             render.material.color = Color.blue;
-//                         }
-//                         seenFurniture.Enqueue(hit.transform.gameObject);
+        //                     if (!seenFurniture.Contains(hit.transform.gameObject))
+        //                     {
+        //                         Renderer render = hit.transform.GetComponent<Renderer>();
+        //                         if (hit.transform.tag == "Heavy")
+        //                         {
+        //                             render.material.color = Color.red;
+        //                         }
+        //                         else if (hit.transform.tag == "Pushable")
+        //                         {
+        //                             render.material.color = Color.blue;
+        //                         }
+        //                         seenFurniture.Enqueue(hit.transform.gameObject);
 
-//                     }
-//                 }
+        //                     }
+        //                 }
 
-//             }
+        //             }
 
-//             else
-//             {
-//                 if (seenFurniture.Count > 0)
-//                 {
-//                     GameObject target = seenFurniture.Dequeue();
-//                     if (target != null)
-//                     {
-//                         target.GetComponent<Renderer>().material.color = Color.white;
+        //             else
+        //             {
+        //                 if (seenFurniture.Count > 0)
+        //                 {
+        //                     GameObject target = seenFurniture.Dequeue();
+        //                     if (target != null)
+        //                     {
+        //                         target.GetComponent<Renderer>().material.color = Color.white;
 
-//                     }
-//                 }
-//             }
+        //                     }
+        //                 }
+        //             }
 
     }
 
-    
+
 }
 
 // using TMPro;

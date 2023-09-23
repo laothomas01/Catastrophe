@@ -55,16 +55,16 @@ public class PlayerMovement : MonoBehaviour
         //calculate player input
         // calculate mouse direction
         Ray cursorRay_;
-        RaycastHit hit;
+        RaycastHit mouseToScreenHit;
         //we want to raycast around the player model
         //this creates a boundary of where the player can point their cursor for movement
         int targetLayerMask_ = 1 << 7;
         cursorRay_ = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-        if (Physics.Raycast(cursorRay_, out hit, Mathf.Infinity, ~targetLayerMask_))
+        if (Physics.Raycast(cursorRay_, out mouseToScreenHit, Mathf.Infinity, ~targetLayerMask_))
         {
             // Debug.Log("Hit Something!");
-            mousePoint = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+            mousePoint = new Vector3(mouseToScreenHit.point.x, transform.position.y, mouseToScreenHit.point.z);
             // Debug.Log(mousePoint);
             lookDirection_ = mousePoint - transform.position;
             transform.LookAt(mousePoint);
@@ -74,7 +74,6 @@ public class PlayerMovement : MonoBehaviour
 
         //using mouse direction and player input, calculate movement direction
         moveDirection_ = transform.forward * movementInput_.y;
-
     }
 
     public Vector3 getLookDirection()
