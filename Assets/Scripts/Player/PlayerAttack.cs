@@ -4,14 +4,19 @@ using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
 {
-    PlayerMovement playerMovement; //want to use functionalities from this component to reduce code redundancy
-    public int attackRange;
-    int rayCount = 1;
-    public Transform lookPoint;
+
+    
+    PlayerMovement playerMovement; //use player's look direction for attack direction
+    public int attackRange; 
+    int rayCount = 1; // will use for cone based raycasting
+    public Transform lookPoint;  // initial position of raycast for looking and attacking
     // int rayAngleSize 
     Vector3 attackDirection;
-    GameObject currentDetectedObject;
+    GameObject currentDetectedObject; 
     Color originalObjectColor;
+    public int pushForceAmount;
+    
+    bool isAttacking = false;
     private void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
@@ -23,11 +28,13 @@ public class PlayerAttack : MonoBehaviour
     }
 
     /*
-        can we condense this into an attack and object detection feature? 
+       can this function be ported to mobile:
+        - maybe. will need to tweak some functionalities.
+            - this is in the department of player movment. maybe???? 
     */
     private void HandlePlayerFurnitureInteraction()
     {
-        
+
         RaycastHit hit;
         attackDirection = Vector3.ClampMagnitude(playerMovement.getLookDirection(), attackRange);
         Debug.DrawRay(lookPoint.position, attackDirection, Color.red);
@@ -35,7 +42,7 @@ public class PlayerAttack : MonoBehaviour
 
         if (Physics.Raycast(lookPoint.position, attackDirection, out hit, attackDirection.magnitude, targetLayerMask_))
         {
-                handleDetection(hit.transform.gameObject);
+            handleDetection(hit.transform.gameObject);
         }
         else
         {
@@ -107,70 +114,89 @@ public class PlayerAttack : MonoBehaviour
         //             }
 
     }
+    //can this function be translated to mobile? 
+    // yes
     void handleDetection(GameObject gameObject)
     {
-         if (gameObject.tag == "Heavy")
+        if (gameObject.tag == "Heavy")
+        {
+            GameObject detectedObject = gameObject;
+            if (detectedObject != currentDetectedObject)
             {
-                GameObject detectedObject = gameObject;
-                if (detectedObject != currentDetectedObject)
+                //Reset the color of the previously detected object
+                if (currentDetectedObject != null)
                 {
-                    //Reset the color of the previously detected object
-                    if (currentDetectedObject != null)
-                    {
-                        Renderer previousRenderer = currentDetectedObject.GetComponent<Renderer>();
-                        previousRenderer.material.color = originalObjectColor;
-                    }
-                    Renderer renderer = detectedObject.GetComponent<Renderer>();
-                    originalObjectColor = renderer.material.color;
-                    renderer.material.color = Color.red;
-                    //Update the current detected object refernce
-                    currentDetectedObject = detectedObject;
-
+                    Renderer previousRenderer = currentDetectedObject.GetComponent<Renderer>();
+                    previousRenderer.material.color = originalObjectColor;
                 }
-        }
-        else if(gameObject.tag == "Pushable")
-            {
-                 GameObject detectedObject = gameObject;
-                if (detectedObject != currentDetectedObject)
-                {
-                    //Reset the color of the previously detected object
-                    if (currentDetectedObject != null)
-                    {
-                        Renderer previousRenderer = currentDetectedObject.GetComponent<Renderer>();
-                        previousRenderer.material.color = originalObjectColor;
-                    }
-                    Renderer renderer = detectedObject.GetComponent<Renderer>();
-                    originalObjectColor = renderer.material.color;
-                    renderer.material.color = Color.blue;
-                    //Update the current detected object refernce
-                    currentDetectedObject = detectedObject;
+                Renderer renderer = detectedObject.GetComponent<Renderer>();
+                originalObjectColor = renderer.material.color;
+                renderer.material.color = Color.red;
+                //Update the current detected object refernce
+                currentDetectedObject = detectedObject;
 
-                }
             }
+        }
+        else if (gameObject.tag == "Pushable")
+        {
+            GameObject detectedObject = gameObject;
+            if (detectedObject != currentDetectedObject)
+            {
+                //Reset the color of the previously detected object
+                if (currentDetectedObject != null)
+                {
+                    Renderer previousRenderer = currentDetectedObject.GetComponent<Renderer>();
+                    previousRenderer.material.color = originalObjectColor;
+                }
+                Renderer renderer = detectedObject.GetComponent<Renderer>();
+                originalObjectColor = renderer.material.color;
+                renderer.material.color = Color.blue;
+                //Update the current detected object refernce
+                currentDetectedObject = detectedObject;
+
+            }
+        }
     }
 
+
+//can this code be translated to mobile? 
     public void OnAttack(InputAction.CallbackContext contxt)
     {
-        
-        switch(contxt.phase)
+        switch (contxt.phase)
         {
             case InputActionPhase.Performed:
-            Debug.Log("Attacked");
-            if(currentDetectedObject.tag == "Heavy")
-            {
-                Destroy(currentDetectedObject,1);
-            }
-            break;
+                Debug.Log("Attacking");
+                isAttacking = true;
+                GetComponent<Animator>().SetBool("HeavyAttacking",isAttacking);
+                if (currentDetectedObject != null)
+                {
+                    if (currentDetectedObject.tag == "Heavy")
+                    {
+                        /*
+                        @TODO: write a 
+                        */
+                        Destroy(currentDetectedObject,0.2f);
+                    }
+                    else if (currentDetectedObject.tag == "Pushable")
+                    {
+                        currentDetectedObject.AddComponent<Rigidbody>();
+                        Rigidbody rb = currentDetectedObject.GetComponent<Rigidbody>();
+                        rb.AddForce(attackDirection * pushForceAmount, ForceMode.Impulse);
+                    }
+                }
+                break;
             case InputActionPhase.Canceled:
-            Debug.Log("Not Attacking!");
-            break;
+                isAttacking = false;
+                GetComponent<Animator>().SetBool("HeavyAttacking",isAttacking);
+                Debug.Log("Not Attacking!");
+                break;
         }
     }
-    
-
 
 }
 
+
+// ========================== DO NOT DELETE THE CODE BELOW. DOING CODE CLEAN UP ====================================
 // using TMPro;
 // public class PlayerAttack : MonoBehaviour
 

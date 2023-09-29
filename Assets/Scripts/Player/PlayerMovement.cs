@@ -16,7 +16,8 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rigidbody_;
 
-   
+    bool isRunning = false;
+    bool isWalking = false;
     void Start()
     {
         rigidbody_ = GetComponent<Rigidbody>();
@@ -67,22 +68,38 @@ public class PlayerMovement : MonoBehaviour
     {
 
         movementInput_ = contxt.ReadValue<Vector2>();
+        switch (contxt.phase)
+        {
+            case InputActionPhase.Performed:
+                isWalking = true;
+                GetComponent<Animator>().SetBool("isWalking",isWalking);
+                break;
+            case InputActionPhase.Canceled:
+                isWalking = false;
+                GetComponent<Animator>().SetBool("isWalking",isWalking);
+                break;
+        }
     }
 
     public void OnToggleSprint(InputAction.CallbackContext contxt)
     {
-        
+
         int currentSpeedMultiplier_ = moveSpeedMultiplier_;
 
         switch (contxt.phase)
         {
             case InputActionPhase.Performed:
+                isRunning = true;
                 Debug.Log("Sprinting!");
                 moveSpeedMultiplier_ = currentSpeedMultiplier_ * 2;
+                GetComponent<Animator>().SetBool("isRunning", isRunning);
                 break;
             case InputActionPhase.Canceled:
+                isRunning = false;
                 Debug.Log("Not Sprinting!");
                 moveSpeedMultiplier_ = currentSpeedMultiplier_ / 2;
+                GetComponent<Animator>().SetBool("isRunning",isRunning);
+
                 break;
         }
     }

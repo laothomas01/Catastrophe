@@ -63,11 +63,6 @@ public class EnemyController : MonoBehaviour
             CatDetected();
         }
         
-        //Debug.DrawRay(face.position, new Vector3(face.forward.x + faceAngles.x,face.forward.y + faceAngles.y, face.forward.z + faceAngles.z) *faceDetectDistance);
-        if (Input.GetKey(KeyCode.Space))
-        {
-            LookAround();
-        }
 
         if (AgentReachedDestination(agent))
         {
@@ -77,6 +72,13 @@ public class EnemyController : MonoBehaviour
         Patrol();
     }
 
+    /// <summary>
+    ///     -    if within viewport's space
+    /// </summary>
+    /// 
+    /// <returns>
+    ///     -  is visible on screen
+    /// </returns>
     bool VisibleOnScreen()
     {
         Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
@@ -248,6 +250,10 @@ public class EnemyController : MonoBehaviour
     }
 
 
+
+    /// <summary>
+    /// - adding visuals to the enemy sight
+    /// </summary>
     void DrawVision()
     {
         int rayCount = Mathf.RoundToInt(viewAngle * visionResoulution);
