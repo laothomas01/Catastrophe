@@ -1,14 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 public class PlayerAttack : MonoBehaviour
 
 {
+        FieldOfView fieldOfView;
+        Rigidbody rb;
+
+        void Start()
+        {
+            fieldOfView = GetComponent<FieldOfView>();
+            rb = GetComponent<Rigidbody>();
+        }
+
+        void Update()
+        {
+            Attack();
+        }
+
+        /*
+        
+        - handle left mouse click
+        - Get Currently detected object 
+        - destroy currently detected object
+        */
+        void Attack()
+        {
+            if(Input.GetMouseButton(0))
+            {
+                if(fieldOfView.GetCurrentDetectedObject() != null)
+                {
+                    // Debug.Log(fieldOfView.GetCurrentDetectedObject().name);
+                
+                    //maybe fill this destroy time with a global constant but i dont want to fucking see "destroyTime" inside "PlayerAttack.cs"
+
+                    Destroy(fieldOfView.GetCurrentDetectedObject());
+                }
+            }
+        }
+
+
+//===================================================================================================================
 //     private Camera cam;
 //     public Transform lookPoint;
 //     public float hitDistance;
-    
+     
 
 //     [SerializeField]
 //     private float forceAmount;

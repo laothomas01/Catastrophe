@@ -12750,7 +12750,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33abd70b401d141dc91b41a13255d4be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0
+  moveSpeed: 100
+  moveSpeedMultiplier: 30
 --- !u!95 &2338441609345614729
 Animator:
   serializedVersion: 5
@@ -12800,7 +12801,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2338441609345614730}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 828cf57649649760daec54a66e5e56d2, type: 3}
   m_Name: 
@@ -13376,7 +13377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raycastOrigin: {fileID: 152233919}
-  lookDistance: 100
+  lookDistance: 50
   fieldOfViewAngle: 0
   fieldOfViewMeshResolution: 0
 --- !u!1 &3272042356782023949

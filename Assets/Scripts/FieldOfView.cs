@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 
 public class FieldOfView : MonoBehaviour
@@ -28,7 +24,7 @@ public class FieldOfView : MonoBehaviour
     private float raycastAngle;
     private int rayCount;
     // ==========================================
-    
+
     //Store the currently detected object
     private GameObject currentDetectedObject;
     private Color originalObjectColor;
@@ -61,7 +57,12 @@ public class FieldOfView : MonoBehaviour
 
             transform.LookAt(cursorPosition);
         }
+
+        lookDirection = cursorPosition - transform.position;
+
+        lookDirection = lookDirection.normalized * lookDistance;
     }
+    
 
     /*
     
@@ -76,14 +77,7 @@ public class FieldOfView : MonoBehaviour
     */
     void handleSingleRaycastFurnitureDetection()
     {
-        lookDirection = cursorPosition - transform.position;
-
-        lookDirection = lookDirection.normalized * lookDistance;
-        
-        // lookDirection = lookDirection.normalized * lookDistance;
         Debug.DrawRay(raycastOrigin.position,lookDirection,Color.red);
-
-        
         GameObject previouslyDetectedObject = currentDetectedObject;
         if(Physics.Raycast(raycastOrigin.position,lookDirection,out raycastHit,lookDirection.magnitude,furnitureLayerMask))
         {
@@ -116,6 +110,15 @@ public class FieldOfView : MonoBehaviour
 
     }
 
+
+    public Vector3 GetLookDirection()
+    {
+        return lookDirection;
+    }
+    public GameObject GetCurrentDetectedObject()
+    {
+        return currentDetectedObject;
+    } 
     //coned ray casted hit detection
 
     // void handleWideFieldOfView()

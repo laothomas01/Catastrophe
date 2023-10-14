@@ -10,8 +10,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 movementInput;
     private Vector3 movementDirection;
     private Rigidbody rigidbody;
-
-
     void Start()
     {
         rigidbody= GetComponent<Rigidbody>();
@@ -29,11 +27,25 @@ public class PlayerMovement : MonoBehaviour
     {
         movementInput.y = Input.GetAxisRaw("Vertical");
         movementDirection = transform.forward * movementInput.y;
+        toggleSprint();
     }
     void Move()
     {
         rigidbody.AddForce(movementDirection.normalized * moveSpeed * moveSpeedMultiplier *  Time.fixedDeltaTime,ForceMode.Force);
     }
+    void toggleSprint()
+    {
+        if(Input.GetKey(KeyCode.LeftShift))
+        {
+            moveSpeedMultiplier = 300;
+        }
+        else
+        {
+            moveSpeedMultiplier = 200;
+        }
+    }
+
+
     //=============================================
 //     public float moveSpeed, speedMultiplier;
 //     private Vector3 move, moveDir, lookDirection, mousePoint;
