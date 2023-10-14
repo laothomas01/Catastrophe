@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465785, g: 0.49641252, b: 0.574817, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2248,11 +2248,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 667633600}
   m_CullTransparentMesh: 1
---- !u!1 &684469723 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9137425217724093504, guid: 26fafe21f5c37ffb4a4893c880450c42, type: 3}
-  m_PrefabInstance: {fileID: 428469379}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &710364024
 GameObject:
   m_ObjectHideFlags: 0
@@ -12755,10 +12750,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33abd70b401d141dc91b41a13255d4be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 150
-  speedMultiplier: 10
-  animator: {fileID: 0}
-  mouseObj: {fileID: 684469723}
+  moveSpeed: 0
 --- !u!95 &2338441609345614729
 Animator:
   serializedVersion: 5
@@ -12793,6 +12785,7 @@ GameObject:
   - component: {fileID: 2338441609345614734}
   - component: {fileID: 2338441609345614733}
   - component: {fileID: 3114240162779470129}
+  - component: {fileID: 3114240162779470130}
   m_Layer: 7
   m_Name: Cat
   m_TagString: Player
@@ -12807,15 +12800,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2338441609345614730}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 828cf57649649760daec54a66e5e56d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookPoint: {fileID: 152233919}
-  hitDistance: 40
-  forceAmount: 100
-  forceMultiplier: 10
 --- !u!54 &2338441609345614734
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -13374,6 +13363,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.094266295, y: 0.14487395, z: 0.28083208}
   m_Center: {x: -0.0028668912, y: 0.07794323, z: 0.039201427}
+--- !u!114 &3114240162779470130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2338441609345614730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ec1f78a583ab43b69d16747521770db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  raycastOrigin: {fileID: 152233919}
+  lookDistance: 100
+  fieldOfViewAngle: 0
+  fieldOfViewMeshResolution: 0
 --- !u!1 &3272042356782023949
 GameObject:
   m_ObjectHideFlags: 0
