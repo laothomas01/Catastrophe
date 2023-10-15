@@ -30,12 +30,17 @@ public class PlayerAttack : MonoBehaviour
                 {
                     // Debug.Log(fieldOfView.GetCurrentDetectedObject().name);
                 
-                    //maybe fill this destroy time with a global constant but i dont want to fucking see "destroyTime" inside "PlayerAttack.cs"
+                    //maybe fill this destroy time with a global constant because i dont want to fucking see "destroyTime" inside "PlayerAttack.cs"
+                    // the time it takes to destroy the object should also be used to cancel the animation after timer expires
+                    // Destroy(fieldOfView.GetCurrentDetectedObject());
 
-                    Destroy(fieldOfView.GetCurrentDetectedObject());
+                    fieldOfView.GetCurrentDetectedObject().SetActive(false);
                 }
             }
         }
+
+
+        
 
 
 //===================================================================================================================

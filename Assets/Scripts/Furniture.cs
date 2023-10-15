@@ -5,18 +5,19 @@ public class Furniture : MonoBehaviour
 {
     void Start()
     {
-        
+
     }
     void Update()
     {
-        
+
     }
-    void OnDestroy() {
-        Debug.Log(this.gameObject.name); 
+    void OnDestroy()
+    {
+
+        GameEvents.AlertEnemy(gameObject);
+    }
+    void OnDisable()
+    {
     }
 
-    void AlertEnemy(GameObject furniture)
-    {
-        
-    }
 }
