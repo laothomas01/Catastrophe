@@ -14,17 +14,18 @@ public class PlayerAttack : MonoBehaviour
         void Update()
         {
             Attack();
+            // Debug.Log(fieldOfView.GetCurrentDetectedObject());
         }
 
-        /*
-        
-        - handle left mouse click
-        - Get Currently detected object 
-        - destroy currently detected object
-        */
-        void Attack()
-        {
-            if(Input.GetMouseButton(0))
+    /*
+
+    - handle left mouse click
+    - Get Currently detected object 
+    - destroy currently detected object
+    */
+    void Attack()
+    {
+            if(Input.GetMouseButtonDown(0))
             {
                 if(fieldOfView.GetCurrentDetectedObject() != null)
                 {
@@ -33,12 +34,13 @@ public class PlayerAttack : MonoBehaviour
                     //maybe fill this destroy time with a global constant because i dont want to fucking see "destroyTime" inside "PlayerAttack.cs"
                     // the time it takes to destroy the object should also be used to cancel the animation after timer expires
                     // Destroy(fieldOfView.GetCurrentDetectedObject());
-
                     fieldOfView.GetCurrentDetectedObject().SetActive(false);
+                    
                 }
             }
         }
 
+     
 
         
 

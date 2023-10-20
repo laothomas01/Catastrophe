@@ -3,6 +3,7 @@ using UnityEngine;
 public class Furniture : MonoBehaviour
 
 {
+
     void Start()
     {
 
@@ -13,11 +14,12 @@ public class Furniture : MonoBehaviour
     }
     void OnDestroy()
     {
-
-        GameEvents.AlertEnemy(gameObject);
     }
     void OnDisable()
     {
+        GameEvents.handleAlertEnemyEvent(this.gameObject);
     }
+    
+
 
 }

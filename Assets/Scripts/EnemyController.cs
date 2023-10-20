@@ -13,23 +13,24 @@ public class EnemyController : MonoBehaviour
      * [] Add sounds
      */
     // Start is called before the first frame update
-    public Transform cat;
+    public Transform player;
     NavMeshAgent agent;
-    public float lerpSpeed,rotateTime,rotateAmount;
-    private float rotateRight, rotateLeft, timer, rotateTimer;
-    private bool rotating=false,triggered=false;
-    public Transform lookPoint;
+    public float lerpRotationSpeed;
+    public float rotateTime;
+    public float rotateAmount;
+    private float rotateRight;
+    private float rotateLeft;
+    private float maxDegrees;
+    private float rotateTimer;
+    private bool enemyRotating=false;
+    private bool enemyAlerted=false;
+    public Transform raycastOrigin;
     public GameObject gameOverScreen;
     private Quaternion currentRotation;
-
     //PlayerDetection
     public MeshFilter viewMeshFilter;
     Mesh viewMesh;
-
-
-
     Animator animator;
-
     //patrolling
     public Vector3[] patrolPoints;
     public float waitBetweenPatrol;
@@ -86,9 +87,10 @@ public class EnemyController : MonoBehaviour
 
     public void InspectFurniture(Transform furniture)
     {
-        triggered = true;
+        Debug.Log("Inspecting: " + furniture);
+        enemyAlerted = true;
         rotateRight = rotateLeft = 90;
-        rotating = false;
+        enemyRotating = false;
         
         agent.SetDestination(furniture.position);
        
@@ -96,7 +98,7 @@ public class EnemyController : MonoBehaviour
 
     bool AgentReachedDestination(NavMeshAgent a)
     {
-        if (triggered && !a.pathPending)
+        if (enemyAlerted && !a.pathPending)
         {
             if (a.remainingDistance <= a.stoppingDistance)
             {
@@ -112,7 +114,7 @@ public class EnemyController : MonoBehaviour
     void Patrol()
     {
         //Debug.Log(AgentReachedDestination(agent));
-        if (patrolPoints.Length > 0 && !triggered && patrolWaitTimer >= waitBetweenPatrol )
+        if (patrolPoints.Length > 0 && !enemyAlerted && patrolWaitTimer >= waitBetweenPatrol )
         {
             int patrolPoint = Random.Range(0, patrolPoints.Length);
             agent.SetDestination(patrolPoints[patrolPoint]);
@@ -124,33 +126,33 @@ public class EnemyController : MonoBehaviour
 
     void LookAround()
     {
-        if (!rotating)
+        if (!enemyRotating)
         {
             //Debug.Log("inside the rotating condition" + currentRotation + " rotate Right: "+rotateRight);
             //making sure the angle stays between 0 and 360. If over, subtract 360. If under, add the negative number to 360
             rotateRight = currentRotation.eulerAngles.y + rotateRight > 360 ? (currentRotation.eulerAngles.y + rotateRight) - 360 : currentRotation.eulerAngles.y + rotateRight;
             rotateLeft = currentRotation.eulerAngles.y - rotateLeft < 0 ? 360 + (currentRotation.eulerAngles.y - rotateLeft) : currentRotation.eulerAngles.y - rotateLeft;
             rotateAmount = rotateRight;
-            rotating = true;
+            enemyRotating = true;
             //Debug.Log("rotate right: " + rotateRight + " rotate left " + rotateLeft + " rotateAmount: " + rotateAmount);
         }
         else
         {
             currentRotation = transform.rotation;
-            transform.rotation = Quaternion.RotateTowards(currentRotation, Quaternion.Euler(0, rotateAmount, 0), timer);
-            timer += lerpSpeed * Time.deltaTime;
+            transform.rotation = Quaternion.RotateTowards(currentRotation, Quaternion.Euler(0, rotateAmount, 0), maxDegrees);
+            maxDegrees += lerpRotationSpeed * Time.deltaTime;
             if (Mathf.Abs((int)transform.eulerAngles.y) == Mathf.Abs((int)rotateAmount))
             {
                 //invert the rotation
                 rotateAmount = rotateAmount == rotateRight ? rotateLeft : rotateRight;
-                timer = 0;
+                maxDegrees = 0;
                 rotateTimer++;
                 if (rotateTimer >= rotateTime)
                 {
                     rotateRight = rotateLeft = 90;
-                    triggered = false;
+                    enemyAlerted = false;
                     rotateTimer = 0;
-                    rotating = false;
+                    enemyRotating = false;
                 }
             }
         }
@@ -196,19 +198,20 @@ public class EnemyController : MonoBehaviour
     void CatDetected()
     {
         DrawVision();
-        catDistance = Vector3.Distance(transform.position, cat.position);
+        catDistance = Vector3.Distance(transform.position, player.position);
         if (catDistance <= viewRadius)
         {
-            Vector3 catDir = (cat.position - transform.position).normalized;
+            Vector3 catDir = (player.position - transform.position).normalized;
             if (Vector3.Angle(transform.forward, catDir) < viewAngle / 2)
             {
                 RaycastHit hit;
-                if (Physics.Raycast(lookPoint.transform.position, catDir, out hit, catDistance))
+                if (Physics.Raycast(raycastOrigin.transform.position, catDir, out hit, catDistance))
                 {
                     //Debug.Log("GameOver");
                     if (hit.transform.gameObject.tag == "Player")
                     {
-                        gameOverScreen.GetComponent<GameOver>().toggleGameOverScreen();
+                        // gameOverScreen.GetComponent<GameOver>().toggleGameOverScreen();
+                        Debug.Log("Hit Player!");
                     }
                 }
             }
