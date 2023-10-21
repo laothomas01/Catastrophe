@@ -1,8 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+/// <summary>
+/// for Enemy animations and enemy behaviors
+/// </summary>
 public class EnemyController : MonoBehaviour
 {
     /*
@@ -22,8 +23,8 @@ public class EnemyController : MonoBehaviour
     private float rotateLeft;
     private float maxDegrees;
     private float rotateTimer;
-    private bool enemyRotating=false;
-    private bool enemyAlerted=false;
+    private bool enemyRotating = false;
+    private bool enemyAlerted = false;
     public Transform raycastOrigin;
     public GameObject gameOverScreen;
     private Quaternion currentRotation;
@@ -56,18 +57,19 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (VisibleOnScreen())
         {
-            CatDetected();
+            // this.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
+            // this.GetComponentInChildren<MeshRenderer>().enabled = true;
+            SearchForCat();
         }
-        
-        // //Debug.DrawRay(face.position, new Vector3(face.forward.x + faceAngles.x,face.forward.y + faceAngles.y, face.forward.z + faceAngles.z) *faceDetectDistance);
-        // if (Input.GetKey(KeyCode.Space))
+        // else
         // {
-        //     LookAround();
+        //     SearchForCat();
+        //     this.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
+        //     this.GetComponentInChildren<MeshRenderer>().enabled = false;
         // }
 
         if (AgentReachedDestination(agent))
@@ -78,22 +80,20 @@ public class EnemyController : MonoBehaviour
         Patrol();
     }
 
+    /// <summary>
+    /// - is enemy is in camera frustrum, begin patrol for cat
+    /// 
+    /// - is not on screen, turn off renderer?
+    /// </summary>
+    /// <returns>
+    /// enemy is visible on screen
+    /// </returns>
+    
     bool VisibleOnScreen()
     {
         Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
         bool onScreen = screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
         return onScreen;
-    }
-
-    public void InspectFurniture(Transform furniture)
-    {
-        Debug.Log("Inspecting: " + furniture);
-        enemyAlerted = true;
-        rotateRight = rotateLeft = 90;
-        enemyRotating = false;
-        
-        agent.SetDestination(furniture.position);
-       
     }
 
     bool AgentReachedDestination(NavMeshAgent a)
@@ -114,27 +114,25 @@ public class EnemyController : MonoBehaviour
     void Patrol()
     {
         //Debug.Log(AgentReachedDestination(agent));
-        if (patrolPoints.Length > 0 && !enemyAlerted && patrolWaitTimer >= waitBetweenPatrol )
+        if (patrolPoints.Length > 0 && !enemyAlerted && patrolWaitTimer >= waitBetweenPatrol)
         {
             int patrolPoint = Random.Range(0, patrolPoints.Length);
             agent.SetDestination(patrolPoints[patrolPoint]);
             patrolWaitTimer = 0;
         }
-            patrolWaitTimer += Time.deltaTime;
-        
+        patrolWaitTimer += Time.deltaTime;
+
     }
 
     void LookAround()
     {
         if (!enemyRotating)
         {
-            //Debug.Log("inside the rotating condition" + currentRotation + " rotate Right: "+rotateRight);
             //making sure the angle stays between 0 and 360. If over, subtract 360. If under, add the negative number to 360
             rotateRight = currentRotation.eulerAngles.y + rotateRight > 360 ? (currentRotation.eulerAngles.y + rotateRight) - 360 : currentRotation.eulerAngles.y + rotateRight;
             rotateLeft = currentRotation.eulerAngles.y - rotateLeft < 0 ? 360 + (currentRotation.eulerAngles.y - rotateLeft) : currentRotation.eulerAngles.y - rotateLeft;
             rotateAmount = rotateRight;
             enemyRotating = true;
-            //Debug.Log("rotate right: " + rotateRight + " rotate left " + rotateLeft + " rotateAmount: " + rotateAmount);
         }
         else
         {
@@ -159,32 +157,18 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    //private void FixedUpdate()
-    //{
-        //RaycastHit hit,hit2;
-        //int layerMask = 1 << 8;
-        //Debug.DrawRay(lookPoint.position, lookPoint.forward * playerDetectDistance);
-        //if (Physics.Raycast(lookPoint.position, lookPoint.forward, out hit, playerDetectDistance, ~layerMask))
-        //{
-        //    if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
-        //    {
-        //       // gameOverScreen.GetComponent<GameOver>().toggleGameOverScreen();
-        //    }
+    //given a furniture object from an event, perform inspection
+    public void InspectFurniture(Transform furniture)
+    {
+        Debug.Log("Inspecting: " + furniture);
+        enemyAlerted = true;
+        rotateRight = rotateLeft = 90;
+        enemyRotating = false;
 
-        //}
-        //if (Physics.Raycast(face.position, new Vector3(face.forward.x + faceAngles.x, face.forward.y + faceAngles.y, face.forward.z + faceAngles.z), out hit2, faceDetectDistance, ~layerMask))
-        //{
- 
-        //    if (hit2.transform.gameObject.layer == LayerMask.NameToLayer("Player"))
-        //    {
-        //        //gameOverScreen.GetComponent<GameOver>().toggleGameOverScreen();
-        //    }
+        agent.SetDestination(furniture.position);
 
-        //}
-
-    //}
-
-    Vector3 GetAnglesDir(float angle, bool globalAngle)
+    }
+    Vector3 GetAngleDirection(float angle, bool globalAngle)
     {
         if (!globalAngle)
         {
@@ -193,9 +177,9 @@ public class EnemyController : MonoBehaviour
         return new Vector3(Mathf.Sin(angle * Mathf.Deg2Rad), 0, Mathf.Cos(angle * Mathf.Deg2Rad));
     }
 
-   
 
-    void CatDetected()
+    
+    void SearchForCat()
     {
         DrawVision();
         catDistance = Vector3.Distance(transform.position, player.position);
@@ -219,18 +203,19 @@ public class EnemyController : MonoBehaviour
 
     }
 
+    //for coned raycast
     ViewCastInfo ViewCast(float globalAngle)
     {
-        Vector3 dir = GetAnglesDir(globalAngle, true);
+        Vector3 dir = GetAngleDirection(globalAngle, true);
         RaycastHit hit;
 
         if (Physics.Raycast(transform.position, dir, out hit, viewRadius))
         {
             GameObject hitObject = hit.transform.gameObject;
-            if(hitObject.tag == "Walls" || hitObject.layer == LayerMask.NameToLayer("Furniture"))
-            return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
+            if (hitObject.tag == "Walls" || hitObject.layer == LayerMask.NameToLayer("Furniture"))
+                return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
         }
-            return new ViewCastInfo(false, transform.position + dir * viewRadius, viewRadius, globalAngle);
+        return new ViewCastInfo(false, transform.position + dir * viewRadius, viewRadius, globalAngle);
     }
 
     //Raycast info struct
@@ -251,6 +236,7 @@ public class EnemyController : MonoBehaviour
     }
 
 
+    // draws coned raycast
     void DrawVision()
     {
         int rayCount = Mathf.RoundToInt(viewAngle * visionResoulution);
@@ -285,5 +271,5 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    
+
 }

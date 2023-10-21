@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class FieldOfView : MonoBehaviour
 {
-
-    
     private Vector3 cursorPosition;
     private Ray screenPointToWorldRay;
     private RaycastHit raycastHit;
@@ -74,6 +72,8 @@ public class FieldOfView : MonoBehaviour
     - cache that furniture's original render material color
     - set undetected furniture's render material color back to original color
     - this furniture detection function uses a single raycast. 
+    - put into fixed update because we want detection to handle at a different frame rate than normal: prevents jank rotation when raycast hits player
+
     */
     void handleSingleRaycastFurnitureDetection()
     {
@@ -110,7 +110,6 @@ public class FieldOfView : MonoBehaviour
 
     }
 
-
     public Vector3 GetLookDirection()
     {
         return lookDirection;
@@ -119,28 +118,5 @@ public class FieldOfView : MonoBehaviour
     {
         return currentDetectedObject;
     } 
-    //coned ray casted hit detection
-
-    // void handleWideFieldOfView()
-    // {
-    //     rayCount = (int)( fieldOfViewAngle * fieldOfViewMeshResolution);
-    //     raycastAngle = fieldOfViewAngle / rayCount;
-    //     for(int i = 0; i < rayCount; i++)
-    //     {
-
-    //     }
-    // }
-    // public float viewAngle;
-    // public float viewRadius;
-    // public Transform cat;
-
-    // public Vector3 GetAnglesPov(float angle, bool globalAngle)
-    // {
-    //     if (!globalAngle)
-    //     {
-    //         angle += transform.eulerAngles.y;
-    //     }
-    //     return new Vector3(Mathf.Sin(angle * Mathf.Deg2Rad), 0, Mathf.Cos(angle * Mathf.Deg2Rad));
-    // }
 
 }

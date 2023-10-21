@@ -4,22 +4,29 @@ public class Furniture : MonoBehaviour
 
 {
 
-    void Start()
-    {
-
-    }
-    void Update()
-    {
-
-    }
+    bool isDestroyed = false;
     void OnDestroy()
     {
+
+        if (isDestroyed)
+        {
+            Debug.Log("Destroyed by player!");
+            //handle enemy alert mechanic
+            EnemyManager.handleAlertEnemyEvent(this.gameObject);
+            // enemyManager.handleAlertEnemyEvent(this.gameObject);
+            //handle scoring system
+        }
+        Debug.Log(this + " Destroyed by game exit!");
+
     }
     void OnDisable()
     {
-        GameEvents.handleAlertEnemyEvent(this.gameObject);
     }
-    
+    public void setIsDestroyed(bool destroyed)
+    {
+        isDestroyed = destroyed;
+    }
+
 
 
 }
