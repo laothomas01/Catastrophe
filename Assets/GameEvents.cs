@@ -1,7 +1,9 @@
-using UnityEngine;
+//================= OBSELETE =============
 
-public class GameEvents : MonoBehaviour
-{
+// using UnityEngine;
+
+// public class GameEvents : MonoBehaviour
+// {
    
 
-}
+// }

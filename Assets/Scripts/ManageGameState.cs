@@ -1,52 +1,54 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-public class ManageGameState : MonoBehaviour
-{
-    public GameObject pauseMenu = null;
-    bool visibleCursor;
+//================= OBSELETE =============
+
+// using System.Collections;
+// using System.Collections.Generic;
+// using UnityEngine;
+// using UnityEngine.SceneManagement;
+// public class ManageGameState : MonoBehaviour
+// {
+//     public GameObject pauseMenu = null;
+//     bool visibleCursor;
     
-    bool isPaused;
+//     bool isPaused;
 
-    void Start()
-    {
+//     void Start()
+//     {
 
-        visibleCursor = false;
-        isPaused = false;
-    }
-    private void Update() {
+//         visibleCursor = false;
+//         isPaused = false;
+//     }
+//     private void Update() {
 
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            togglePause();
-        }
-    }    
+//         if (Input.GetKeyDown(KeyCode.Escape))
+//         {
+//             togglePause();
+//         }
+//     }    
 
-    public bool getIsPaused()
-    {
-        return isPaused;
-    }
-    public void togglePause()
-    {
+//     public bool getIsPaused()
+//     {
+//         return isPaused;
+//     }
+//     public void togglePause()
+//     {
            
-            isPaused = !isPaused;
-            visibleCursor = !visibleCursor;
-              Cursor.visible = visibleCursor;
-            Time.timeScale = isPaused ? 0 : 1;       
-            pauseMenu.SetActive(isPaused);
+//             isPaused = !isPaused;
+//             visibleCursor = !visibleCursor;
+//               Cursor.visible = visibleCursor;
+//             Time.timeScale = isPaused ? 0 : 1;       
+//             pauseMenu.SetActive(isPaused);
             
-    }
+//     }
 
  
   
-    public void backToMainMenu()
-    {
-        SceneManager.LoadScene("Main_Menu");
-    }
+//     public void backToMainMenu()
+//     {
+//         SceneManager.LoadScene("Main_Menu");
+//     }
 
     
 
        
-}
+// }

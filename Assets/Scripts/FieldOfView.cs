@@ -15,7 +15,7 @@ public class FieldOfView : MonoBehaviour
 
     int playerLayerMask;
     int furnitureLayerMask;
-    
+
     public float lookDistance;
 
     //========= attributes used for wide coned raycast =============    
@@ -47,9 +47,9 @@ public class FieldOfView : MonoBehaviour
     void handleLookAtMouseCursor()
     {
         screenPointToWorldRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if(Physics.Raycast(screenPointToWorldRay,out raycastHit,Mathf.Infinity,~playerLayerMask))
+        if (Physics.Raycast(screenPointToWorldRay, out raycastHit, Mathf.Infinity, ~playerLayerMask))
         {
-            cursorPosition.Set(raycastHit.point.x,transform.position.y,raycastHit.point.z);
+            cursorPosition.Set(raycastHit.point.x, transform.position.y, raycastHit.point.z);
 
             transform.LookAt(cursorPosition);
         }
@@ -58,7 +58,7 @@ public class FieldOfView : MonoBehaviour
 
         lookDirection = lookDirection.normalized * lookDistance;
     }
-    
+
 
     /*
     
@@ -71,19 +71,28 @@ public class FieldOfView : MonoBehaviour
     - set undetected furniture's render material color back to original color
     - this furniture detection function uses a single raycast. 
     - put into fixed update because we want detection to handle at a different frame rate than normal: prevents jank rotation when raycast hits player
+    - we will update this with a coned detection for better accuracy 
 
     */
     void handleSingleRaycastFurnitureDetection()
     {
-        Debug.DrawRay(raycastOrigin.position,lookDirection,Color.red);
+        Debug.DrawRay(raycastOrigin.position, lookDirection, Color.red);
         GameObject previouslyDetectedObject = currentDetectedObject;
-        if(Physics.Raycast(raycastOrigin.position,lookDirection,out raycastHit,lookDirection.magnitude,furnitureLayerMask))
+
+        //dont think a switch statement is useful here
+        //if you raycasted first and did not hit a furniture, do nothing;
+        if (Physics.Raycast(raycastOrigin.position, lookDirection, out raycastHit, lookDirection.magnitude, ~furnitureLayerMask))
+        {
+            return;
+        }
+        //else if you raycasted to a furniture, set color to red
+        else if (Physics.Raycast(raycastOrigin.position, lookDirection, out raycastHit, lookDirection.magnitude, furnitureLayerMask))
         {
             currentDetectedObject = raycastHit.transform.gameObject;
-            if(currentDetectedObject != previouslyDetectedObject)
+            if (currentDetectedObject != previouslyDetectedObject)
             {
                 // //Reset the color of previously detected object
-                if(previouslyDetectedObject != null)
+                if (previouslyDetectedObject != null)
                 {
                     Renderer previousRenderer = previouslyDetectedObject.GetComponent<Renderer>();
                     previousRenderer.material.color = originalObjectColor;
@@ -94,10 +103,11 @@ public class FieldOfView : MonoBehaviour
                 newRenderer.material.color = Color.red;
             }
         }
+        //if you raycasted to a funriture and stopped change its color back to original
         else
         {
             //Reset the color of the previosuly detected object
-            if(previouslyDetectedObject != null)
+            if (previouslyDetectedObject != null)
             {
                 Renderer previousRender = previouslyDetectedObject.GetComponent<Renderer>();
                 previousRender.material.color = originalObjectColor;
@@ -115,6 +125,6 @@ public class FieldOfView : MonoBehaviour
     public GameObject GetCurrentDetectedObject()
     {
         return currentDetectedObject;
-    } 
+    }
 
 }

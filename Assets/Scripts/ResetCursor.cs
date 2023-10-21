@@ -1,18 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+//================= OBSELETE =============
 
-public class ResetCursor : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        Cursor.visible = true;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
+// using System.Collections;
+// using System.Collections.Generic;
+// using UnityEngine;
+
+// public class ResetCursor : MonoBehaviour
+// {
+//     // Start is called before the first frame update
+//     void Start()
+//     {
+//         Cursor.visible = true;
+//     }
+
+//     // Update is called once per frame
+//     void Update()
+//     {
         
-    }
-}
+//     }
+// }

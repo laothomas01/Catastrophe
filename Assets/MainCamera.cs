@@ -1,4 +1,3 @@
-using Mono.CompilerServices.SymbolWriter;
 using UnityEngine;
 
 public class MainCamera : MonoBehaviour
@@ -28,13 +27,6 @@ public class MainCamera : MonoBehaviour
         currentShakeDuration = shakeDuration;
     }
 
-    // public void Shake()
-    // {
-    //     originalPosition = cameraTransform.localPosition;
-    //     currentShakeDuration = shakeDuration;
-    // }
-
-
     private void FollowPlayer()
     {
         transform.position = player.position + followPlayerOffset;
@@ -61,11 +53,14 @@ public class MainCamera : MonoBehaviour
         Debug.Log("Camera Shake!");
         if (currentShakeDuration > 0)
         {
+            //shake magnitude is how rough the camera rumbles, how far the camera is shifted from it current position
+            // we add that offset position to camera'a current position
             cameraTransform.localPosition = transform.position + Random.insideUnitSphere * shakeMagnitude;
             currentShakeDuration -= Time.deltaTime * decreaseFactor;
         }
         else
         {
+            //reset camera
             cameraTransform.localPosition = transform.position;
             currentShakeDuration = shakeDuration;
             canShake = false;
