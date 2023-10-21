@@ -53,7 +53,7 @@ public class EnemyController : MonoBehaviour
         rotateRight = rotateAmount;
         rotateLeft = rotateAmount;
         agent = GetComponent<NavMeshAgent>();
-        Quaternion currentRotation = transform.rotation;
+        // Quaternion currentRotation = transform.rotation;
 
     }
 

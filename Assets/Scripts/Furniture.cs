@@ -5,10 +5,13 @@ public class Furniture : MonoBehaviour
 {
     EnemyManager enemyManager;
     Score score;
+
+    MainCamera camera;
     void Start()
     {
         score = FindFirstObjectByType<Score>();
         enemyManager = FindAnyObjectByType<EnemyManager>();
+        camera = FindAnyObjectByType<MainCamera>();
     }
     bool isDestroyed = false;
     void OnDestroy()
@@ -17,8 +20,8 @@ public class Furniture : MonoBehaviour
         if (isDestroyed)
         {
             score.DecrementCurrentHeavyFurnitureCount();
-            enemyManager.GetComponent<EnemyManager>().handleAlertEnemyEvent(gameObject);
-            
+            camera.CanShake(true);
+            // enemyManager.GetComponent<EnemyManager>().handleAlertEnemyEvent(gameObject);
         }
     }
     public void IsDestroyed(bool destroyed)

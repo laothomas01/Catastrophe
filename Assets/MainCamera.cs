@@ -1,87 +1,74 @@
+using Mono.CompilerServices.SymbolWriter;
 using UnityEngine;
 
 public class MainCamera : MonoBehaviour
 {
-   
-//     // Transform of the camera to shake. Grabs the gameObject's transform
-// 	// if null.
-// 	public Transform camTransform;
-	
-// 	// How long the object should shake for.
-   public float shakeDuration = 0f;
-	
-// 	// Amplitude of the shake. A larger value shakes the camera harder.
-   public float shakeAmount = 0.7f;
-  public float decreaseFactor = 1.0f;
-	
+    //============ camera shake members ======
+    [SerializeField] private float shakeDuration = 0.2f; // Duration of shake effect;
+    [SerializeField] private float shakeMagnitude = 0.3f; // Magnitude of the shake effect
 
-//     bool canShake;
+    private Transform cameraTransform;
+    [SerializeField] private float currentShakeDuration = 0;
+    public float decreaseFactor = 2f; // Rate at which the shake effect decreases over time
+    private bool canShake = false;
+    //=========================================
 
-   Vector3 originalPos;
+    //============= camera follow members ======
 
-    GameObject player;
-//     [SerializeField]
-//     private Transform player;
-     public Vector3 offset;
+    Transform player;
+    [SerializeField]
+    private Vector3 followPlayerOffset;
 
-    void Awake()
+    //==========================================
+
+    private void Awake()
     {
-        
+        player = GameObject.Find("Cat").GetComponent<Transform>();
+        cameraTransform = GetComponent<Transform>();
+        currentShakeDuration = shakeDuration;
     }
-//     void Awake()
-// 	{
-// 		if (camTransform == null)
-// 		{
-// 			camTransform = GetComponent(typeof(Transform)) as Transform;
-// 		}
-// 	}
-//     void OnEnable()
-// 	{
-// 		originalPos = camTransform.localPosition;
-// 	}
-//     void Start() {
-//         canShake = false;
-//         Time.timeScale = 1;
-//         Cursor.visible = false;
-//     }
 
-//     void Update()
-//     {
-       
-//         follow_player();
-        
-//         if(canShake)
-//         {
-//             camera_shake();
-            
-//         }
+    // public void Shake()
+    // {
+    //     originalPosition = cameraTransform.localPosition;
+    //     currentShakeDuration = shakeDuration;
+    // }
 
-//     }
-//     public void follow_player()
-//     {
-//  transform.position = player.transform.position + offset;
-//     }
-//     public void camera_shake()
-//     {
-//         //camera shake
-//         if (shakeDuration > 0)
-// 		{
-//             //shake and  shake at its current position
-// 			camTransform.localPosition = this.transform.position + Random.insideUnitSphere * shakeAmount;
-			
-// 			shakeDuration -= Time.deltaTime * decreaseFactor;
-// 		}
-// 		else
-// 		{
-// 			shakeDuration = 0.2f;
-            
-//             // return to current position
-// 			camTransform.localPosition = this.transform.position;
-//             setCanShake(false);
-// 		}
-//     }
-//     public void setCanShake(bool shake)
-//     {
-//         this.canShake = shake;
-//     }
+
+    private void FollowPlayer()
+    {
+        transform.position = player.position + followPlayerOffset;
+    }
+    private void Update()
+    {
+
+
+        FollowPlayer();
+
+        if (canShake)
+        {
+            Shake();
+        }
+
+    }
+    public void CanShake(bool shake)
+    {
+        canShake = shake;
+    }
+
+    public void Shake()
+    {
+        Debug.Log("Camera Shake!");
+        if (currentShakeDuration > 0)
+        {
+            cameraTransform.localPosition = transform.position + Random.insideUnitSphere * shakeMagnitude;
+            currentShakeDuration -= Time.deltaTime * decreaseFactor;
+        }
+        else
+        {
+            cameraTransform.localPosition = transform.position;
+            currentShakeDuration = shakeDuration;
+            canShake = false;
+        }
+    }
 }
