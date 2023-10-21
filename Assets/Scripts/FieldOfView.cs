@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// handle functionality related to player's field of view
+/// </summary>
 public class FieldOfView : MonoBehaviour
 {
     private Vector3 cursorPosition;
@@ -15,7 +18,7 @@ public class FieldOfView : MonoBehaviour
     
     public float lookDistance;
 
-//========= attributes used for wide coned raycast =============    
+    //========= attributes used for wide coned raycast =============    
     public float fieldOfViewAngle;
     public float fieldOfViewMeshResolution;
 
@@ -40,12 +43,7 @@ public class FieldOfView : MonoBehaviour
         handleLookAtMouseCursor();
     }
 
-    /*
-    
-    - take on screen mouse cursor position and cast a ray into the x-z plane form that position
-    - rotate player's forward vector in direction of mouse cursor
-    
-    */
+    // on screen mouse position converted to world coordinates and casts a ray
     void handleLookAtMouseCursor()
     {
         screenPointToWorldRay = Camera.main.ScreenPointToRay(Input.mousePosition);

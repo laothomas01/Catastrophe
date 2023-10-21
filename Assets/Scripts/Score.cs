@@ -1,79 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement;
 public class Score : MonoBehaviour
 {
-    private int maxFurnitureCount;
-    private int currFurnitureCount = 0;
-    
     private TextMeshProUGUI textMesh;
-    // ManageGameObjects objManage_Script;
-    // public GameObject objManage;
-    ManageGameObjects objManage_Script;
-    public GameObject winScreen;
-    List<GameObject> objects;
-    GameObject[] heavy;
-    GameObject[] pushable;
-    public int layer;
+    FurnitureManager furnitureManager;
+    int currentHeavyFurnitureCount;
     void Start()
     {
-        textMesh = this.GetComponent<TextMeshProUGUI>();
-        // objManage_Script = objManage.GetComponent<ManageGameObjects>();
-        //objManage_Script = GameObject.Find("GameObjectManager").GetComponent<ManageGameObjects>();
-        //objects = GameObject.FindGameObjectsWithTag("Heavy");
-        heavy = GameObject.FindGameObjectsWithTag("Heavy");
-        //pushable = GameObject.FindGameObjectsWithTag("Pushable");
-        try{
-            maxFurnitureCount = heavy.Length;
-        }
-        catch
-        {
-            Debug.Log("Null exception");
-        }
-        
-        currFurnitureCount = maxFurnitureCount;
-        textMesh.SetText(currFurnitureCount.ToString() + "/" + maxFurnitureCount.ToString());
+        textMesh = GetComponent<TextMeshProUGUI>();
+        furnitureManager = FindFirstObjectByType<FurnitureManager>();
+        currentHeavyFurnitureCount = furnitureManager.GetMaxHeavyFurnitureCount();
+        textMesh.SetText(currentHeavyFurnitureCount.ToString() + "/" + furnitureManager.GetMaxHeavyFurnitureCount().ToString());
     }
-
-    // Update is called once per frame
     void Update()
     {
-        heavy = GameObject.FindGameObjectsWithTag("Heavy");
-            //pushable = GameObject.FindGameObjectsWithTag("Pushable");
-        //if (heavy != null && pushable != null)
-        if (heavy != null)
-        {
-            //currFurnitureCount = (heavy.Length + pushable.Length);
-            currFurnitureCount = (heavy.Length);
-            textMesh.SetText(currFurnitureCount.ToString() + "/" + maxFurnitureCount.ToString());
-        }
-            
-        if (currFurnitureCount == 0)
-        {
-            winScreen.SetActive(true);
-            winScreen.GetComponent<GameOver>().toggleGameOverScreen();
-        }
+        textMesh.SetText(currentHeavyFurnitureCount.ToString() + "/" + furnitureManager.GetMaxHeavyFurnitureCount().ToString());
+    }
+    public void DecrementCurrentHeavyFurnitureCount()
+    {
+        --currentHeavyFurnitureCount;
+    }
 
-        
-        
-    }
-    public void setCurrCount(int c)
-    {
-        this.currFurnitureCount = c;
-    }
-    
-    public int getCurrCount()
-    {
-        return this.currFurnitureCount;
-    }
-    public int getMaxCount()
-    {
-        return this.maxFurnitureCount;
-    }
-    public void setMaxFurnitureCount(int i)
-    {
-        this.maxFurnitureCount = i;
-    }
 }

@@ -3,30 +3,26 @@ using UnityEngine;
 public class Furniture : MonoBehaviour
 
 {
-
+    EnemyManager enemyManager;
+    Score score;
+    void Start()
+    {
+        score = FindFirstObjectByType<Score>();
+        enemyManager = FindAnyObjectByType<EnemyManager>();
+    }
     bool isDestroyed = false;
     void OnDestroy()
     {
 
         if (isDestroyed)
         {
-            Debug.Log("Destroyed by player!");
-            //handle enemy alert mechanic
-            EnemyManager.handleAlertEnemyEvent(this.gameObject);
-            // enemyManager.handleAlertEnemyEvent(this.gameObject);
-            //handle scoring system
+            score.DecrementCurrentHeavyFurnitureCount();
+            enemyManager.GetComponent<EnemyManager>().handleAlertEnemyEvent(gameObject);
+            
         }
-        Debug.Log(this + " Destroyed by game exit!");
-
     }
-    void OnDisable()
-    {
-    }
-    public void setIsDestroyed(bool destroyed)
+    public void IsDestroyed(bool destroyed)
     {
         isDestroyed = destroyed;
     }
-
-
-
 }
