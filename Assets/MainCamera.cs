@@ -55,6 +55,8 @@ public class MainCamera : MonoBehaviour
         {
             //shake magnitude is how rough the camera rumbles, how far the camera is shifted from it current position
             // we add that offset position to camera'a current position
+
+            //position + point inside sphere * offset distance
             cameraTransform.localPosition = transform.position + Random.insideUnitSphere * shakeMagnitude;
             currentShakeDuration -= Time.deltaTime * decreaseFactor;
         }

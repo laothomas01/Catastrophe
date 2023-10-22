@@ -6,16 +6,21 @@ public class PlayerMovement : MonoBehaviour
 {
 
     public float moveSpeed;
-    public float moveSpeedMultiplier;
+    private float moveSpeedMultiplier;
     private Vector3 movementInput;
     private Vector3 movementDirection;
     private Rigidbody rigidbody;
+
+    public int runSpeedMultiplier;
+    public int walkSpeedMultiplier;
     void Start()
     {
         rigidbody= GetComponent<Rigidbody>();
     }
     void Update()
     {
+        Debug.Log("Movespeed = " + moveSpeed * moveSpeedMultiplier);
+
         HandleMovementInputs();
     }
 
@@ -37,11 +42,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if(Input.GetKey(KeyCode.LeftShift))
         {
-            moveSpeedMultiplier = 300;
+        Debug.Log("Sprinting!");
+
+            moveSpeedMultiplier = runSpeedMultiplier;
         }
         else
         {
-            moveSpeedMultiplier = 200;
+            moveSpeedMultiplier = walkSpeedMultiplier;
         }
     }
 

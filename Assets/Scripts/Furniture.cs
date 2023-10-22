@@ -21,7 +21,7 @@ public class Furniture : MonoBehaviour
         {
             score.DecrementCurrentHeavyFurnitureCount();
             camera.CanShake(true);
-            // enemyManager.GetComponent<EnemyManager>().handleAlertEnemyEvent(gameObject);
+            enemyManager.GetComponent<EnemyManager>().HandleAlertEnemyEvent(gameObject.transform.position);
         }
     }
     public void IsDestroyed(bool destroyed)

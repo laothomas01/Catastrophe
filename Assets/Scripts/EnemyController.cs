@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
 /// <summary>
@@ -41,6 +43,9 @@ public class EnemyController : MonoBehaviour
     private float catDistance;
     public float visionResoulution;
 
+    //add a delay for when the enemy turns around
+    public float waitTimeBeforeRotation = 0.5f;
+
     void Start()
     {
         viewMesh = new Mesh();
@@ -53,31 +58,33 @@ public class EnemyController : MonoBehaviour
         rotateRight = rotateAmount;
         rotateLeft = rotateAmount;
         agent = GetComponent<NavMeshAgent>();
-        // Quaternion currentRotation = transform.rotation;
-
     }
 
     void Update()
     {
         if (VisibleOnScreen())
         {
-            // this.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
-            // this.GetComponentInChildren<MeshRenderer>().enabled = true;
+            this.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
+            this.GetComponentInChildren<MeshRenderer>().enabled = true;
             SearchForCat();
         }
-        // else
-        // {
-        //     SearchForCat();
-        //     this.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
-        //     this.GetComponentInChildren<MeshRenderer>().enabled = false;
-        // }
+        else
+        {
+            this.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
+            this.GetComponentInChildren<MeshRenderer>().enabled = false;
+            SearchForCat();
+        }
 
         if (AgentReachedDestination(agent))
         {
             LookAround();
         }
+        else
+        {
+            Patrol();
+        }
+
         animator.SetBool("isWalking", agent.velocity.magnitude > 0);
-        Patrol();
     }
 
     /// <summary>
@@ -88,7 +95,7 @@ public class EnemyController : MonoBehaviour
     /// <returns>
     /// enemy is visible on screen
     /// </returns>
-    
+
     bool VisibleOnScreen()
     {
         Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
@@ -124,8 +131,9 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    void LookAround()
+     void LookAround()
     {
+        Debug.Log("Looking Around");
         if (!enemyRotating)
         {
             //making sure the angle stays between 0 and 360. If over, subtract 360. If under, add the negative number to 360
@@ -158,16 +166,28 @@ public class EnemyController : MonoBehaviour
     }
 
     //given a furniture object from an event, perform inspection
-    public void InspectFurniture(Transform furniture)
+
+    //i would like the enemy ai to wait a few seconds before inspection begins 
+
+    //i will turn this into a coroutine
+    public IEnumerator InspectFurniture(Vector3 position)
     {
-        Debug.Log("Inspecting: " + furniture);
+        // Debug.Log("Inspecting: " + furniture);
+    
+        yield return new WaitForSeconds(waitTimeBeforeRotation);
+
+        Debug.Log("Rotating!");
         enemyAlerted = true;
         rotateRight = rotateLeft = 90;
         enemyRotating = false;
 
-        agent.SetDestination(furniture.position);
 
+        //time before beginning inspection
+        agent.SetDestination(position);
+
+       
     }
+
     Vector3 GetAngleDirection(float angle, bool globalAngle)
     {
         if (!globalAngle)
@@ -178,7 +198,7 @@ public class EnemyController : MonoBehaviour
     }
 
 
-    
+
     void SearchForCat()
     {
         DrawVision();
