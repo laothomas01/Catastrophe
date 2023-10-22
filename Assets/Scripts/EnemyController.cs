@@ -64,16 +64,16 @@ public class EnemyController : MonoBehaviour
     {
         if (VisibleOnScreen())
         {
-            this.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
-            this.GetComponentInChildren<MeshRenderer>().enabled = true;
+            // this.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
+            // this.GetComponentInChildren<MeshRenderer>().enabled = true;
             SearchForCat();
         }
-        else
-        {
-            this.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
-            this.GetComponentInChildren<MeshRenderer>().enabled = false;
-            SearchForCat();
-        }
+        // else
+        // {
+        //     this.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
+        //     this.GetComponentInChildren<MeshRenderer>().enabled = false;
+        //     SearchForCat();
+        // }
 
         if (AgentReachedDestination(agent))
         {
@@ -172,16 +172,10 @@ public class EnemyController : MonoBehaviour
     //i will turn this into a coroutine
     public IEnumerator InspectFurniture(Vector3 position)
     {
-        // Debug.Log("Inspecting: " + furniture);
-    
         yield return new WaitForSeconds(waitTimeBeforeRotation);
-
-        Debug.Log("Rotating!");
         enemyAlerted = true;
         rotateRight = rotateLeft = 90;
         enemyRotating = false;
-
-
         //time before beginning inspection
         agent.SetDestination(position);
 
