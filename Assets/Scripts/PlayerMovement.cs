@@ -13,15 +13,18 @@ public class PlayerMovement : MonoBehaviour
 
     public int runSpeedMultiplier;
     public int walkSpeedMultiplier;
+
+    bool isSprinting = false;
+    Animator animator;
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
     }
     void Update()
     {
-        // Debug.Log("Movespeed = " + moveSpeed * moveSpeedMultiplier);
-
+        animator = GetComponent<Animator>();
         HandleMovementInputs();
+        HandleMoveAnimation();
     }
 
     void FixedUpdate()
@@ -34,6 +37,29 @@ public class PlayerMovement : MonoBehaviour
         movementDirection = transform.forward * movementInput.y;
         toggleSprint();
     }
+    void HandleMoveAnimation()
+    {
+        if (movementInput.x > 0 || movementInput.y > 0)
+        {
+            if (moveSpeedMultiplier == walkSpeedMultiplier)
+            {
+                animator.SetBool("isRunning", false);
+                animator.SetBool("isWalking", true);
+            }
+            else
+            {
+                animator.SetBool("isRunning", true);
+                animator.SetBool("isWalking", false);
+            }
+
+        }
+        else
+        {
+            animator.SetBool("isWalking", false);
+
+        }
+
+    }
     void Move()
     {
         rigidbody.AddForce(movementDirection.normalized * moveSpeed * moveSpeedMultiplier * Time.fixedDeltaTime, ForceMode.Force);
@@ -42,7 +68,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
-
             moveSpeedMultiplier = runSpeedMultiplier;
         }
         else
