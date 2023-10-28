@@ -1,5 +1,11 @@
 using UnityEngine;
 
+
+/// <summary>
+/// Base class for Furniture objects
+/// - can be extended for more specific functionalities
+/// - can be an abstract class 
+/// </summary>
 public class Furniture : MonoBehaviour
 
 {

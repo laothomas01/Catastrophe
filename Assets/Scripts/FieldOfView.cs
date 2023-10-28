@@ -10,21 +10,10 @@ public class FieldOfView : MonoBehaviour
     private Ray screenPointToWorldRay;
     private RaycastHit raycastHit;
     private Vector3 lookDirection;
-
-    private Vector3 raycastDirection;
-    //starting position of the raycast
     public Transform raycastOrigin;
-
     int playerLayerMask;
     int furnitureLayerMask;
-
     public float lookDistance;
-
-    //========= attributes used for wide coned raycast =============    
-    public int rayCount;
-
-    // ==========================================
-
     //Store the currently detected object
     private GameObject currentDetectedObject;
     private Color originalObjectColor;
@@ -124,18 +113,23 @@ public class FieldOfView : MonoBehaviour
 
     void PerformConedRaycast()
     {
-        float coneAngle = 90f; // Adjust as per your needs
+        //@TODO: need to make these variables public for unity editor value adjustments
+        float coneAngle = 45f; // Adjust as per your needs
         float angleIncrement = 5f;
-       
+        GameObject previouslyDetectedObject = currentDetectedObject;
+
         //TODO: explain this logic
         for (float angle = -coneAngle / 2, angle2 = coneAngle / 2; angle <= coneAngle / 2; angle += angleIncrement, angle2 -= angleIncrement)
         {
             Quaternion rotation = Quaternion.Euler(0f, angle, 0f);
             Vector3 rayDirection = rotation * lookDirection;
 
-            RaycastHit hit;
-
-            Debug.DrawRay(raycastOrigin.position, rayDirection, Color.red);
+            // Debug.DrawRay(raycastOrigin.position, rayDirection, Color.red);
+            //@TODO: add physics raycast detection
+            if(Physics.Raycast(raycastOrigin.position,rayDirection,out raycastHit,lookDistance,~furnitureLayerMask))
+            {
+                return;
+            }
             
             // if (Physics.Raycast(raycastOrigin.position, rayDirection, out hit, maxDistance))
             // {

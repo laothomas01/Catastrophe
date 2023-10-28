@@ -10,11 +10,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 movementInput;
     private Vector3 movementDirection;
     private Rigidbody rigidbody;
-
     public int runSpeedMultiplier;
     public int walkSpeedMultiplier;
-
-    bool isSprinting = false;
     Animator animator;
     void Start()
     {
@@ -39,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void HandleMoveAnimation()
     {
-        if (movementInput.x > 0 || movementInput.y > 0)
+        if (movementInput.x != 0 || movementInput.y != 0)
         {
             if (moveSpeedMultiplier == walkSpeedMultiplier)
             {
@@ -55,8 +52,8 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            animator.SetBool("isRunning", false);
             animator.SetBool("isWalking", false);
-
         }
 
     }
@@ -77,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    //=============================================
+    //======================OBSELETE =======================
     //     public float moveSpeed, speedMultiplier;
     //     private Vector3 move, moveDir, lookDirection, mousePoint;
     //     public Animator animator;
