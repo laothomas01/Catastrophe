@@ -16201,8 +16201,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   raycastOrigin: {fileID: 152233919}
   lookDistance: 35
-  fieldOfViewAngle: 0
-  fieldOfViewMeshResolution: 0
+  raycastStartingAngle: 45
+  raycastingResolution: 0
+  rayCount: 10
+  drawRayCone: 1
 --- !u!4 &3128787835835244951
 Transform:
   m_ObjectHideFlags: 0

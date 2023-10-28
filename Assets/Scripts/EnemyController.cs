@@ -52,7 +52,7 @@ public class EnemyController : MonoBehaviour
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
 
-        animator = gameObject.GetComponent<Animator>();
+        animator = GetComponent<Animator>();
         patrolWaitTimer = waitBetweenPatrol;
         rotateTimer = 0;
         rotateRight = rotateAmount;

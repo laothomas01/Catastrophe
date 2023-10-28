@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 /// <summary>
@@ -10,6 +11,7 @@ public class FieldOfView : MonoBehaviour
     private RaycastHit raycastHit;
     private Vector3 lookDirection;
 
+    private Vector3 raycastDirection;
     //starting position of the raycast
     public Transform raycastOrigin;
 
@@ -19,16 +21,16 @@ public class FieldOfView : MonoBehaviour
     public float lookDistance;
 
     //========= attributes used for wide coned raycast =============    
-    public float fieldOfViewAngle;
-    public float fieldOfViewMeshResolution;
+    public int rayCount;
 
-    private float raycastAngle;
-    private int rayCount;
     // ==========================================
 
     //Store the currently detected object
     private GameObject currentDetectedObject;
     private Color originalObjectColor;
+
+    [SerializeField]
+    bool drawRayCone = false;
     void Start()
     {
         playerLayerMask = 1 << 7;
@@ -36,15 +38,17 @@ public class FieldOfView : MonoBehaviour
     }
     void Update()
     {
-        handleSingleRaycastFurnitureDetection();
+        // HandleSingleRaycastFurnitureDetection();
+        // ConedRaycastFurnitureDetection();
+        PerformConedRaycast();
     }
     void FixedUpdate()
     {
-        handleLookAtMouseCursor();
+        HandleLookAtMouseCursor();
     }
 
     // on screen mouse position converted to world coordinates and casts a ray
-    void handleLookAtMouseCursor()
+    void HandleLookAtMouseCursor()
     {
         screenPointToWorldRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(screenPointToWorldRay, out raycastHit, Mathf.Infinity, ~playerLayerMask))
@@ -74,7 +78,7 @@ public class FieldOfView : MonoBehaviour
     - we will update this with a coned detection for better accuracy 
 
     */
-    void handleSingleRaycastFurnitureDetection()
+    void HandleSingleRaycastFurnitureDetection()
     {
         Debug.DrawRay(raycastOrigin.position, lookDirection, Color.red);
         GameObject previouslyDetectedObject = currentDetectedObject;
@@ -117,6 +121,35 @@ public class FieldOfView : MonoBehaviour
         }
 
     }
+
+    void PerformConedRaycast()
+    {
+        float coneAngle = 90f; // Adjust as per your needs
+        float angleIncrement = 5f;
+       
+        //TODO: explain this logic
+        for (float angle = -coneAngle / 2, angle2 = coneAngle / 2; angle <= coneAngle / 2; angle += angleIncrement, angle2 -= angleIncrement)
+        {
+            Quaternion rotation = Quaternion.Euler(0f, angle, 0f);
+            Vector3 rayDirection = rotation * lookDirection;
+
+            RaycastHit hit;
+
+            Debug.DrawRay(raycastOrigin.position, rayDirection, Color.red);
+            
+            // if (Physics.Raycast(raycastOrigin.position, rayDirection, out hit, maxDistance))
+            // {
+            //     // Handle raycast hit
+            //     Debug.DrawRay(raycastOrigin.position, rayDirection * hit.distance, Color.red);
+            // }
+            // else
+            // {
+            //     // Handle no hit
+            //     Debug.DrawRay(raycastOrigin.position, rayDirection * maxDistance, Color.green);
+            // }
+        }
+    }
+
 
     public Vector3 GetLookDirection()
     {
