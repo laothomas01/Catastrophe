@@ -16,14 +16,16 @@ public class FieldOfView : MonoBehaviour
 
     //globally store currently detected object
     private GameObject currentDetectedObject = null;
+    private GameObject prevDetectedObject = null;
 
     private Color originalColor = new Color(1, 1, 1, 1);
 
     [SerializeField]
-    bool drawRayCone = false;
+    bool drawRay = false;
 
-    public float coneAngle = 45f;
+    public float coneAngle = 90f;
     public float angleIncrement = 5f;
+
     void Start()
     {
         playerLayerMask = 1 << 7;
@@ -31,8 +33,8 @@ public class FieldOfView : MonoBehaviour
     }
     void Update()
     {
-        HandleSingleRaycastFurnitureDetection();
-        // HandleConedRaycastFurnitureDetection();
+        // HandleSingleRaycastFurnitureDetection();
+        HandleConedRaycastFurnitureDetection();
         // PerformConedRaycast();
     }
     void FixedUpdate()
@@ -58,7 +60,7 @@ public class FieldOfView : MonoBehaviour
 
 
     // /*
-    
+
     // - calculate look direction based on cursor position and player's current position
     // - set look direction's magniture to a set look distance
     // - draw ray for debugging purposes
@@ -118,128 +120,63 @@ public class FieldOfView : MonoBehaviour
         }
 
     }
+
+    /*
+    
+
+
+    */
     void HandleConedRaycastFurnitureDetection()
     {
-           
-           
-    //     for (float angle = -coneAngle / 2, angle2 = coneAngle / 2; angle <= coneAngle / 2; angle += angleIncrement, angle2 -= angleIncrement)
-    //     {
-    //         Quaternion rotation = Quaternion.Euler(0f, angle, 0f);
-    //         Quaternion rotation2 = Quaternion.Euler(0f, angle2, 0f);
-    //         Vector3 rayDirection = rotation * directionCatIsFacing;
-    //         Vector3 rayDirection2 = rotation2 * directionCatIsFacing;
-    //         GameObject previouslyDetectedObject = currentDetectedObject;
-    //         Debug.DrawRay(raycastOrigin.position, rayDirection, Color.red);
-    //          if (Physics.Raycast(raycastOrigin.position, rayDirection, out raycastHit, lookDistance, ~furnitureLayerMask) &&
-    //     Physics.Raycast(raycastOrigin.position, rayDirection2, out raycastHit, lookDistance, ~furnitureLayerMask))
-    // {
-    //     return;
-    // }
-    //       else if (Physics.Raycast(raycastOrigin.position, rayDirection, out raycastHit, lookDistance, furnitureLayerMask) ||
-    //          Physics.Raycast(raycastOrigin.position, rayDirection2, out raycastHit, lookDistance, furnitureLayerMask))
-    //          {
-    //             currentDetectedObject = raycastHit.transform.gameObject;
+        GameObject previouslyDetectedObject = currentDetectedObject;
+        bool isHitting = false; // Flag to track if any raycast is hitting
 
-    //     // Change the color of the furniture object
-    //     Renderer objectRenderer = currentDetectedObject.GetComponent<Renderer>();
-    //     objectRenderer.material.color = Color.red;
-    //          }
-    //          else{
-    //             if(previouslyDetectedObject != null)
-    //             {
-    //                 Renderer lastRenderer = currentDetectedObject.GetComponent<Renderer>();
-    //                 lastRenderer.material.color = originalColor;
-    //             }
-    //          }       
+        for (float angle = 0, angle2 = 0; angle <= coneAngle; angle += angleIncrement, angle2 -= angleIncrement)
+        {
+            Quaternion rotation = Quaternion.Euler(0f, angle, 0f);
+            Quaternion rotation2 = Quaternion.Euler(0f, angle2, 0f);
+            Vector3 rayDirection1 = rotation * directionCatIsFacing;
+            Vector3 rayDirection2 = rotation2 * directionCatIsFacing;
 
+            if (drawRay)
+            {
+                Debug.DrawRay(raycastOrigin.position, rayDirection1, Color.red);
+                Debug.DrawRay(raycastOrigin.position, rayDirection2, Color.red);
+            }
 
-    //     }
+            if (Physics.Raycast(raycastOrigin.position, rayDirection1, out raycastHit, lookDistance, furnitureLayerMask) ||
+                Physics.Raycast(raycastOrigin.position, rayDirection2, out raycastHit, lookDistance, furnitureLayerMask))
+            {
+                isHitting = true;
+                currentDetectedObject = raycastHit.transform.gameObject;
+
+                if (currentDetectedObject != previouslyDetectedObject)
+                {
+                    // Set color of previously detected furniture back to normal
+                    if (previouslyDetectedObject != null)
+                    {
+                        previouslyDetectedObject.GetComponent<Renderer>().material.color = originalColor;
+                    }
+
+                    // Set color of current detected furniture to red
+                    currentDetectedObject.GetComponent<Renderer>().material.color = Color.red;
+                    previouslyDetectedObject = currentDetectedObject;
+                }
+            }
+        }
+
+        if (!isHitting)
+        {
+            // Set color of previously detected furniture back to normal
+            if (previouslyDetectedObject != null)
+            {
+                previouslyDetectedObject.GetComponent<Renderer>().material.color = Color.white;
+                previouslyDetectedObject = null;
+            }
+
+            Debug.Log("Not Hitting");
+        }
     }
-
-    // void PerformConedRaycast()
-    // {
-    //     //figure out a way that is readable/logical
-    //     for (float angle = -coneAngle / 2, angle2 = coneAngle / 2; angle <= coneAngle / 2; angle += angleIncrement, angle2 -= angleIncrement)
-    //     {
-    //         Quaternion rotation = Quaternion.Euler(0f, angle, 0f);
-    //         Quaternion rotation2 = Quaternion.Euler(0f, angle2, 0f);
-    //         Vector3 rayDirection = rotation * directionCatIsFacing;
-    //         Vector3 rayDirection2 = rotation2 * directionCatIsFacing;
-    //         GameObject previouslyDetectedObject = currentDetectedObject;
-
-
-    //         /*
-            
-    //         - want to cache current obj 
-    //         - want to cache prev seen obj as curr obj
-    //         - 
-
-    //         A = curr obj
-    //         B = A
-    //         change B's properties while A stores information 
-            
-    //         */
-    //         // if(Physics.Raycast(raycastOrigin.position, rayDirection, out raycastHit, lookDistance, ~furnitureLayerMask) && 
-    //         // Physics.Raycast(raycastOrigin.position, rayDirection2, out raycastHit, lookDistance, ~furnitureLayerMask)
-    //         // )
-    //         // {
-    //         //     return;
-    //         // }
-            
-    //         // else 
-            
-    //         if (Physics.Raycast(raycastOrigin.position, rayDirection, out raycastHit, lookDistance, furnitureLayerMask) ||
-    //             Physics.Raycast(raycastOrigin.position, rayDirection2, out raycastHit, lookDistance, furnitureLayerMask))
-    //         {
-    //             currentDetectedObject = raycastHit.transform.gameObject;
-    //             //previouslyDetectedObject = currentDetectedObject
-    //             Renderer objectRenderer = currentDetectedObject.GetComponent<Renderer>();
-    //             objectRenderer.material.color = Color.red;
-                
-    //         }
-    //         else
-    //         {
-    //             if(previouslyDetectedObject != null)
-    //             {
-    //                 Renderer previousRenderer = previouslyDetectedObject.GetComponent<Renderer>();
-    //                 previousRenderer.material.color = originalObjectColor;
-                    
-    //             }
-    //             currentDetectedObject = null;
-    //         }
-
-
-
-    //         // else if (Physics.Raycast(raycastOrigin.position, rayDirection, out raycastHit, lookDistance, furnitureLayerMask) ||
-    //         //     Physics.Raycast(raycastOrigin.position, rayDirection2, out raycastHit, lookDistance, furnitureLayerMask))
-    //         // {
-
-    //         //     currentDetectedObject = raycastHit.transform.gameObject;
-    //         //     //Check if the currently detected object is different from the previously detected object 
-    //         //     if(currentDetectedObject != previouslyDetectedObject)
-    //         //     {
-    //         //         Renderer previousRenderer = previouslyDetectedObject.GetComponent<Renderer>();
-    //         //         if(previouslyDetectedObject != null)
-    //         //         {
-    //         //             previousRenderer.material.color = originalObjectColor;
-    //         //         }
-    //         //     }
-
-    //         //     //Change the color of the currently hit object 
-    //         //     Renderer currentRenderer = currentDetectedObject.GetComponent<Renderer>();
-    //         //     currentRenderer.material.color = Color.red;
-    //         // }
-    //         // if(currentDetectedObject != null)
-    //         // {
-    //         //     Renderer lastRenderer = currentDetectedObject.GetComponent<Renderer>();
-    //         //     lastRenderer.material.color = originalObjectColor;
-    //         // }
-            
-    //     }
-
-        
-    // }
-
 
     public Vector3 GetLookDirection()
     {

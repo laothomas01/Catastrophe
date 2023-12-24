@@ -16,25 +16,18 @@ public class EnemyManager : MonoBehaviour
     public void HandleAlertEnemyEvent(Vector3 furniturePosition)
     {
         GameObject closestEnemy = FindClosestEnemy();
-        Vector3 position = furniturePosition;
-        StartCoroutine(closestEnemy.GetComponent<EnemyController>().InspectFurniture(position));
-
+        if(closestEnemy != null)
+        {
+             Vector3 position = furniturePosition;
+             Debug.Log("Enemy Alerted!");
+            // StartCoroutine(closestEnemy.GetComponent<EnemyController>().InspectFurniture(position));
+        }
     }
 
     private GameObject FindClosestEnemy()
     {
         float closestDistance = Mathf.Infinity;
         GameObject closestEnemy = null;
-        // foreach(GameObject enemy in enemies)
-        // {
-        //     float distance = Vector3.Distance(enemy.transform.position,transform.position);
-
-        //     if(distance < closestDistance)
-        //     {
-        //         closestDistance = distance;
-        //         closestEnemy = enemy;
-        //     }
-        // }
         for (int i = 0; i < enemies.Length; i++)
         {
             //player's position. not "enemy manager positon you retard!"

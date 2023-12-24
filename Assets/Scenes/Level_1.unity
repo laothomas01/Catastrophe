@@ -16201,8 +16201,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   raycastOrigin: {fileID: 152233919}
   lookDistance: 30
-  drawRayCone: 1
-  coneAngle: 45
+  drawRay: 1
+  coneAngle: 15
   angleIncrement: 5
 --- !u!4 &3128787835835244951
 Transform:
