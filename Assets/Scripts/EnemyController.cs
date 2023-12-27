@@ -1,6 +1,23 @@
-using System.Collections;
+/*
+
+Based on set game difficulty, 
+set the angular speed and acceleration of the NavMeshAgent
+
+ex:
+
+1: EASY
+    - angular speed: 220
+    - acceleration: 100
+2: MEDIUM
+    - angular speed:
+    - acceleration:
+3: HARD
+    - angular speed: 600 
+    - acceleration: 600
+
+*/
+
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.AI;
 /// <summary>
@@ -74,7 +91,7 @@ public class EnemyController : MonoBehaviour
         //     this.GetComponentInChildren<MeshRenderer>().enabled = false;
         //     SearchForCat();
         // }
-
+        
         if (AgentReachedDestination(agent))
         {
             LookAround();
@@ -131,6 +148,7 @@ public class EnemyController : MonoBehaviour
 
     }
 
+    //After enemy destination is achieved, enemy rotates at current position to inspect the area 
      void LookAround()
     {
         Debug.Log("Looking Around");
@@ -170,16 +188,13 @@ public class EnemyController : MonoBehaviour
     //i would like the enemy ai to wait a few seconds before inspection begins 
 
     //i will turn this into a coroutine
-    public IEnumerator InspectFurniture(Vector3 position)
+    public void InspectFurniture(Vector3 position)
     {
-        yield return new WaitForSeconds(waitTimeBeforeRotation);
         enemyAlerted = true;
         rotateRight = rotateLeft = 90;
         enemyRotating = false;
         //time before beginning inspection
         agent.SetDestination(position);
-
-       
     }
 
     Vector3 GetAngleDirection(float angle, bool globalAngle)

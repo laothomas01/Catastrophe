@@ -20,7 +20,7 @@ public class EnemyManager : MonoBehaviour
         {
              Vector3 position = furniturePosition;
              Debug.Log("Enemy Alerted!");
-            // StartCoroutine(closestEnemy.GetComponent<EnemyController>().InspectFurniture(position));
+             closestEnemy.GetComponent<EnemyController>().InspectFurniture(position);
         }
     }
 
@@ -42,14 +42,6 @@ public class EnemyManager : MonoBehaviour
         // Debug.Log("Closest Distance: " + closestDistance + " " + closestEnemy.name);
         return closestEnemy;
     }
-
-    /*
-    
-    implementing strategy pattern:
-    - based on the given size of the array, we can implement and use different algorithms to solve our problem: which enemy is the closest
-
-    
-    */
 
 
 }

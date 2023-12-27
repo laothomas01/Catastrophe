@@ -14862,9 +14862,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 50
   m_Speed: 250
-  m_Acceleration: 600
+  m_Acceleration: 100
   avoidancePriority: 50
-  m_AngularSpeed: 600
+  m_AngularSpeed: 220
   m_StoppingDistance: 10
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -14964,9 +14964,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 50
   m_Speed: 250
-  m_Acceleration: 600
+  m_Acceleration: 100
   avoidancePriority: 50
-  m_AngularSpeed: 600
+  m_AngularSpeed: 220
   m_StoppingDistance: 10
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -15041,7 +15041,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 3114240162779470128}
   lerpRotationSpeed: 0.1
-  rotateTime: 3
+  rotateTime: 10
   rotateAmount: 90
   raycastOrigin: {fileID: 712762561329677730}
   gameOverScreen: {fileID: 6106936760264775530}
@@ -15085,9 +15085,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 50
   m_Speed: 250
-  m_Acceleration: 600
+  m_Acceleration: 100
   avoidancePriority: 50
-  m_AngularSpeed: 600
+  m_AngularSpeed: 220
   m_StoppingDistance: 10
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -16268,7 +16268,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &3167094433934036345
 GameObject:
   m_ObjectHideFlags: 0
@@ -16288,7 +16288,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &3167094434743187544
 GameObject:
   m_ObjectHideFlags: 0
@@ -16308,7 +16308,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3196255537164668929
 Transform:
   m_ObjectHideFlags: 0

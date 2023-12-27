@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 /// <summary>
@@ -122,9 +123,7 @@ public class FieldOfView : MonoBehaviour
     }
 
     /*
-    
-
-
+        
     */
     void HandleConedRaycastFurnitureDetection()
     {
@@ -148,8 +147,10 @@ public class FieldOfView : MonoBehaviour
                 Physics.Raycast(raycastOrigin.position, rayDirection2, out raycastHit, lookDistance, furnitureLayerMask))
             {
                 isHitting = true;
+
                 currentDetectedObject = raycastHit.transform.gameObject;
 
+                // if we detect multiple furniture but need to reset their color 
                 if (currentDetectedObject != previouslyDetectedObject)
                 {
                     // Set color of previously detected furniture back to normal
@@ -163,18 +164,17 @@ public class FieldOfView : MonoBehaviour
                     previouslyDetectedObject = currentDetectedObject;
                 }
             }
-        }
 
+        }
+        //if we detect 1 furniture and look away 
         if (!isHitting)
         {
-            // Set color of previously detected furniture back to normal
-            if (previouslyDetectedObject != null)
+            if (currentDetectedObject != null)
             {
-                previouslyDetectedObject.GetComponent<Renderer>().material.color = Color.white;
-                previouslyDetectedObject = null;
-            }
+                currentDetectedObject.GetComponent<Renderer>().material.color = originalColor;
+                currentDetectedObject = null;
 
-            Debug.Log("Not Hitting");
+            }
         }
     }
 

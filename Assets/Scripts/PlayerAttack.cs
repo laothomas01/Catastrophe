@@ -35,7 +35,6 @@ public class PlayerAttack : MonoBehaviour
                 // the time it takes to destroy the object should also be used to cancel the animation after timer expires
                 fieldOfView.GetCurrentDetectedObject().GetComponent<Furniture>().IsDestroyed(true);
                 Destroy(fieldOfView.GetCurrentDetectedObject());
-                // fieldOfView.GetCurrentDetectedObject().SetActive(false);
 
             }
         }
