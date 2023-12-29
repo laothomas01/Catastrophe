@@ -11,7 +11,6 @@ public class Furniture : MonoBehaviour
 {
     EnemyManager enemyManager;
     Score score;
-
     MainCamera camera;
     void Start()
     {
@@ -25,6 +24,8 @@ public class Furniture : MonoBehaviour
 
         if (isDestroyed)
         {
+            // audioManager.Play("brokenWood");
+            FindObjectOfType<AudioManager>().Play("brokenwood");
             score.DecrementCurrentHeavyFurnitureCount();
             camera.CanShake(true);
             enemyManager.GetComponent<EnemyManager>().HandleAlertEnemyEvent(gameObject.transform.position);

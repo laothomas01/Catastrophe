@@ -2,29 +2,23 @@ using UnityEngine;
 
 public class MainCamera : MonoBehaviour
 {
-    //============ camera shake members ======
-    [SerializeField] private float shakeDuration = 0.2f; // Duration of shake effect;
-    [SerializeField] private float shakeMagnitude = 0.3f; // Magnitude of the shake effect
+    [SerializeField] private float cameraShakeDuration = 0.2f;
+    [SerializeField] private float cameraShakeMagnitude = 0.3f;
 
     private Transform cameraTransform;
-    [SerializeField] private float currentShakeDuration = 0;
-    public float decreaseFactor = 2f; // Rate at which the shake effect decreases over time
+    [SerializeField] private float currentCameraShakeDuration = 0;
+    public float cameraShakeDecreaseFactor = 2f;
     private bool canShake = false;
-    //=========================================
-
-    //============= camera follow members ======
 
     Transform player;
     [SerializeField]
     private Vector3 followPlayerOffset;
 
-    //==========================================
-
     private void Awake()
     {
         player = GameObject.Find("Cat").GetComponent<Transform>();
         cameraTransform = GetComponent<Transform>();
-        currentShakeDuration = shakeDuration;
+        currentCameraShakeDuration = cameraShakeDuration;
     }
 
     private void FollowPlayer()
@@ -33,8 +27,6 @@ public class MainCamera : MonoBehaviour
     }
     private void Update()
     {
-
-
         FollowPlayer();
 
         if (canShake)
@@ -51,20 +43,20 @@ public class MainCamera : MonoBehaviour
     public void Shake()
     {
         Debug.Log("Camera Shake!");
-        if (currentShakeDuration > 0)
+        if (currentCameraShakeDuration > 0)
         {
             //shake magnitude is how rough the camera rumbles, how far the camera is shifted from it current position
             // we add that offset position to camera'a current position
 
             //position + point inside sphere * offset distance
-            cameraTransform.localPosition = transform.position + Random.insideUnitSphere * shakeMagnitude;
-            currentShakeDuration -= Time.deltaTime * decreaseFactor;
+            cameraTransform.localPosition = transform.position + Random.insideUnitSphere * cameraShakeMagnitude;
+            currentCameraShakeDuration -= Time.deltaTime * cameraShakeDecreaseFactor;
         }
         else
         {
             //reset camera
             cameraTransform.localPosition = transform.position;
-            currentShakeDuration = shakeDuration;
+            currentCameraShakeDuration = cameraShakeDuration;
             canShake = false;
         }
     }

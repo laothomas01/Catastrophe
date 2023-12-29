@@ -173,7 +173,6 @@ public class FieldOfView : MonoBehaviour
             {
                 currentDetectedObject.GetComponent<Renderer>().material.color = originalColor;
                 currentDetectedObject = null;
-
             }
         }
     }
