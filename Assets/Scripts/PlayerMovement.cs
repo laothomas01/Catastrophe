@@ -1,73 +1,111 @@
-
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 public class PlayerMovement : MonoBehaviour
 {
+    PlayerInput leftJoyStick;
+    public float moveSpeed = 1f;  // Set a default value if not set in the Inspector
+    public float runSpeedMultiplier = 1f;
+    public float walkSpeedMultiplier = 1f;
 
-    public float moveSpeed;
     private float moveSpeedMultiplier;
     private Vector3 movementInput;
     private Vector3 movementDirection;
-    private Rigidbody rigidbody;
-    public int runSpeedMultiplier;
-    public int walkSpeedMultiplier;
-    Animator animator;
+    private Rigidbody rb;
+    private Animator animator;
+    private DeviceManager.PlatformType currentPlatform;
+
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
+        leftJoyStick = GetComponent<PlayerInput>();
+        moveSpeedMultiplier = walkSpeedMultiplier;
     }
+
     void Update()
     {
-        animator = GetComponent<Animator>();
-        HandleMovementInputs();
-        HandleMoveAnimation();
+        HandleCurrentPlatformControls();
+        // HandleMoveAnimation();
     }
 
     void FixedUpdate()
     {
         Move();
     }
-    void HandleMovementInputs()
+
+    // void HandleMovementInputs()
+    // {
+    //     movementInput.y = Input.GetAxisRaw("Vertical");
+    //     movementDirection = transform.forward * movementInput.y;
+    //     ToggleSprint();
+    // }
+
+    // void HandleMoveAnimation()
+    // {
+    //     bool isMoving = movementInput.x != 0 || movementInput.y != 0;
+    //     bool isRunning = moveSpeedMultiplier == runSpeedMultiplier;
+
+    //     animator.SetBool("isRunning", isRunning && isMoving);
+    //     animator.SetBool("isWalking", !isRunning && isMoving);
+    // }
+
+    private void Move()
+    {
+        rb.AddForce(movementDirection * moveSpeed * moveSpeedMultiplier, ForceMode.Force);
+    }
+
+    // can be rewritten to fit mobile controls 
+    private void ToggleSprint()
+    {
+        moveSpeedMultiplier = Input.GetKey(KeyCode.LeftShift) ? runSpeedMultiplier : walkSpeedMultiplier;
+    }
+
+    public void SetPlatformControls(DeviceManager.PlatformType platform)
+    {
+        currentPlatform = platform;
+    }
+
+    void HandlePcControls()
     {
         movementInput.y = Input.GetAxisRaw("Vertical");
         movementDirection = transform.forward * movementInput.y;
-        toggleSprint();
+        ToggleSprint();
     }
-    void HandleMoveAnimation()
+    
+    // there is no backwards movement when playing on mobile compared to playing keyboard/mouse 
+    // both come with unique challenges 
+    void HandleMobileControls()
     {
-        if (movementInput.x != 0 || movementInput.y != 0)
+        movementInput = leftJoyStick.actions["Move"].ReadValue<Vector2>();
+        if(movementInput.magnitude > 0.1f)
         {
-            if (moveSpeedMultiplier == walkSpeedMultiplier)
-            {
-                animator.SetBool("isRunning", false);
-                animator.SetBool("isWalking", true);
-            }
-            else
-            {
-                animator.SetBool("isRunning", true);
-                animator.SetBool("isWalking", false);
-            }
+            //Calculate movement bsaed on pplayer's current forward direction
+            movementDirection = new Vector3(movementInput.x,0,movementInput.y);
 
+            //Ensure movement direction happens in the forward direction 
+            movementDirection = transform.forward * movementDirection.magnitude; 
         }
         else
         {
-            animator.SetBool("isRunning", false);
-            animator.SetBool("isWalking", false);
+            movementDirection = Vector3.zero;
         }
+    }
+    void HandleCurrentPlatformControls()
+    {
+        switch (currentPlatform)
+        {
+            case DeviceManager.PlatformType.PC:
+                // HandlePcControls();
+                HandleMobileControls(); // Placed here for testing purposes 
+                break;
+            case DeviceManager.PlatformType.Mobile:
+                HandleMobileControls();
+                break;
+            default:
+                throw new System.Exception("Current device type not found");
 
-    }
-    void Move()
-    {
-        rigidbody.AddForce(movementDirection.normalized * moveSpeed * moveSpeedMultiplier * Time.fixedDeltaTime, ForceMode.Force);
-    }
-    void toggleSprint()
-    {
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            moveSpeedMultiplier = runSpeedMultiplier;
-        }
-        else
-        {
-            moveSpeedMultiplier = walkSpeedMultiplier;
         }
     }
+
 }
