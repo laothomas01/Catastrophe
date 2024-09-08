@@ -3,8 +3,10 @@ using UnityEngine;
 public class DeviceManager : MonoBehaviour
 {
     public static DeviceManager instance;
+
     public enum PlatformType { PC, Mobile }
     public PlatformType currentPlatform;
+
 
     private void Awake()    
     {
@@ -12,11 +14,11 @@ public class DeviceManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // Optionally keep it across scenes
+            // DontDestroyOnLoad(gameObject); // Optionally keep it across scenes
         }
         else
         {
-            Destroy(gameObject); // Ensure only one instance exists
+            // Destroy(gameObject); // Ensure only one instance exists
         }
     }
 
@@ -49,5 +51,15 @@ public class DeviceManager : MonoBehaviour
         {
             Debug.LogWarning("PlayerManager instance is not available.");
         }
+        if(UIManager.instance != null)
+        {
+            UIManager.instance .SetCurrentPlatform(currentPlatform);
+        }
+        else
+        {
+            Debug.LogWarning("UIManager instance is not available.");
+
+        }
+        
     }
 }

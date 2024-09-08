@@ -13,11 +13,11 @@ public class PlayerManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // Optionally keep it across scenes
+            // DontDestroyOnLoad(gameObject); // Optionally keep it across scenes
         }
         else
         {
-            Destroy(gameObject); // Ensure only one instance exists
+            // Destroy(gameObject); // Ensure only one instance exists
         }
     }
 
@@ -38,7 +38,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (playerAttack != null)
         {
-            playerAttack.SetPlatformControls(currentPlatform);
+            playerAttack.SetCurrentPlatform(currentPlatform);
         }
     }
 }

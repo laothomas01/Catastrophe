@@ -1,13 +1,16 @@
+using UnityEngine.InputSystem;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    private FieldOfView fieldOfView;
+    FieldOfView fieldOfView;
     private DeviceManager.PlatformType currentPlatform;
+    PlayerInput rightStickPress;
 
     void Start()
     {
         fieldOfView = GetComponent<FieldOfView>();
+        rightStickPress = GetComponent<PlayerInput>();
     }
 
     void Update()
@@ -20,7 +23,9 @@ public class PlayerAttack : MonoBehaviour
         switch(currentPlatform)
         {
             case DeviceManager.PlatformType.PC:
-                HandlePcControls();
+                // HandlePcControls();
+                HandleMobileControls(); // for testing purposes 
+
                 break;
             case DeviceManager.PlatformType.Mobile:
                 break;
@@ -29,7 +34,7 @@ public class PlayerAttack : MonoBehaviour
 
         }
     }
-    public void SetPlatformControls(DeviceManager.PlatformType platform)
+    public void SetCurrentPlatform(DeviceManager.PlatformType platform)
     {
         currentPlatform = platform;
     }
@@ -53,6 +58,15 @@ public class PlayerAttack : MonoBehaviour
             }
         }
     }
+    void HandleMobileControls()
+    {
+        if(rightStickPress.actions["Attack"].IsPressed())
+        {
+            Debug.Log("Attack");
+        }
+    }
+
+
     // public void HandleCurrentPlatformControls(DeviceManager.PlatformType currentPlatform)
     // {
     //     switch(currentPlatform)
