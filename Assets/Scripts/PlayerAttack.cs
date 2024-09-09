@@ -20,7 +20,7 @@ public class PlayerAttack : MonoBehaviour
 
     void HandleCurrentPlatformControls()
     {
-        switch(currentPlatform)
+        switch (currentPlatform)
         {
             case DeviceManager.PlatformType.PC:
                 // HandlePcControls();
@@ -60,9 +60,19 @@ public class PlayerAttack : MonoBehaviour
     }
     void HandleMobileControls()
     {
-        if(rightStickPress.actions["Attack"].IsPressed())
+        if (rightStickPress.actions["Attack"].IsPressed())
         {
-            Debug.Log("Attack");
+            GameObject target = fieldOfView.GetCurrentDetectedObject();
+            if (target != null)
+            {
+
+                Furniture furniture = target.GetComponent<Furniture>();
+                if (furniture != null)
+                {
+                    furniture.IsDestroyed(true);
+                }
+                Destroy(target);
+            }
         }
     }
 

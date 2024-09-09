@@ -10,6 +10,7 @@ public class DeviceManager : MonoBehaviour
 
     private void Awake()    
     {
+        Screen.autorotateToPortrait = false; 
         // Singleton pattern: ensure only one instance exists
         if (instance == null)
         {

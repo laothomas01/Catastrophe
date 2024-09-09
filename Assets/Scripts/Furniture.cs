@@ -21,15 +21,15 @@ public class Furniture : MonoBehaviour
     bool isDestroyed = false;
     void OnDestroy()
     {
+        // if (isDestroyed)
+        // {
+        //     // audioManager.Play("brokenWood");
+        //     FindObjectOfType<AudioManager>().Play("brokenwood");
+        //     score.DecrementCurrentHeavyFurnitureCount();
+        //     camera.CanShake(true);
+        //     enemyManager.GetComponent<EnemyManager>().HandleAlertEnemyEvent(gameObject.transform.position);
+        // }
 
-        if (isDestroyed)
-        {
-            // audioManager.Play("brokenWood");
-            FindObjectOfType<AudioManager>().Play("brokenwood");
-            score.DecrementCurrentHeavyFurnitureCount();
-            camera.CanShake(true);
-            enemyManager.GetComponent<EnemyManager>().HandleAlertEnemyEvent(gameObject.transform.position);
-        }
     }
     public void IsDestroyed(bool destroyed)
     {

@@ -27,7 +27,7 @@ public class FieldOfView : MonoBehaviour
 
     private void Update()
     {
-        // DetectFurnitureInCone();
+        DetectFurnitureInCone();
     }
 
     private void FixedUpdate()
