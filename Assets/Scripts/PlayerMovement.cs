@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     PlayerInput leftJoyStick;
+    PlayerInput rightStickPress;
     public float moveSpeed = 1f;  // Set a default value if not set in the Inspector
     public float runSpeedMultiplier = 1f;
     public float walkSpeedMultiplier = 1f;
@@ -12,14 +13,14 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 movementInput;
     private Vector3 movementDirection;
     private Rigidbody rb;
-    private Animator animator;
     private DeviceManager.PlatformType currentPlatform;
+    private bool isSprinting = false; 
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
         leftJoyStick = GetComponent<PlayerInput>();
+        rightStickPress = GetComponent<PlayerInput>();
         moveSpeedMultiplier = walkSpeedMultiplier;
     }
 
@@ -53,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
         rb.AddForce(movementDirection * moveSpeed * moveSpeedMultiplier, ForceMode.Force);
+        moveSpeedMultiplier = isSprinting ? runSpeedMultiplier : walkSpeedMultiplier;
     }
 
     // can be rewritten to fit mobile controls 
@@ -90,6 +92,14 @@ public class PlayerMovement : MonoBehaviour
         {
             movementDirection = Vector3.zero;
         }
+        if(rightStickPress.actions["Sprint"].IsPressed() && isSprinting)
+        {
+            isSprinting = false;
+        }
+        else if(rightStickPress.actions["Sprint"].IsPressed() && !isSprinting)
+        {
+            isSprinting = true;
+        }
     }
     void HandleCurrentPlatformControls()
     {
@@ -106,6 +116,15 @@ public class PlayerMovement : MonoBehaviour
                 throw new System.Exception("Current device type not found");
 
         }
+    }
+    [HideInInspector] public bool IsSprinting()
+    {
+        return isSprinting;
+    }
+    [HideInInspector]
+    public Vector3 GetMovementInput()
+    {
+        return movementInput;
     }
 
 }
