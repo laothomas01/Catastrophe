@@ -21,24 +21,24 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        if (player != null)
-        {
-            playerAttack = player.GetComponent<PlayerAttack>();
-            playerMovement = player.GetComponent<PlayerMovement>();
-        }
-        else
-        {
-            Debug.LogError("Player instance not assigned in PlayerManager.");
-        }
-    }
+    // void Start()
+    // {
+    //     if (player != null)
+    //     {
+    //         playerAttack = player.GetComponent<PlayerAttack>();
+    //         playerMovement = player.GetComponent<PlayerMovement>();
+    //     }
+    //     else
+    //     {
+    //         Debug.LogError("Player instance not assigned in PlayerManager.");
+    //     }
+    // }
 
-    public void NotifyPlayerOfCurrentPlatform(DeviceManager.PlatformType currentPlatform)
-    {
-        if (playerAttack != null)
-        {
-            playerAttack.SetCurrentPlatform(currentPlatform);
-        }
-    }
+    // public void NotifyPlayerOfCurrentPlatform(DeviceManager.PlatformType currentPlatform)
+    // {
+    //     if (playerAttack != null)
+    //     {
+    //         playerAttack.SetCurrentPlatform(currentPlatform);
+    //     }
+    // }
 }

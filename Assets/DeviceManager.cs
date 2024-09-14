@@ -8,7 +8,7 @@ public class DeviceManager : MonoBehaviour
     public PlatformType currentPlatform;
 
 
-    private void Awake()    
+    private void Awake()
     {
         Screen.autorotateToPortrait = false; 
         // Singleton pattern: ensure only one instance exists
@@ -30,37 +30,37 @@ public class DeviceManager : MonoBehaviour
 
     void DetectPlatform()
     {
-        if (Application.isMobilePlatform)
-        {
-            currentPlatform = PlatformType.Mobile;
-        }
-        else
-        {
-            currentPlatform = PlatformType.PC;
-        }
+        // if (Application.isMobilePlatform)
+        // {
+        //     currentPlatform = PlatformType.Mobile;
+        // }
+        // else
+        // {
+        //     currentPlatform = PlatformType.PC;
+        // }
 
-        NotifySystemsOfPlatformChange();
+        // NotifySystemsOfPlatformChange();
     }
 
-    void NotifySystemsOfPlatformChange()
-    {
-        if (PlayerManager.instance != null)
-        {
-            PlayerManager.instance.NotifyPlayerOfCurrentPlatform(currentPlatform);
-        }
-        else
-        {
-            Debug.LogWarning("PlayerManager instance is not available.");
-        }
-        if(UIManager.instance != null)
-        {
-            UIManager.instance .SetCurrentPlatform(currentPlatform);
-        }
-        else
-        {
-            Debug.LogWarning("UIManager instance is not available.");
+    // void NotifySystemsOfPlatformChange()
+    // {
+    //     if (PlayerManager.instance != null)
+    //     {
+    //         PlayerManager.instance.NotifyPlayerOfCurrentPlatform(currentPlatform);
+    //     }
+    //     else
+    //     {
+    //         Debug.LogWarning("PlayerManager instance is not available.");
+    //     }
+    //     if(UIManager.instance != null)
+    //     {
+    //         UIManager.instance .SetCurrentPlatform(currentPlatform);
+    //     }
+    //     else
+    //     {
+    //         Debug.LogWarning("UIManager instance is not available.");
 
-        }
+    //     }
         
-    }
+    // }
 }
