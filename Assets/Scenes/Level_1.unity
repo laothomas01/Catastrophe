@@ -15394,26 +15394,11 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: df510de4-4e67-4d1b-a67b-9b00f9a942fc
     m_ActionName: Player/Rotate[/Mouse/position]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Gamepad
+  m_NeverAutoSwitchControlSchemes: 1
+  m_DefaultControlScheme: KeyboardMouse
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &3114240162779470142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 324759610}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14bfa049aa51f69458a0d241a645f946, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementAnimationNames:
-  - Walking
-  - Running
 --- !u!4 &3128787835835244951
 Transform:
   m_ObjectHideFlags: 0
@@ -18105,7 +18090,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7293346819141416213, guid: 5c9ec6c63782c4846861d76193ff7cbe, type: 3}
       propertyPath: moveSpeed
-      value: 200
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7293346819141416213, guid: 5c9ec6c63782c4846861d76193ff7cbe, type: 3}
+      propertyPath: rotationSpeed
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 7293346819141416213, guid: 5c9ec6c63782c4846861d76193ff7cbe, type: 3}
       propertyPath: newInputSystem
@@ -18117,7 +18106,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7293346819141416213, guid: 5c9ec6c63782c4846861d76193ff7cbe, type: 3}
       propertyPath: walkSpeedMultiplier
-      value: 2
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 7293346819141416213, guid: 5c9ec6c63782c4846861d76193ff7cbe, type: 3}
       propertyPath: playerLayerMask.m_Bits
@@ -18215,49 +18204,9 @@ PrefabInstance:
       propertyPath: m_LocalRotation.y
       value: -0.5000002
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 847326678661057156, guid: 5c9ec6c63782c4846861d76193ff7cbe, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 5c9ec6c63782c4846861d76193ff7cbe, type: 3}
---- !u!114 &4991391412410906273
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 324759610}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77d49a7a6d855004d84e997a58428e88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4991391412410906274
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 324759610}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbafbdd7718e44b459b920ad8ed20998, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4991391412410906275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 324759610}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4225936155c0b9b49b2a02f2f57c7466, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerLayerMask:
-    serializedVersion: 2
-    m_Bits: 128
-  moveSpeed: 10000
-  rotationSpeed: 10
 --- !u!114 &4991391412410906281 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7293346819141416213, guid: 5c9ec6c63782c4846861d76193ff7cbe, type: 3}
@@ -18269,6 +18218,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33abd70b401d141dc91b41a13255d4be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4991391412410906288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324759610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14bfa049aa51f69458a0d241a645f946, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementAnimationNames:
+  - Walking
+  - Running
 --- !u!1 &5020720176573523016
 GameObject:
   m_ObjectHideFlags: 0

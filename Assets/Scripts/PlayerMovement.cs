@@ -19,14 +19,19 @@ public class PlayerMovement : MonoBehaviour
     PlayerInput playerInput;
     private string currentControlScheme;
     private Vector2 joystickInput = Vector2.zero;
+    public float walkSpeedMultiplier = 300f;
+    public float sprintSpeedMultiplier = 500f;
+
     private void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
-        playerInput.SwitchCurrentControlScheme("Gamepad");
+        // playerInput.SwitchCurrentControlScheme("Gamepad"); // for testing on mobile 
         currentControlScheme = playerInput.currentControlScheme;
     }
-
+    private void Update()
+    {
+    }
     private void FixedUpdate()
     {
         // Rotate the player toward the mouse position
@@ -34,11 +39,11 @@ public class PlayerMovement : MonoBehaviour
         // If the player is holding "W", move the player forward
         if (isSprinting)
         {
-            moveSpeedMultiplier = 500f;
+            moveSpeedMultiplier = sprintSpeedMultiplier;
         }
         else
         {
-            moveSpeedMultiplier = 100f;
+            moveSpeedMultiplier = walkSpeedMultiplier;
         }
 
         if (isMovingForward)
@@ -53,14 +58,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (value.performed)
         {
-            if (currentControlScheme == "KeyboardMouse")
-            {
-                isMovingForward = true;
-            }
-            else if (currentControlScheme == "Gamepad")
-            {
-                isMovingForward = true;
-            }
+            isMovingForward = true;
         }
         else if (value.canceled)
         {
@@ -109,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isSprinting = true;
         }
-        if (value.canceled)
+        else if (value.canceled)
         {
             isSprinting = false;
         }
@@ -150,8 +148,8 @@ public class PlayerMovement : MonoBehaviour
             if (joystickInput.sqrMagnitude > 0.1f) // Ignore small inputs (dead zone)
             {
                 // Convert joystick input (X and Y) to a direction in the X-Z plane
-                //Rotate around Y axis and move in X-Z plane 
                 Vector3 directionToLook = new Vector3(joystickInput.x, 0f, joystickInput.y).normalized;
+                //Rotate around Y axis and move in X-Z plane 
                 Quaternion rotationAxis = Quaternion.LookRotation(directionToLook);
                 // Rotate the player by multiplying the current rotation with the new rotation
                 playerRigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, rotationAxis, rotationSpeed * Time.fixedDeltaTime));
@@ -159,4 +157,18 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+    public bool IsSprinting()
+    {
+        return isSprinting;
+    }
+    public bool IsMovingForward()
+    {
+        return isMovingForward;
+    }
+    public Vector2 JoystickInput()
+    {
+        return joystickInput;
+    }
+
+
 }

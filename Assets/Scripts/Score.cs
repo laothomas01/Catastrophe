@@ -3,22 +3,24 @@ using TMPro;
 public class Score : MonoBehaviour
 {
     private TextMeshProUGUI textMesh;
-    FurnitureManager furnitureManager;
+    // public FurnitureManager furnitureManager;
+    public GameObject  furnitureManager;
+    FurnitureManager furnitureManagerScript;
     int currentHeavyFurnitureCount;
     void Start()
     {
         textMesh = GetComponent<TextMeshProUGUI>();
-        furnitureManager = FindFirstObjectByType<FurnitureManager>();
-        currentHeavyFurnitureCount = furnitureManager.GetMaxHeavyFurnitureCount();
-        textMesh.SetText(currentHeavyFurnitureCount.ToString() + "/" + furnitureManager.GetMaxHeavyFurnitureCount().ToString());
+        furnitureManagerScript = furnitureManager.GetComponent<FurnitureManager>();
+        textMesh.SetText(furnitureManagerScript.GetCurrentHeavyFurnitureCount().ToString() + "/" + furnitureManagerScript.GetMaxHeavyFurnitureCount().ToString());
+
     }
     void Update()
     {
-        textMesh.SetText(currentHeavyFurnitureCount.ToString() + "/" + furnitureManager.GetMaxHeavyFurnitureCount().ToString());
+        textMesh.SetText(furnitureManagerScript.GetCurrentHeavyFurnitureCount().ToString() + "/" + furnitureManagerScript.GetMaxHeavyFurnitureCount().ToString());
     }
-    public void DecrementCurrentHeavyFurnitureCount()
-    {
-        --currentHeavyFurnitureCount;
-    }
+    // public void DecrementCurrentHeavyFurnitureCount()
+    // {
+    //     --currentHeavyFurnitureCount;
+    // }
 
 }

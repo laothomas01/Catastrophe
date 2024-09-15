@@ -1,9 +1,8 @@
 using UnityEngine;
 
 /*
-    - generic field of view component
-    - specify a layer mask to detect
-    - reusable for any other game that needs a field of view 
+- player's "vision". 
+- area of detection 
 */
 public class FieldOfView : MonoBehaviour
 {

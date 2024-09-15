@@ -10,25 +10,21 @@ public class Furniture : MonoBehaviour
 
 {
     EnemyManager enemyManager;
-    Score score;
+    FurnitureManager furnitures;
     MainCamera camera;
     void Start()
     {
-        score = FindFirstObjectByType<Score>();
+        furnitures = FindFirstObjectByType<FurnitureManager>();
         enemyManager = FindAnyObjectByType<EnemyManager>();
         camera = FindAnyObjectByType<MainCamera>();
     }
     bool isDestroyed = false;
     void OnDestroy()
     {
-        // if (isDestroyed)
-        // {
-        //     // audioManager.Play("brokenWood");
-        //     FindObjectOfType<AudioManager>().Play("brokenwood");
-        //     score.DecrementCurrentHeavyFurnitureCount();
-        //     camera.CanShake(true);
-        //     enemyManager.GetComponent<EnemyManager>().HandleAlertEnemyEvent(gameObject.transform.position);
-        // }
+        if (isDestroyed)
+        {
+            furnitures.DecrementCurrentHeavyFurnitureCount();
+        }
 
     }
     public void IsDestroyed(bool destroyed)
