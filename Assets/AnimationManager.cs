@@ -1,14 +1,13 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AnimationManager : MonoBehaviour
 {
-    private Animator animator;
+    // private Animator animator;
 
-    // 0 = Walking
-    // 1 = Running 
+    // // 0 = Walking
+    // // 1 = Running 
     public string[] movementAnimationNames;
-    // PlayerMovement playerMovement;
+    // // PlayerMovement playerMovement;
 
     // // Start is called before the first frame update
     void Start()

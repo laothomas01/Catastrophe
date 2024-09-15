@@ -1,31 +1,33 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class DeviceManager : MonoBehaviour
 {
-    public static DeviceManager instance;
+    // public static DeviceManager instance;
 
-    public enum PlatformType { PC, Mobile }
-    public PlatformType currentPlatform;
+    // public enum PlatformType { PC, Mobile }
+    // public PlatformType currentPlatform;
 
-
+    public PlayerInput playerInput;
     private void Awake()
     {
-        Screen.autorotateToPortrait = false; 
-        // Singleton pattern: ensure only one instance exists
-        if (instance == null)
-        {
-            instance = this;
-            // DontDestroyOnLoad(gameObject); // Optionally keep it across scenes
-        }
-        else
-        {
-            // Destroy(gameObject); // Ensure only one instance exists
-        }
+        playerInput.SwitchCurrentControlScheme("Mobile");
+        // Screen.autorotateToPortrait = false; 
+        // // Singleton pattern: ensure only one instance exists
+        // if (instance == null)
+        // {
+        //     instance = this;
+        //     // DontDestroyOnLoad(gameObject); // Optionally keep it across scenes
+        // }
+        // else
+        // {
+        //     // Destroy(gameObject); // Ensure only one instance exists
+        // }
     }
 
     void Start()
     {
-        DetectPlatform();
+        // DetectPlatform();
     }
 
     void DetectPlatform()

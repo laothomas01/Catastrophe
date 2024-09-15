@@ -3,6 +3,7 @@ using UnityEngine;
 /*
     - generic field of view component
     - specify a layer mask to detect
+    - reusable for any other game that needs a field of view 
 */
 public class FieldOfView : MonoBehaviour
 {
@@ -13,19 +14,11 @@ public class FieldOfView : MonoBehaviour
     [SerializeField] private bool drawRay = false;
     private GameObject currentDetectedObject;
     private Color originalColor = Color.white;
-    // private int playerLayerMask;
     [SerializeField] private LayerMask detectedLayerMask;
-    // private int furnitureLayerMask; // maybe allow this to be a furniture layer the developer can specify in the inspector 
-    // private DeviceManager.PlatformType currentPlatform;
-    // PlayerMovement playerMovement;
-    // public float rotationSpeed = 1f;
     private void Start()
     {
         // Initialize player rotation to face 90 degrees on the Y-axis (right).
         transform.rotation = Quaternion.Euler(0, 90, 0);
-        // playerLayerMask = LayerMask.GetMask("Player");
-        // playerMovement = GetComponent<PlayerMovement>();
-
     }
 
     private void Update()
@@ -33,29 +26,6 @@ public class FieldOfView : MonoBehaviour
         DetectFurniture(detectedLayerMask);
     }
 
-    private void FixedUpdate()
-    {
-        // if (currentPlatform == DeviceManager.PlatformType.PC)
-        // {
-        //     LookAtMouseCursor();
-        // }
-    }
-
-
-    // player rotation pc mouse controls 
-    // private void LookAtMouseCursor()
-    // {
-    //     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-    //     if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, ~playerLayerMask))
-    //     {
-    //         Vector3 targetPosition = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-    //         transform.LookAt(targetPosition);
-    //     }
-    // }
-
-    //universal function 
-
-    //field of view is a cone based ray cast for detection
     private void DetectFurniture(int detectedLayer)
     {
         GameObject previousObject = currentDetectedObject;
