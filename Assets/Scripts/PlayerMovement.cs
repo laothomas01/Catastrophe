@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     {
         playerRigidbody = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
-        // playerInput.SwitchCurrentControlScheme("Gamepad"); // for testing on mobile 
+        playerInput.SwitchCurrentControlScheme("Gamepad"); // for testing on mobile 
         currentControlScheme = playerInput.currentControlScheme;
     }
     private void Update()
@@ -137,12 +137,12 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (currentControlScheme == "Keyboard")
+        else if (currentControlScheme == "Keyboard")
         {
             //@TODO TBD
         }
 
-        if (currentControlScheme == "Gamepad")
+        else if (currentControlScheme == "Gamepad")
         {
             // Check if there's any significant input from the joystick to rotate
             if (joystickInput.sqrMagnitude > 0.1f) // Ignore small inputs (dead zone)

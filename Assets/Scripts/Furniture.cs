@@ -23,7 +23,10 @@ public class Furniture : MonoBehaviour
     {
         if (isDestroyed)
         {
-            furnitures.DecrementCurrentHeavyFurnitureCount();
+            if(this.gameObject.tag == "Heavy")
+            {
+                furnitures.DecrementCurrentHeavyFurnitureCount();
+            }
         }
 
     }

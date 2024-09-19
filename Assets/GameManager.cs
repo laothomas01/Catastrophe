@@ -1,17 +1,24 @@
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+
+    public GameObject player;
+    PlayerInput playerInput;
+    public GameObject mobileControlsUi;
     void Start()
     {
-        Debug.Log(SystemInfo.operatingSystem);
-            
+        playerInput = player.GetComponent<PlayerInput>();
+        if (Application.isMobilePlatform)
+        {   
+            playerInput.SwitchCurrentControlScheme("Gamepad");
+            if (mobileControlsUi != null)
+            {
+                Debug.Log("Mobile");
+                mobileControlsUi.SetActive(true);
+            }
+        }
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
