@@ -1,4 +1,5 @@
 
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,21 +17,22 @@ public class PlayerMovement : MonoBehaviour
     private bool isMovingForward = false;          // To track if the player is holding "W" to move
     private bool isSprinting = false; // To track if player is holding "Shift" for sprint 
     private Rigidbody playerRigidbody;             // Reference to the player's Rigidbody
-    PlayerInput playerInput;
-    private string currentControlScheme;
+    // PlayerInput playerInput;
+    // private string currentControlScheme;
     private Vector2 joystickInput = Vector2.zero;
     public float walkSpeedMultiplier = 300f;
     public float sprintSpeedMultiplier = 500f;
 
+    PlayerInputManager playerInputManager;
+
     private void Awake()
     {
         playerRigidbody = GetComponent<Rigidbody>();
-        playerInput = GetComponent<PlayerInput>();
-        playerInput.SwitchCurrentControlScheme("Gamepad"); // for testing on mobile 
-        currentControlScheme = playerInput.currentControlScheme;
+        playerInputManager = GetComponent<PlayerInputManager>();
     }
     private void Update()
     {
+        // Debug.Log("IsSprintin:" + isSprinting);
     }
     private void FixedUpdate()
     {
@@ -56,24 +58,41 @@ public class PlayerMovement : MonoBehaviour
     //event driven handling for movement input 
     public void OnMovement(InputAction.CallbackContext value)
     {
-        if (value.performed)
+        if (playerInputManager.GetCurrentControlScheme() == "KeyboardMouse")
         {
-            isMovingForward = true;
+            Debug.Log("OnMovement Current control scheme : " + playerInputManager.GetCurrentControlScheme());
+
+            if (value.performed)
+            {
+                isMovingForward = true;
+            }
+            else if (value.canceled)
+            {
+                isMovingForward = false; // Stop moving forward when "W" is released
+            }
         }
-        else if (value.canceled)
+        else if (playerInputManager.GetCurrentControlScheme() == "Gamepad")
         {
-            isMovingForward = false; // Stop moving forward when "W" is released
+            Debug.Log("OnMovement Current control scheme : " + playerInputManager.GetCurrentControlScheme());
+            if (value.performed)
+            {
+                isMovingForward = true;
+            }
+            else if (value.canceled)
+            {
+                isMovingForward = false; // Stop moving forward when "W" is released
+            }
         }
     }
     public void OnRotate(InputAction.CallbackContext value)
     {
         if (value.performed)
         {
-            if (currentControlScheme == "KeyboardMouse")
+            if (playerInputManager.GetCurrentControlScheme() == "KeyboardMouse")
             {
                 mousePosition = value.ReadValue<Vector2>();
             }
-            else if (currentControlScheme == "Gamepad")
+            else if (playerInputManager.GetCurrentControlScheme() == "Gamepad")
             {
                 joystickInput = value.ReadValue<Vector2>();
             }
@@ -84,32 +103,29 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // public void OnRotate(InputAction.CallbackContext value)
-    // {
-
-    //     if (value.performed)
-    //     {
-    //         if (currentControlScheme == "KeyboardMouse")
-    //         {
-    //         }
-    //         else if (currentControlScheme == "Gamepad")
-    //         {
-    //             Debug.Log(currentControlScheme);
-    //             // joystickInput = value.ReadValue<Vector2>();
-    //         }
-    //     }
-
-    // }
-
     public void OnSprint(InputAction.CallbackContext value)
     {
-        if (value.performed)
+        if (playerInputManager.GetCurrentControlScheme() == "KeyboardMouse")
         {
-            isSprinting = true;
+            if (value.performed)
+            {
+                isSprinting = true;
+            }
+            else if (value.canceled)
+            {
+                isSprinting = false;
+            }
         }
-        else if (value.canceled)
+        else if (playerInputManager.GetCurrentControlScheme() == "Gamepad")
         {
-            isSprinting = false;
+            if (value.performed && isSprinting)
+            {
+                isSprinting = false;
+            }
+            else if (value.performed && !isSprinting)
+            {
+                isSprinting = true;
+            }
         }
     }
 
@@ -125,7 +141,7 @@ public class PlayerMovement : MonoBehaviour
     {
 
         //or  control schemes that require screen to world interactions 
-        if (currentControlScheme == "KeyboardMouse")
+        if (playerInputManager.GetCurrentControlScheme() == "KeyboardMouse")
         {
             Ray ray = Camera.main.ScreenPointToRay(mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, ~playerLayerMask))
@@ -137,12 +153,12 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        else if (currentControlScheme == "Keyboard")
+        else if (playerInputManager.GetCurrentControlScheme() == "Keyboard")
         {
             //@TODO TBD
         }
 
-        else if (currentControlScheme == "Gamepad")
+        else if (playerInputManager.GetCurrentControlScheme() == "Gamepad")
         {
             // Check if there's any significant input from the joystick to rotate
             if (joystickInput.sqrMagnitude > 0.1f) // Ignore small inputs (dead zone)
@@ -165,10 +181,5 @@ public class PlayerMovement : MonoBehaviour
     {
         return isMovingForward;
     }
-    public Vector2 JoystickInput()
-    {
-        return joystickInput;
-    }
-
 
 }

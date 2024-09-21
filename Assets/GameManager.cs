@@ -1,24 +1,32 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+
+/*
+on start:
+    if mobile:
+
+    if PC:
+
+*/
 public class GameManager : MonoBehaviour
 {
-
     public GameObject player;
-    PlayerInput playerInput;
     public GameObject mobileControlsUi;
-    void Start()
+
+
+
+    void Awake()
     {
-        playerInput = player.GetComponent<PlayerInput>();
-        if (Application.isMobilePlatform)
-        {   
-            playerInput.SwitchCurrentControlScheme("Gamepad");
+        Debug.Log(player);
+        PlayerInputManager playerInputManager = player.GetComponent<PlayerInputManager>();
+        if (Application.isMobilePlatform) // Mobile COntrols 
+        {
             if (mobileControlsUi != null)
             {
-                Debug.Log("Mobile");
                 mobileControlsUi.SetActive(true);
             }
+            playerInputManager.SetCurrentControlScheme("Gamepad");
         }
-
     }
 
 }
