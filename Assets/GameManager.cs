@@ -15,16 +15,10 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        // PlayerInputManager playerInputManager = player.GetComponent<PlayerInputManager>();
-        // Debug.Log(playerInputManager.GetCurrentControlScheme());
-        
-        if (mobileControlsUI != null)
+        if(Application.isMobilePlatform)
         {
             mobileControlsUI.SetActive(true);
         }
-        // playerInputManager.SetCurrentControlScheme("Gamepad");
-
-
 
     }
 

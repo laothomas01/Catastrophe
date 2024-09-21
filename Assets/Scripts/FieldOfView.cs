@@ -37,9 +37,12 @@ public class FieldOfView : MonoBehaviour
                 // Check if the detected object is in the desired layer
                 if ((1 << hit.transform.gameObject.layer & detectedLayer) != 0)
                 {
-                    detectedObject = hit.transform.gameObject;  // Track the first valid object
-                    Debug.DrawRay(raycastOrigin.position, direction * raycastDistance, Color.red);
-                    break;  // Stop further raycasts once a valid object is found
+                    if (hit.transform.gameObject.tag == "Heavy")
+                    {
+                        detectedObject = hit.transform.gameObject;  // Track the first valid object
+                        Debug.DrawRay(raycastOrigin.position, direction * raycastDistance, Color.red);
+                        break;  // Stop further raycasts once a valid object is found
+                    }
                 }
                 else
                 {
@@ -62,7 +65,14 @@ public class FieldOfView : MonoBehaviour
                 {
                     ResetDetectedObjectColor(previousObject);  // Unhighlight the previous object
                 }
-                SetDetectedObjectColor(currentDetectedObject, Color.red);  // Highlight the new object
+                if (currentDetectedObject.gameObject.tag == "Heavy")
+                {
+                    SetDetectedObjectColor(currentDetectedObject, Color.red);  // Highlight the new object
+                }
+                // else
+                // {
+                //     SetDetectedObjectColor(currentDetectedObject, Color.blue);  // Highlight the new object
+                // }
             }
         }
         else
