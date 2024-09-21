@@ -3,19 +3,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputManager : MonoBehaviour
 {
-    PlayerInput playerInput;
-    // Start is called before the first frame update
-    void Awake()
-    {
-        playerInput = GetComponent<PlayerInput>();
-
-    }
     public void SetCurrentControlScheme(string controlScheme)
     {
+        PlayerInput playerInput = GetComponent<PlayerInput>();
         playerInput.SwitchCurrentControlScheme(controlScheme);
     }
     public string GetCurrentControlScheme()
     {
+        PlayerInput playerInput = GetComponent<PlayerInput>();
         return playerInput.currentControlScheme;
     }
 

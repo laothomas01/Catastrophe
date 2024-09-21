@@ -17,8 +17,6 @@ public class PlayerMovement : MonoBehaviour
     private bool isMovingForward = false;          // To track if the player is holding "W" to move
     private bool isSprinting = false; // To track if player is holding "Shift" for sprint 
     private Rigidbody playerRigidbody;             // Reference to the player's Rigidbody
-    // PlayerInput playerInput;
-    // private string currentControlScheme;
     private Vector2 joystickInput = Vector2.zero;
     public float walkSpeedMultiplier = 300f;
     public float sprintSpeedMultiplier = 500f;
@@ -32,7 +30,6 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
-        // Debug.Log("IsSprintin:" + isSprinting);
     }
     private void FixedUpdate()
     {
@@ -58,22 +55,8 @@ public class PlayerMovement : MonoBehaviour
     //event driven handling for movement input 
     public void OnMovement(InputAction.CallbackContext value)
     {
-        if (playerInputManager.GetCurrentControlScheme() == "KeyboardMouse")
+        if (playerInputManager.GetCurrentControlScheme() == "Gamepad" || playerInputManager.GetCurrentControlScheme() == "KeyboardMouse")
         {
-            Debug.Log("OnMovement Current control scheme : " + playerInputManager.GetCurrentControlScheme());
-
-            if (value.performed)
-            {
-                isMovingForward = true;
-            }
-            else if (value.canceled)
-            {
-                isMovingForward = false; // Stop moving forward when "W" is released
-            }
-        }
-        else if (playerInputManager.GetCurrentControlScheme() == "Gamepad")
-        {
-            Debug.Log("OnMovement Current control scheme : " + playerInputManager.GetCurrentControlScheme());
             if (value.performed)
             {
                 isMovingForward = true;
@@ -92,7 +75,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 mousePosition = value.ReadValue<Vector2>();
             }
-            else if (playerInputManager.GetCurrentControlScheme() == "Gamepad")
+
+            if (playerInputManager.GetCurrentControlScheme() == "Gamepad")
             {
                 joystickInput = value.ReadValue<Vector2>();
             }

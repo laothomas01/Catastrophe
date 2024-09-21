@@ -10,23 +10,22 @@ on start:
 */
 public class GameManager : MonoBehaviour
 {
-    public GameObject player;
-    public GameObject mobileControlsUi;
-
-
+    // public GameObject player;
+    public GameObject mobileControlsUI;
 
     void Awake()
     {
-        Debug.Log(player);
-        PlayerInputManager playerInputManager = player.GetComponent<PlayerInputManager>();
-        if (Application.isMobilePlatform) // Mobile COntrols 
+        // PlayerInputManager playerInputManager = player.GetComponent<PlayerInputManager>();
+        // Debug.Log(playerInputManager.GetCurrentControlScheme());
+        
+        if (mobileControlsUI != null)
         {
-            if (mobileControlsUi != null)
-            {
-                mobileControlsUi.SetActive(true);
-            }
-            playerInputManager.SetCurrentControlScheme("Gamepad");
+            mobileControlsUI.SetActive(true);
         }
+        // playerInputManager.SetCurrentControlScheme("Gamepad");
+
+
+
     }
 
 }
