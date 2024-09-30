@@ -42,7 +42,6 @@ public class MainCamera : MonoBehaviour
 
     public void Shake()
     {
-        Debug.Log("Camera Shake!");
         if (currentCameraShakeDuration > 0)
         {
             //shake magnitude is how rough the camera rumbles, how far the camera is shifted from it current position

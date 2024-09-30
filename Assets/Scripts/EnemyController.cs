@@ -45,7 +45,6 @@ public class EnemyController : MonoBehaviour
     private bool enemyRotating = false;
     private bool enemyAlerted = false;
     public Transform raycastOrigin;
-    public GameObject gameOverScreen;
     private Quaternion currentRotation;
     //PlayerDetection
     public MeshFilter viewMeshFilter;
@@ -79,12 +78,12 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        if (VisibleOnScreen())
-        {
+        // if (VisibleOnScreen())
+        // {
             // this.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
             // this.GetComponentInChildren<MeshRenderer>().enabled = true;
-            SearchForCat();
-        }
+        SearchForCat();
+        // }
         // else
         // {
         //     this.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
@@ -151,7 +150,6 @@ public class EnemyController : MonoBehaviour
     //After enemy destination is achieved, enemy rotates at current position to inspect the area 
      void LookAround()
     {
-        Debug.Log("Looking Around");
         if (!enemyRotating)
         {
             //making sure the angle stays between 0 and 360. If over, subtract 360. If under, add the negative number to 360
@@ -220,11 +218,10 @@ public class EnemyController : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(raycastOrigin.transform.position, catDir, out hit, catDistance))
                 {
-                    //Debug.Log("GameOver");
                     if (hit.transform.gameObject.tag == "Player")
                     {
-                        // gameOverScreen.GetComponent<GameOver>().toggleGameOverScreen();
-                        Debug.Log("Hit Player!");
+                        Debug.Log("Hit");
+                        FindObjectOfType<GameManager>().SetIsPlayerFound(true);
                     }
                 }
             }

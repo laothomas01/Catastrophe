@@ -9,14 +9,14 @@ using UnityEngine;
 public class Furniture : MonoBehaviour
 
 {
-    EnemyManager enemyManager;
     FurnitureManager furnitures;
-    MainCamera camera;
+    
+
+    
     void Start()
     {
         furnitures = FindFirstObjectByType<FurnitureManager>();
-        enemyManager = FindAnyObjectByType<EnemyManager>();
-        camera = FindAnyObjectByType<MainCamera>();
+        
     }
     bool isDestroyed = false;
     void OnDestroy()
@@ -25,6 +25,8 @@ public class Furniture : MonoBehaviour
         {
             if(this.gameObject.tag == "Heavy")
             {
+                MainCamera camera = FindAnyObjectByType<MainCamera>();
+                camera.CanShake(true);
                 furnitures.DecrementCurrentHeavyFurnitureCount();
             }
         }

@@ -23,9 +23,7 @@ public class AnimationManager : MonoBehaviour
     {
         HandleWalkSprintAnimation(playerMovement.IsMovingForward(), playerMovement.IsSprinting());
         // HandleAttackAnimation(playerAttack.IsAttacking());
-
     }
-
 
     /*
     walk | sprint | ~walk | ~ sprint | walk & sprint | walk & ~sprint | 
@@ -64,13 +62,13 @@ public class AnimationManager : MonoBehaviour
     }
     void HandleAttackAnimation(bool isAttacking)
     {
-        if(isAttacking)
+        if (isAttacking)
         {
-            animator.SetBool(movementAnimationNames[2],isAttacking);
+            animator.SetBool(movementAnimationNames[2], isAttacking);
         }
         else
         {
-            animator.SetBool(movementAnimationNames[2], false);
+            animator.SetBool(movementAnimationNames[2], isAttacking);
         }
     }
 }

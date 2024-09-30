@@ -16,10 +16,9 @@ public class EnemyManager : MonoBehaviour
     public void HandleAlertEnemyEvent(Vector3 furniturePosition)
     {
         GameObject closestEnemy = FindClosestEnemy();
-        if(closestEnemy != null)
+        if (closestEnemy != null)
         {
              Vector3 position = furniturePosition;
-             Debug.Log("Enemy Alerted!");
              closestEnemy.GetComponent<EnemyController>().InspectFurniture(position);
         }
     }

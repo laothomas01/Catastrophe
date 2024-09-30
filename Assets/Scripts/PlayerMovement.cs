@@ -1,5 +1,4 @@
 
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,6 +8,8 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class PlayerMovement : MonoBehaviour
 {
+    // public GameObject mouseCursor;
+    // Vector3 cursorPosition;
     [SerializeField] private LayerMask playerLayerMask;
     [SerializeField] private float moveSpeed = 1f;
     private float moveSpeedMultiplier = 1f;
@@ -22,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     public float sprintSpeedMultiplier = 500f;
 
     PlayerInputManager playerInputManager;
+    private Vector3 currentLookDirection = Vector3.zero;
 
     private void Awake()
     {
@@ -49,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
         {
             MoveForward();
         }
-        // Debug.Log("MoveSpeedMultiplier: " + moveSpeedMultiplier);
+
     }
 
     //event driven handling for movement input 
@@ -75,7 +77,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 mousePosition = value.ReadValue<Vector2>();
             }
-
             if (playerInputManager.GetCurrentControlScheme() == "Gamepad")
             {
                 joystickInput = value.ReadValue<Vector2>();
@@ -130,10 +131,12 @@ public class PlayerMovement : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, ~playerLayerMask))
             {
-                Vector3 targetPosition = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-                Vector3 directionToLook = (targetPosition - transform.position).normalized; // Calculate direction to mouse
+                Vector3 mousePosition = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+                Vector3 directionToLook = (mousePosition - transform.position).normalized; // Calculate direction to mouse
+                currentLookDirection = directionToLook;
                 Quaternion targetRotation = Quaternion.LookRotation(directionToLook);        // Determine target rotation
                 playerRigidbody.MoveRotation(Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime)); // Smooth rotation with Rigidbody
+            
             }
         }
 
@@ -164,6 +167,10 @@ public class PlayerMovement : MonoBehaviour
     public bool IsMovingForward()
     {
         return isMovingForward;
+    }
+    public Vector3 GetCurrentLookDirection()
+    {
+        return currentLookDirection;
     }
 
 }
