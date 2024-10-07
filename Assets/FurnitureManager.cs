@@ -15,10 +15,6 @@ public class FurnitureManager : MonoBehaviour
         currentHeavyFurnitureCount = maxHeavyFurnitureCount;
         // currentHeavyFurnitureCount = maxHeavyFurnitureCount;
     }
-    void Update()
-    {
-        
-    }
     public void DecrementCurrentHeavyFurnitureCount()
     {
         currentHeavyFurnitureCount--;

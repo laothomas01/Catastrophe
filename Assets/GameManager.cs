@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 /*
 on start:
@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour
     public GameObject mobileControlsUI;
     public GameObject gameOverUI;
     bool isPlayerFound = false; 
-
+    bool win = false;
+    FurnitureManager furnitureManager;
     void Awake()
     {
         Time.timeScale = 1;
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
         {
             mobileControlsUI.SetActive(false);
         }
+        furnitureManager = FindObjectOfType<FurnitureManager>();
 
     }
     public void SetIsPlayerFound(bool found)
@@ -39,6 +41,15 @@ public class GameManager : MonoBehaviour
         {
             GameOver();
         }
+        if(furnitureManager.GetCurrentHeavyFurnitureCount() == 0)
+        {
+            win = true;
+        }
+        if(win)
+        {
+            WinScreen();
+        }
+        
     }
 
     public void GameOver()
@@ -46,6 +57,10 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         gameOverUI.SetActive(true);
 
+    }
+    public void WinScreen()
+    {
+        SceneManager.LoadScene("Win_Screen");
     }
 
 }

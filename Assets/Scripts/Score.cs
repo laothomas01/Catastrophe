@@ -4,18 +4,17 @@ public class Score : MonoBehaviour
 {
     private TextMeshProUGUI textMesh;
     // public FurnitureManager furnitureManager;
-    public GameObject  furnitureManager;
-    FurnitureManager furnitureManagerScript;
+    // public GameObject  furnitureManager;
+    FurnitureManager furnitureManager;
+
     void Start()
     {
         textMesh = GetComponent<TextMeshProUGUI>();
-        furnitureManagerScript = furnitureManager.GetComponent<FurnitureManager>();
-        // textMesh.SetText(furnitureManagerScript.GetCurrentHeavyFurnitureCount().ToString() + "/" + furnitureManagerScript.GetMaxHeavyFurnitureCount().ToString());
-
+        furnitureManager = FindObjectOfType<FurnitureManager>();
     }
     void Update()
     {
-        textMesh.SetText(furnitureManagerScript.GetCurrentHeavyFurnitureCount().ToString() + "/" + furnitureManagerScript.GetMaxHeavyFurnitureCount().ToString());
+        textMesh.SetText(furnitureManager.GetCurrentHeavyFurnitureCount().ToString() + "/" + furnitureManager.GetMaxHeavyFurnitureCount().ToString());
     }
 
 }

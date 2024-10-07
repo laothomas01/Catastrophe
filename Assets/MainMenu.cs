@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 public class MainMenu : MonoBehaviour
 {
     public Button play;
@@ -23,13 +25,12 @@ public class MainMenu : MonoBehaviour
         }
 
     }
-    void PlayGame()
+    public void PlayGame()
     {
-        Debug.Log("You have clicked the play button");
+        SceneManager.LoadScene("Level_1");
     }
     void ExitGame()
     {
-        Debug.Log("Exit Button");
     }
 
 }
