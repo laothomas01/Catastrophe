@@ -2,17 +2,35 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(PlayerInputManager))]
 
-public class PlayerMovement : MonoBehaviour
+//handling unity new input manager 
+[RequireComponent(typeof(PlayerInputManager))]
+//player physics 
+[RequireComponent(typeof(Rigidbody))]
+
+public class TopdownMovement : MonoBehaviour
 {
+    //@TODO Add a toggling on/off/implementation for mouse cursor 
+    // public GameObject mouseCursor;
+    // Vector3 cursorPosition;
+
+    // [SerializeField] private bool toggleMouseCursorOn = false;
+    // public 
+
+
     private LayerMask playerLayerMask;
     public float walkSpeed = 300f;
     public float sprintMultiplier = 2f; 
     private float currentSpeed; 
-    public float rotationSpeed = 1f; 
+    // private float moveSpeedMultiplier = 1f;
+    // [SerializeField] private float moveSpeed = 1f;
+    [SerializeField] private float rotationSpeed = 1f; 
 
+    // [SerializeField] private float moveSpeed = 1f;
+    // [SerializeField] private float rotationSpeed = 1f;
+    // [SerializeField] private int walkSpeedMultiplier = 300;
+    // [SerializeField] private int sprintSpeedMultiplier = 500;
+    
     private Vector2 mousePosition = Vector2.zero;
     private bool isMoving = false;
     private bool isSprinting = false;
@@ -142,9 +160,24 @@ public class PlayerMovement : MonoBehaviour
     // written to only move in Z direction 
     private void MoveForward()
     {
+        // // rigidbody.velocity = vector3.lerp(rigidbody.velocity, desiredVelocity, 0.3f)
+        // Vector3 forwardMovement = transform.forward * moveSpeed * moveSpeedMultiplier * Time.deltaTime;
+        // // rb.MovePosition(transform.position + forwardMovement);
+        // // transform.Translate(forwardMovement.x, forwardMovement.z, forwardMovement.);
+        // // rb.velocity = Vector3.Lerp(rb.velocity, forwardMovement, 0.3f);
+        // // rb.velocity += forwardMovement; 
+        // // rb.AddForce(forwardMovement, ForceMode.Force);
+
         // Apply force to move forward
         Vector3 forwardMovement = transform.forward * currentSpeed * Time.fixedDeltaTime;
         rb.velocity = forwardMovement;
+        // rb.AddForce(forwardMovement, ForceMode.VelocityChange);
+
+        // // Clamp the maximum speed to control snappiness
+        // if (rb.velocity.magnitude > moveSpeed * moveSpeedMultiplier)
+        // {
+        //     rb.velocity = rb.velocity.normalized * moveSpeed * moveSpeedMultiplier;
+        // }
     }
 
     private void RotatePlayer()

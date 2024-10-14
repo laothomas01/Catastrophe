@@ -21,7 +21,7 @@ public class AnimationManager : MonoBehaviour
     
     void Update()
     {
-        HandleWalkSprintAnimation(playerMovement.IsMovingForward(), playerMovement.IsSprinting());
+        HandleWalkSprintAnimation(playerMovement.IsMoving(), playerMovement.IsSprinting());
         // HandleAttackAnimation(playerAttack.IsAttacking());
     }
 

@@ -23,6 +23,8 @@ using UnityEngine.AI;
 /// <summary>
 /// for Enemy animations and enemy behaviors
 /// </summary>
+
+//@TODO: port all of this code to field of view and reuse field of view script 
 public class EnemyController : MonoBehaviour
 {
     /*
@@ -32,6 +34,7 @@ public class EnemyController : MonoBehaviour
      * [X] Add animations
      * [] Add sounds
      */
+
     // Start is called before the first frame update
     public Transform player;
     NavMeshAgent agent;
@@ -55,9 +58,9 @@ public class EnemyController : MonoBehaviour
     public float waitBetweenPatrol;
     private float patrolWaitTimer;
     public float viewAngle;
-    public float viewRadius;
+    public float viewDistance;
     private float catDistance;
-    public float visionResoulution;
+    public float visionResolution;
 
     //add a delay for when the enemy turns around
     public float waitTimeBeforeRotation = 0.5f;
@@ -78,18 +81,7 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        // if (VisibleOnScreen())
-        // {
-            // this.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
-            // this.GetComponentInChildren<MeshRenderer>().enabled = true;
         SearchForCat();
-        // }
-        // else
-        // {
-        //     this.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
-        //     this.GetComponentInChildren<MeshRenderer>().enabled = false;
-        //     SearchForCat();
-        // }
         
         if (AgentReachedDestination(agent))
         {
@@ -204,13 +196,12 @@ public class EnemyController : MonoBehaviour
         return new Vector3(Mathf.Sin(angle * Mathf.Deg2Rad), 0, Mathf.Cos(angle * Mathf.Deg2Rad));
     }
 
-
-
+    
     void SearchForCat()
     {
         DrawVision();
         catDistance = Vector3.Distance(transform.position, player.position);
-        if (catDistance <= viewRadius)
+        if (catDistance <= viewDistance)
         {
             Vector3 catDir = (player.position - transform.position).normalized;
             if (Vector3.Angle(transform.forward, catDir) < viewAngle / 2)
@@ -235,13 +226,13 @@ public class EnemyController : MonoBehaviour
         Vector3 dir = GetAngleDirection(globalAngle, true);
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, dir, out hit, viewRadius))
+        if (Physics.Raycast(transform.position, dir, out hit, viewDistance))
         {
             GameObject hitObject = hit.transform.gameObject;
             if (hitObject.tag == "Walls" || hitObject.layer == LayerMask.NameToLayer("Furniture"))
                 return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
         }
-        return new ViewCastInfo(false, transform.position + dir * viewRadius, viewRadius, globalAngle);
+        return new ViewCastInfo(false, transform.position + dir * viewDistance, viewDistance, globalAngle);
     }
 
     //Raycast info struct
@@ -265,7 +256,7 @@ public class EnemyController : MonoBehaviour
     // draws coned raycast
     void DrawVision()
     {
-        int rayCount = Mathf.RoundToInt(viewAngle * visionResoulution);
+        int rayCount = Mathf.RoundToInt(viewAngle * visionResolution);
         float rayAngleSize = viewAngle / rayCount;
         List<Vector3> viewPoints = new List<Vector3>();
         for (int i = 0; i <= rayCount; i++)
