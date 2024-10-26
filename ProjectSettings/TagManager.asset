@@ -10,6 +10,7 @@ TagManager:
   - Fluid
   - Heavy
   - Walls
+  - Fragment
   layers:
   - Default
   - TransparentFX
